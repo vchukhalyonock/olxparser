@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    command: npm run start
+    volumes:
+      - ./client:/src/front-end
+      - /src/front-end/node_modules
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    ports:
+      - "3000:3000"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    command: npm run start
+    volumes:
+      - ./api:/src/back-end
+      - /src/back-end/node_modules
+    environment:
+      - PORT=3003
+    ports:
+      - "3003:3003"
+
