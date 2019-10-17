@@ -2,10 +2,10 @@ FROM node:10.16.3-alpine
 
 EXPOSE 3000
 
-WORKDIR /src/front-end
+WORKDIR /src/client
 
 COPY client/package.json .
 
 RUN npm install
 
-COPY client/ /src/front-end/
+COPY client/ /src/client/

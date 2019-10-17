@@ -2,15 +2,18 @@
   "name": "api",
   "version": "0.0.0",
   "private": true,
+  "main": "src/index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon -L src/index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.19.4"
   }
 }
