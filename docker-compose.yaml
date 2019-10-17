@@ -7,6 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile.client
     command: npm run start
+    links:
+      - api
     volumes:
       - ./client:/src/client
       - /src/client/node_modules
@@ -21,6 +23,8 @@ services:
       context: .
       dockerfile: Dockerfile.api
     command: npm start
+    links:
+      - mongo
     volumes:
       - ./api:/src/api
       - /src/api/node_modules
@@ -28,4 +32,16 @@ services:
       - PORT=3003
     ports:
       - "3003:3003"
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: olxparser
+    ports:
+      - "27017:27017"
+
+
+
 
