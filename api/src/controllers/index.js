@@ -1,8 +1,10 @@
 import { invokeMap } from 'lodash';
 import DefaultController from './DefaultController';
+import ImportRequestsController from "./ImportRequestsController";
 
 const controllers = {
-    DefaultController
+    DefaultController,
+    ImportRequestsController,
 };
 
 export function initControllers(router) {
