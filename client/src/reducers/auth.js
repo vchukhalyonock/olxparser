@@ -1,11 +1,14 @@
-import {LOGIN} from "./constants";
+import { LOGIN } from "./constants";
+import { LOCAL_STORAGE_TOKEN } from "../actions/auth";
 
-const initialState = {};
+const initialState = {
+    token: localStorage.getItem(LOCAL_STORAGE_TOKEN)
+};
 
 export default function auth(state = initialState, action) {
     switch (action.type) {
         case LOGIN:
-            break;
+            return action.payload;
 
         default:
             break;

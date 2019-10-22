@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducers";
 import thunk from "redux-thunk";
+import { Provider } from "react-redux";
 
-
-import Login from "./components/login";
-import {Provider} from "react-redux";
+import App from './components/application';
 
 const store = createStore(reducer, applyMiddleware(thunk));
-
-class App extends Component {
-    render() {
-        return (
-            <Login/>
-        )
-    }
-}
 
 ReactDOM.render(
     <Provider store={store}>

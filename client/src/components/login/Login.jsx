@@ -41,9 +41,6 @@ class Login extends Component {
 
 
     loginSubmitHandler = (event) => {
-        console.log("Submit");
-        console.log("login", this.loginInput.current.value);
-        console.log("password", this.passwordInput.current.value);
         const login = this.loginInput.current.value;
         const password = this.passwordInput.current.value;
         this.props.onLogin(login, password);
@@ -106,11 +103,17 @@ Login.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => ({
+    token: state.auth.token
+});
+
+const mapDispatchToProps = dispatch => ({
+    onLogin: (login, password) => {
+        dispatch(makeLogin(login, password));
+    }
+});
+
 export default connect(
-    state => ({}),
-    dispatch => ({
-        onLogin: (login, password) => {
-            dispatch(makeLogin(login, password));
-        }
-    })
+    mapStateToProps,
+    mapDispatchToProps
 )(withStyles(styles)(Login));

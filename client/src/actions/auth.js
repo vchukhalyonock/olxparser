@@ -1,11 +1,13 @@
 import { LOGIN } from "../reducers/constants";
+import config from "../config";
 
+export const LOCAL_STORAGE_TOKEN = 'olxparsertoken';
 
-const url = "";
+const url = `${config.backendUrl}/auth`;
 
-const login = (login, password) => dispatch => {
+const login = (login, password) => async dispatch => {
 
-    fetch(url, {
+    const response = await fetch(url, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -14,15 +16,17 @@ const login = (login, password) => dispatch => {
             login: login,
             password: password
         })
-    })
-        .then((response) => {
-            console.log("Response:", response);
-            dispatch({
-                type: LOGIN,
-                payload: {}
-            });
-        });
+    });
 
+    if(response.ok) {
+        const data = await response.json();
+        if(data.token) {
+            localStorage.setItem(LOCAL_STORAGE_TOKEN, data.token);
+        }
+        dispatch({type: LOGIN, payload: data});
+    } else {
+        dispatch({type: LOGIN, payload: false});
+    }
 };
 
 export  {
