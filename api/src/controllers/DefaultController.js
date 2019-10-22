@@ -8,6 +8,7 @@ class DefaultController extends Controller {
             {
                 route: '/',
                 verb: VERB.GET,
+                public: true,
                 handler: this.defaultRoute
             }
         ]

@@ -1,3 +1,5 @@
+import authMiddleware from '../middlewares/authMiddleware';
+
 export const VERB = {
     GET: 'get',
     POST: 'post',
@@ -19,6 +21,10 @@ class Controller {
         this.routes.forEach(config => {
            const verb = config.verb || VERB.GET;
            const args = [config.route];
+
+           if(!config.public) {
+               args.push(authMiddleware);
+           }
 
            router[verb].apply(router, [...args, asyncMiddleware(config.handler)]);
         });

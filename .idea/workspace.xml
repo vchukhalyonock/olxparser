@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/controllers/DefaultController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/controllers/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/core/Controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/core/Error.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/middlewares/errorMiddleware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/middlewares/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/middlewares/notFoundMiddleware.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/models/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/config/auth/JWTAuthStrategy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/config/auth/LocalAuthStrategy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/controllers/AuthController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/middlewares/authMiddleware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/controllers/DefaultController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/DefaultController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/controllers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/core/Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/core/Controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,7 +85,8 @@
       <workItem from="1571065319770" duration="9196000" />
       <workItem from="1571237668034" duration="952000" />
       <workItem from="1571311762402" duration="139000" />
-      <workItem from="1571311912003" duration="3730000" />
+      <workItem from="1571311912003" duration="5751000" />
+      <workItem from="1571678915955" duration="8669000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>
