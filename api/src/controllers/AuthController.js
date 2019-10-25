@@ -3,12 +3,13 @@ import passport from 'passport';
 import Controller, { VERB } from '../core/Controller';
 
 import { JWT_SECRET } from '../config/auth/JWTAuthStrategy';
+import { AUTH_URL } from "../constants/urls";
 
 class AuthController extends Controller {
     get routes() {
         return [
             {
-                route: '/auth',
+                route: AUTH_URL,
                 verb: VERB.POST,
                 public: true,
                 handler: this.login
