@@ -1,4 +1,4 @@
-import { LOGIN } from "./constants";
+import { LOGIN } from "../constants/reducers";
 import { LOCAL_STORAGE_TOKEN } from "../actions/auth";
 
 const initialState = {

@@ -1,4 +1,4 @@
-import { LOGIN } from "../reducers/constants";
+import { LOGIN } from "../constants/reducers";
 import config from "../config";
 
 export const LOCAL_STORAGE_TOKEN = 'olxparsertoken';

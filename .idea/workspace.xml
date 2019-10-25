@@ -2,13 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/header/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/actions/menu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/listItemLink/ListItemLink.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/listItemLink/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/menuItems/components/MenuItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/menuItems/components/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/reducers/menu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/application/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/application/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/dashboard/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/listItems/ListItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/listItems/ListItems.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/orders/Orders.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/orders/Orders.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/dashboard/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/dashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/dashboard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/listItems/ListItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/menuItems/MenuItems.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/listItems/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/menuItems/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/reducers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +41,7 @@
   <component name="PropertiesComponent">
     <property name="TF_FMT" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client/src/pages/dashboard" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -38,8 +50,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/src/constants" />
+      <recent name="$PROJECT_DIR$/client/src/pages/dashboard" />
       <recent name="$PROJECT_DIR$/api/src" />
       <recent name="$PROJECT_DIR$/api/views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/src/pages/dashboard" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -84,7 +101,8 @@
       <workItem from="1571311912003" duration="5751000" />
       <workItem from="1571678915955" duration="8719000" />
       <workItem from="1571731279523" duration="109000" />
-      <workItem from="1571738243751" duration="18451000" />
+      <workItem from="1571738243751" duration="19116000" />
+      <workItem from="1571988600677" duration="5465000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

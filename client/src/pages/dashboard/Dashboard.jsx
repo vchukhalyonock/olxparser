@@ -6,7 +6,7 @@ import {
     Paper,
 } from '@material-ui/core';
 
-import Orders from '../orders';
+import Orders from '../../components/orders';
 
 const useStyles = makeStyles(theme => ({
     container: {

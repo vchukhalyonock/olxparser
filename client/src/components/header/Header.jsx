@@ -19,7 +19,7 @@ import {
     Notifications as NotificationsIcon
 } from "@material-ui/icons";
 import { APPLICATION_NAME } from "../../constants/titles";
-import { mainListItems } from "../listItems";
+import MenuItems from "../menuItems";
 
 const drawerWidth = 240;
 
@@ -142,7 +142,9 @@ class Header extends Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <List>{mainListItems}</List>
+                    <List>
+                        <MenuItems />
+                    </List>
                 </Drawer>
             </Fragment>
         )
