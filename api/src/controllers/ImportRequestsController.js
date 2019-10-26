@@ -69,8 +69,10 @@ class ImportRequestsController extends Controller {
 
     async getImportRequests(req, res, next) {
         let importRequests = null;
+        let total = 0;
         try {
             importRequests = await ImportRequestModel.find({}).exec();
+            total = await ImportRequestModel.countDocuments().exec();
         } catch (e) {
             console.log(e);
             next(e);
@@ -78,7 +80,8 @@ class ImportRequestsController extends Controller {
 
         return res.json({
             status: 'success',
-            items: importRequests
+            items: importRequests,
+            total
         })
     }
 

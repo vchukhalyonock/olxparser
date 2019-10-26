@@ -10,8 +10,13 @@ import { string } from "prop-types";
 
 import Login from '../login';
 import Dashboard from "../../pages/dashboard";
+import { ImportRequestsContainer } from "../../pages/importRequests/containers";
 import Header from "../header";
 import Copyright from "../copyright";
+import {
+    DASHBOARD_PATH,
+    IMPORT_REQUESTS_PAGE_PATH
+} from "../../constants/router";
 
 const styles = theme => ({
     root: {
@@ -38,8 +43,11 @@ class App extends Component {
                         <main className={classes.content}>
                             <div className={classes.appBarSpacer} />
                             <Switch>
-                                <Route exact path='/'>
+                                <Route exact path={DASHBOARD_PATH}>
                                     <Dashboard />
+                                </Route>
+                                <Route exact path={IMPORT_REQUESTS_PAGE_PATH}>
+                                    <ImportRequestsContainer />
                                 </Route>
                             </Switch>
                             <Copyright />

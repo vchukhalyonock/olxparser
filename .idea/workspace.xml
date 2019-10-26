@@ -2,11 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/constants/urls.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/actions/importRequests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/constants/methods.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/constants/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/constants/urls.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/containers/ImportRequestsContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/containers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/list.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/utils/rest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/controllers/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/AuthController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/controllers/ImportRequestsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/ImportRequestsController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/db/mongodb.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/db/mongodb.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/application/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/application/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/mainMenuItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/mainMenuItems.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/reducers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +105,7 @@
       <workItem from="1571678915955" duration="8719000" />
       <workItem from="1571731279523" duration="109000" />
       <workItem from="1571738243751" duration="19116000" />
-      <workItem from="1571988600677" duration="9244000" />
+      <workItem from="1571988600677" duration="20245000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>
