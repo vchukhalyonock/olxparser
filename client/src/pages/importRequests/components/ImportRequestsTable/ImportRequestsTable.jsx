@@ -26,7 +26,7 @@ class ImportRequestsTable extends Component {
         const {
             importRequests
         } = this.props;
-        
+
         const list = importRequests.list.items;
 
         return (

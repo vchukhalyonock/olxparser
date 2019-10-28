@@ -3,9 +3,12 @@ import {
     Container,
     Grid,
     makeStyles,
-    Paper
+    Paper,
+    Button,
 } from "@material-ui/core";
 import ImportRequestsTable from "../components/ImportRequestsTable";
+import ListItemLink from "../../../components/listItemLink";
+import { CREATE_IMPORT_REQUEST_PAGE_PATH } from "../../../constants/router";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -18,6 +21,9 @@ const useStyles = makeStyles(theme => ({
         overflow: 'auto',
         flexDirection: 'column',
     },
+    button: {
+        margin: theme.spacing(1)
+    },
 }));
 
 export default () => {
@@ -26,7 +32,19 @@ export default () => {
     return (
         <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
-                {/* Recent Orders */}
+                <Grid item xs={10}/>
+                <Grid item xs={2}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        className={classes.button}
+                        component={ListItemLink}
+                        to={CREATE_IMPORT_REQUEST_PAGE_PATH}
+                    >
+                        Create IR
+                    </Button>
+                </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
                         <ImportRequestsTable />

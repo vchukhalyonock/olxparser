@@ -1,5 +1,11 @@
 import reducers from './reducers';
+import {
+    ImportRequestsContainer,
+    ImportRequestsFormContainer
+} from "./containers";
 
 export {
-    reducers
+    reducers,
+    ImportRequestsFormContainer,
+    ImportRequestsContainer
 }

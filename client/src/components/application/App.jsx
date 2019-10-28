@@ -10,10 +10,14 @@ import { string } from "prop-types";
 
 import Login from '../login';
 import Dashboard from "../../pages/dashboard";
-import { ImportRequestsContainer } from "../../pages/importRequests/containers";
+import {
+    ImportRequestsContainer,
+    ImportRequestsFormContainer
+} from "../../pages/importRequests";
 import Header from "../header";
 import Copyright from "../copyright";
 import {
+    CREATE_IMPORT_REQUEST_PAGE_PATH,
     DASHBOARD_PATH,
     IMPORT_REQUESTS_PAGE_PATH
 } from "../../constants/router";
@@ -48,6 +52,9 @@ class App extends Component {
                                 </Route>
                                 <Route exact path={IMPORT_REQUESTS_PAGE_PATH}>
                                     <ImportRequestsContainer />
+                                </Route>
+                                <Route exact path={CREATE_IMPORT_REQUEST_PAGE_PATH}>
+                                    <ImportRequestsFormContainer />
                                 </Route>
                             </Switch>
                             <Copyright />
