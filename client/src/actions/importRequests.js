@@ -36,8 +36,8 @@ const updateImportRequest = (importRequest) => async dispatch => {
 
 
 const deleteImportRequest = (id) => async dispatch => {
-    const responseData = await rest(`${url}/${id}`, METHODS.DELETE);
-    dispatch({type: DELETE_IMPORT_REQUEST, payload: responseData});
+    await rest(`${url}/${id}`, METHODS.DELETE);
+    dispatch({type: DELETE_IMPORT_REQUEST, payload: {id: id}});
 };
 
 export {

@@ -1,0 +1,1 @@
+export const DELETE_IMPORT_REQUEST_CONFIRMATION = 'Do you want to delete import request?';

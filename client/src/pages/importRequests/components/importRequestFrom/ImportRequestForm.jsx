@@ -9,7 +9,6 @@ import {
 import {
     string
 } from "prop-types";
-import { merge } from 'lodash';
 import {
     createImportRequest,
     updateImportRequest
