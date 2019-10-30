@@ -2,25 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route
 } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import { string } from "prop-types";
 
 import Login from '../login';
-import Dashboard from "../../pages/dashboard";
-import {
-    ImportRequestsContainer,
-    ImportRequestsFormContainer
-} from "../../pages/importRequests";
 import Header from "../header";
 import Copyright from "../copyright";
-import {
-    CREATE_IMPORT_REQUEST_PAGE_PATH,
-    DASHBOARD_PATH,
-    IMPORT_REQUESTS_PAGE_PATH
-} from "../../constants/router";
+import RouterComponent from "../../router";
 
 const styles = theme => ({
     root: {
@@ -46,17 +35,7 @@ class App extends Component {
                         <Header title={this.props.menuTitle}/>
                         <main className={classes.content}>
                             <div className={classes.appBarSpacer} />
-                            <Switch>
-                                <Route exact path={DASHBOARD_PATH}>
-                                    <Dashboard />
-                                </Route>
-                                <Route exact path={IMPORT_REQUESTS_PAGE_PATH}>
-                                    <ImportRequestsContainer />
-                                </Route>
-                                <Route exact path={CREATE_IMPORT_REQUEST_PAGE_PATH}>
-                                    <ImportRequestsFormContainer />
-                                </Route>
-                            </Switch>
+                            <RouterComponent />
                             <Copyright />
                         </main>
                     </div>

@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/router/Router.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/application/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/application/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/containers/ImportRequestFormContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/containers/ImportRequestFormContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +93,7 @@
       <workItem from="1571678915955" duration="8719000" />
       <workItem from="1571731279523" duration="109000" />
       <workItem from="1571738243751" duration="19116000" />
-      <workItem from="1571988600677" duration="27953000" />
+      <workItem from="1571988600677" duration="35887000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

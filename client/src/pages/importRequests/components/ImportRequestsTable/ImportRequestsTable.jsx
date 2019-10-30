@@ -5,7 +5,9 @@ import React,
 } from "react";
 import { connect } from "react-redux";
 import { object } from "prop-types";
+import { Link } from "react-router-dom";
 import {
+    Icon,
     Table,
     TableBody,
     TableCell,
@@ -13,8 +15,8 @@ import {
     TableRow,
 } from '@material-ui/core';
 import Title from "../../../../components/title";
-
 import { getImportRequests } from "../../../../actions/importRequests";
+import { EDIT_IMPORT_REQUEST_PAGE_PATH } from "../../../../constants/router";
 
 class ImportRequestsTable extends Component {
 
@@ -47,7 +49,11 @@ class ImportRequestsTable extends Component {
                                 <TableCell>{item.requestedAt}</TableCell>
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.olxAccountUrl}</TableCell>
-                                <TableCell></TableCell>
+                                <TableCell>
+                                    <Link to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`}>
+                                        <Icon>edit</Icon>
+                                    </Link>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

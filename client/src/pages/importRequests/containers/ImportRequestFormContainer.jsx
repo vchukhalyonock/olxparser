@@ -32,13 +32,14 @@ class ImportRequestsFormContainer extends Component {
 
     render() {
         const { classes } = this.props;
+        const importRequestId = this.props.match.params.importRequestId;
 
         return (
             <Container  maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Paper className={classes.paper}>
-                            <ImportRequestForm />
+                            <ImportRequestForm importRequestId={importRequestId}/>
                         </Paper>
                     </Grid>
                 </Grid>

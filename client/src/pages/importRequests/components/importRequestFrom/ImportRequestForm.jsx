@@ -1,4 +1,4 @@
-import React, { Component, createRef, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import {
@@ -6,9 +6,16 @@ import {
     TextField,
     withStyles
 } from "@material-ui/core";
-import { string } from "prop-types";
-import { createImportRequest } from "../../../../actions/importRequests";
+import {
+    string
+} from "prop-types";
+import { merge } from 'lodash';
+import {
+    createImportRequest,
+    updateImportRequest
+} from "../../../../actions/importRequests";
 import { IMPORT_REQUESTS_PAGE_PATH } from "../../../../constants/router";
+import { getImportRequest } from "../../../../actions/importRequests";
 
 const styles = theme => ({
     textField: {
@@ -25,10 +32,25 @@ class ImportRequestForm extends Component {
 
     constructor(props) {
         super(props);
-        this.IREmail = createRef();
-        this.IROLXLink = createRef();
         this.state = {
-            redirect: false
+            redirect: false,
+            email: undefined,
+            olxAccountUrl: undefined
+        }
+    }
+
+    handleEmailChange = (event) => {
+        this.setState({email: event.target.value});
+    };
+
+    handleOlxAccountUrlChange = (event) => {
+        this.setState({olxAccountUrl: event.target.value});
+    };
+
+    componentDidMount() {
+        const { importRequestId } = this.props;
+        if(importRequestId) {
+            this.props.getIR(importRequestId);
         }
     }
 
@@ -43,24 +65,38 @@ class ImportRequestForm extends Component {
     };
 
     cancelHandler = (event) => {
+        this.setState({
+            email: undefined,
+            olxAccountUrl: undefined
+        });
         this.setRedirect();
         event.preventDefault();
     };
 
 
     IRSubmitHandler = (event) => {
-        const email = this.IREmail.current.value;
-        const olxAccountUrl = this.IROLXLink.current.value;
-        this.props.saveIR(email, olxAccountUrl);
+
+        const converted = {
+            email: this.state.email ? this.state.email : this.props.email,
+            olxAccountUrl: this.state.olxAccountUrl ? this.state.olxAccountUrl : this.props.olxAccountUrl
+        };
+
+        const { email, olxAccountUrl } = converted;
+        const { importRequestId } = this.props;
+        this.props.saveIR(email, olxAccountUrl, importRequestId);
         this.setRedirect();
         event.preventDefault();
     };
 
     render() {
-        const { classes } = this.props;
+        let { classes, email, olxAccountUrl, importRequestId } = this.props;
+        if(!importRequestId) {
+            email = undefined;
+            olxAccountUrl = undefined;
+        }
 
         return (
-            <Fragment>
+            <Fragment key={email}>
                 {this.renderRedirect()}
                 <form onSubmit={this.IRSubmitHandler}>
                     <TextField
@@ -69,7 +105,9 @@ class ImportRequestForm extends Component {
                         className={classes.textField}
                         margin="normal"
                         required
-                        inputRef={this.IREmail}
+                        onChange={this.handleEmailChange}
+                        defaultValue={email}
+                        InputLabelProps={{shrink: true}}
                     />
                     <TextField
                         id="olxLink"
@@ -77,7 +115,9 @@ class ImportRequestForm extends Component {
                         className={classes.textField}
                         margin="normal"
                         required
-                        inputRef={this.IROLXLink}
+                        onChange={this.handleOlxAccountUrlChange}
+                        defaultValue={olxAccountUrl}
+                        InputLabelProps={{shrink: true}}
                     />
                     <div style={{textAlign: "right"}}>
                         <Button variant="contained" className={classes.button} onClick={this.cancelHandler}>Cancel</Button>
@@ -90,23 +130,36 @@ class ImportRequestForm extends Component {
 }
 
 ImportRequestForm.propTypes = {
-    IREmail: string,
-    IROLXLink: string
+    email: string,
+    olxAccountUrl: string,
+    importRequestId: string
 };
 
 ImportRequestForm.defaultProps = {
-    IREmail: undefined,
-    IROLXLink: undefined,
+    email: undefined,
+    olxAccountUrl: undefined,
+    importRequestId: undefined
 };
 
 const mapStateToProps = state => ({
-    IREmail: state.importRequests.single.email,
-    IROLXLink: state.importRequests.single.olxAccountUrl
+    email: state.importRequests.single.email,
+    olxAccountUrl: state.importRequests.single.olxAccountUrl,
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveIR: (email, olxAccountUrl) => {
-        dispatch(createImportRequest({email, olxAccountUrl}));
+    saveIR: (email, olxAccountUrl, importRequestId = undefined) => {
+        if(importRequestId) {
+            dispatch(updateImportRequest({
+                _id: importRequestId,
+                email,
+                olxAccountUrl
+            }))
+        } else {
+            dispatch(createImportRequest({email, olxAccountUrl}));
+        }
+    },
+    getIR: (id) => {
+        dispatch(getImportRequest(id))
     }
 });
 
