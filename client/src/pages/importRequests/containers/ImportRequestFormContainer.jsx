@@ -3,10 +3,9 @@ import {
     Container,
     Grid,
     Paper,
-    TextField,
-    Button,
     withStyles
 } from "@material-ui/core";
+import ImportRequestForm from "../components/importRequestFrom/ImportRequestForm";
 
 const styles = theme => ({
     container: {
@@ -39,26 +38,7 @@ class ImportRequestsFormContainer extends Component {
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
                         <Paper className={classes.paper}>
-                            <form>
-                                <TextField
-                                    id="email"
-                                    label="Email"
-                                    className={classes.textField}
-                                    margin="normal"
-                                    required
-                                />
-                                <TextField
-                                    id="olxLink"
-                                    label="OLX Link"
-                                    className={classes.textField}
-                                    margin="normal"
-                                    required
-                                />
-                                <div style={{"text-align": "right"}}>
-                                    <Button variant="contained" className={classes.button}>Cancel</Button>
-                                    <Button variant="contained" color="primary" className={classes.button}>Save</Button>
-                                </div>
-                            </form>
+                            <ImportRequestForm />
                         </Paper>
                     </Grid>
                 </Grid>
