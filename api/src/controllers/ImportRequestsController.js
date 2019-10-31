@@ -32,6 +32,11 @@ class ImportRequestsController extends Controller {
                 route: IMPORT_REQUEST_URL,
                 verb: VERB.PUT,
                 handler: this.updateImportRequest
+            },
+            {
+                route: `${IMPORT_REQUEST_URL}/status`,
+                verb: VERB.PUT,
+                handler: this.updateImportRequestStatus
             }
         ]
     }
@@ -58,6 +63,22 @@ class ImportRequestsController extends Controller {
         const newRequest = req.body;
         try {
             await ImportRequestModel.updateOne({_id: newRequest._id}, newRequest).exec();
+        } catch (e) {
+            console.log(e);
+            next(e);
+        }
+
+        return res.json({status: "success"});
+    }
+
+    async updateImportRequestStatus(req, res, next) {
+        const { id, status } = req.body;
+        try {
+            const importRequest = await ImportRequestModel.findOne({_id: id}).exec();
+            if(importRequest) {
+                importRequest.status = status;
+                await importRequest.save();
+            }
         } catch (e) {
             console.log(e);
             next(e);

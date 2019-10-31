@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/confirm/Confirm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/confirm/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/constants/notifications.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/constants/statuses.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/controllers/ImportRequestsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/ImportRequestsController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/actions/importRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/importRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/reducers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/list.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -92,7 +91,7 @@
       <workItem from="1571678915955" duration="8719000" />
       <workItem from="1571731279523" duration="109000" />
       <workItem from="1571738243751" duration="19116000" />
-      <workItem from="1571988600677" duration="39309000" />
+      <workItem from="1571988600677" duration="41351000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

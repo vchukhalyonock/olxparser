@@ -11,21 +11,25 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    IconButton
+    IconButton,
+    CircularProgress
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
-    Delete as DeleteIcon
+    Delete as DeleteIcon,
+    Queue as QueueIcon
 } from '@material-ui/icons';
 import Title from "../../../../components/title";
 import {
     getImportRequests,
-    deleteImportRequest
+    deleteImportRequest,
+    updateImportRequestStatus
 } from "../../../../actions/importRequests";
 import { EDIT_IMPORT_REQUEST_PAGE_PATH } from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
-import {DELETE_IMPORT_REQUEST_CONFIRMATION} from "../../../../constants/notifications";
+import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
+import { REQUEST_STATUS } from "../../../../constants/statuses";
 
 class ImportRequestsTable extends Component {
 
@@ -61,6 +65,27 @@ class ImportRequestsTable extends Component {
         this.setState({openConfirm: false});
     };
 
+
+    handleAddToQueue = (importRequestId) => {
+        this.props.onAddToQueue(importRequestId);
+    };
+
+    renderStatus(id, status) {
+        if(status === REQUEST_STATUS.NEW) {
+            return (
+                <IconButton onClick={() => this.handleAddToQueue(id)}>
+                    <QueueIcon />
+                </IconButton>
+            );
+        } else {
+            return (
+                <IconButton >
+                    <CircularProgress size="30px"/>
+                </IconButton>
+            )
+        }
+    }
+
     render() {
         const {
             importRequests
@@ -85,7 +110,7 @@ class ImportRequestsTable extends Component {
                             <TableCell>Date</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>OLX Account URL</TableCell>
-                            <TableCell></TableCell>
+                            <TableCell />
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -101,6 +126,7 @@ class ImportRequestsTable extends Component {
                                     <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
                                         <DeleteIcon />
                                     </IconButton>
+                                    {this.renderStatus(item._id, item.status)}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -129,6 +155,9 @@ const mapDispatchToProps = dispatch => ({
     },
     onDeleteImportRequest: (importRequestId) => {
         dispatch(deleteImportRequest(importRequestId));
+    },
+    onAddToQueue: (importRequestId) => {
+        dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.PENDING));
     }
 });
 

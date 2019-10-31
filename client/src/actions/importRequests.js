@@ -4,6 +4,7 @@ import {
     CREATE_IMPORT_REQUEST,
     UPDATE_IMPORT_REQUEST,
     DELETE_IMPORT_REQUEST,
+    UPDATE_IMPORT_REQUEST_STATUS,
 } from "../constants/reducers";
 import { IMPORT_REQUESTS_URL } from "../constants/urls";
 import config from '../config';
@@ -40,10 +41,16 @@ const deleteImportRequest = (id) => async dispatch => {
     dispatch({type: DELETE_IMPORT_REQUEST, payload: {id: id}});
 };
 
+const updateImportRequestStatus = (id, status) => async dispatch => {
+    await rest(`${url}/status`, METHODS.PUT, {id, status});
+    dispatch({type: UPDATE_IMPORT_REQUEST_STATUS, payload: {id, status}});
+};
+
 export {
     getImportRequest,
     getImportRequests,
     createImportRequest,
     updateImportRequest,
     deleteImportRequest,
+    updateImportRequestStatus
 }
