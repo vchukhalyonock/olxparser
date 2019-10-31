@@ -42,6 +42,19 @@ services:
     ports:
       - "27017:27017"
 
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile.queueManager
+    command: npm start
+    links:
+      - mongo
+      - api
+    volumes:
+      - ./queueManager:/src/queue
+      - /src/queue/node_modules
+
+
 
 
 
