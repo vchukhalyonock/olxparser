@@ -3,7 +3,7 @@ import { mongoConnection } from '../db';
 
 const Schema = mongoose.Schema;
 
-const AdvertSchema = new Schema({
+const OfferSchema = new Schema({
     importRequestId: String,
     caption: String,
     description: String,
@@ -12,4 +12,4 @@ const AdvertSchema = new Schema({
     createdAt: Date
 });
 
-export default mongoConnection.model('Advert', AdvertSchema);
+export default mongoConnection.model('Offer', OfferSchema);

@@ -8,6 +8,7 @@ export const REQUEST_STATUS = {
     PENDING: 'PENDING',
     IN_PROGRESS: 'IN_PROGRESS',
     DONE: 'DONE',
+    ERROR: 'ERROR'
 };
 
 const ImportRequestSchema = new Schema({

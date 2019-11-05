@@ -1,10 +1,12 @@
 import Queue from "./Queue";
 import seleniumDriver from '../services/selenium';
+import OlxService from "../services/olx";
 
 export default class Application {
 
     constructor() {
        this.queue = new Queue();
+       this.olxService = new OlxService(seleniumDriver());
     }
 
     async init() {
@@ -26,33 +28,17 @@ export default class Application {
         for(let i = 0; i < importRequestsQueue.length; i++) {
             this.runImportRequest(selenium, importRequestsQueue[i]);
         }
-
-        setTimeout(() => {
-            this.endImportRequest(selenium);
-        }, 5000);
     }
 
     runImportRequest(selenium, importRequest) {
-        console.log(importRequest);
+        console.log("processing import request", importRequest);
         (async () => {
-            console.log('inside IR proc');
-            console.log(importRequest.olxAccountUrl);
-            console.log("selenium", selenium);
-            const getSite = await selenium.get(importRequest.olxAccountUrl);
-            console.log("loaded1");
-            //await selenium.sleep(5000);
-            //console.log(getSite);
-            /*const element = selenium.By.className('.link.parent.search.search');
-            console.log(element);*/
-        })();
-    }
+            this.olxService.baseUrl = importRequest.olxAccountUrl;
+            await this.olxService.visit();
+            console.log("loaded");
+            await this.olxService.getAdvertsFromPage();
 
-    endImportRequest(selenium, importRequest) {
-        (async () => {
-            console.log("stop session");
-            await selenium.close();
-            await selenium.sleep(2000);
-            await selenium.quit();
+            await this.olxService.exit();
         })();
     }
 };

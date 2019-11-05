@@ -1,5 +1,5 @@
 import ImportRequestModel from "./ImportRequestModel";
-import AdvertsModel from "./AdvertsModel";
+import AdvertsModel from "./OffersModel";
 
 export {
     ImportRequestModel,
