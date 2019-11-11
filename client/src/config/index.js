@@ -1,3 +1,3 @@
 export default {
-    backendUrl: 'http://localhost:3003'
+    backendUrl: 'http://localhost/api'
 }

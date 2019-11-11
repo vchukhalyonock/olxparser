@@ -51,6 +51,10 @@ services:
       - mongo
       - api
       - selenium-hub
+    depends_on:
+      - selenium-hub
+      - chrome
+      - mongo
     volumes:
       - ./queueManager:/src/queue
       - /src/queue/node_modules
@@ -72,6 +76,19 @@ services:
       - HUB_PORT=4444
     ports:
       - "5900:5900"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    image: evico2-nginx:dev-${GIT_COMMIT:-latest}
+    depends_on:
+      - client
+      - api
+    ports:
+      - "80:80"
+    logging:
+      driver: none
 
 
 
