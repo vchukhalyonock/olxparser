@@ -1,5 +1,7 @@
 import { By, until } from 'selenium-webdriver';
 import { DEFAULT_TIMEOUT } from "../../constants/common";
+import cheerio from 'cheerio';
+import fetch from 'node-fetch';
 
 class OlxService {
 
@@ -12,8 +14,8 @@ class OlxService {
     async visit(importRequestUrl = undefined) {
         const url = importRequestUrl ? importRequestUrl : this.baseUrl;
         await this.seleniumDriver.sleep(1000);
-        //await this.seleniumDriver.get(url);
-        await this.seleniumDriver.navigate().to(url);
+        await this.seleniumDriver.get(url);
+        //await this.seleniumDriver.navigate().to(url);
         await this.seleniumDriver.sleep(DEFAULT_TIMEOUT);
     }
 
@@ -34,7 +36,9 @@ class OlxService {
         const offersTable = await this.getOffersTable();
         const offersList = await this.getOffersList(offersTable);
         //console.log('offersList', offersList);
-        const offers = await this.offersListProcessing(offersList);
+        let offers = await this.offersListProcessing(offersList);
+        console.log("Offers", offers);
+        offers = await this.offersLinksProcessing(offers);
         console.log("Offers", offers);
     }
 
@@ -65,13 +69,39 @@ class OlxService {
         return offers;
     }
 
-    offersLinksProcessing(links) {
-        
+    async offersLinksProcessing(offers) {
+        const newOffers = [];
+        for (let i = 0; i < offers.length; i++) {
+            const offer = await this.linkProcess(offers[i]);
+            newOffers.push(offer);
+        }
+        return newOffers;
     }
 
-    async linkProcess(link) {
-        console.log('Processing link ', link);
+    async linkProcess(offer) {
+        console.log('Processing link ', offer.link);
+        const response = await fetch(
+            offer.link,
+            {
+                method: 'GET',
+                cache: 'no-cache',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                },
+                referrer: 'no-referrer'
+            }
+        );
+        if(response.ok) {
+            const body = await response.text();
+            console.log(body);
+            const $ = cheerio.load(body);
+            offer.description = $('.clr.lheight20.large').text();
+        } else {
+            throw new Error(response.statusText);
+        }
 
+        return offer;
     }
 }
 

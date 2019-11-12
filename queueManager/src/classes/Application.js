@@ -28,6 +28,7 @@ export default class Application {
         for(let i = 0; i < importRequestsQueue.length; i++) {
             this.runImportRequest(selenium, importRequestsQueue[i]);
         }
+        // (async () => await this.olxService.exit())();
     }
 
     runImportRequest(selenium, importRequest) {
@@ -37,8 +38,6 @@ export default class Application {
             await this.olxService.visit();
             console.log("loaded");
             await this.olxService.getAdvertsFromPage();
-
-            await this.olxService.exit();
         })();
     }
 };
