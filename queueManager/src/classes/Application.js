@@ -6,7 +6,7 @@ export default class Application {
 
     constructor() {
        this.queue = new Queue();
-       this.olxService = new OlxService(seleniumDriver());
+       this.olxService = new OlxService();
     }
 
     async init() {
@@ -24,21 +24,16 @@ export default class Application {
     }
 
     run(importRequestsQueue) {
-        const selenium = seleniumDriver();
         for(let i = 0; i < importRequestsQueue.length; i++) {
-            this.runImportRequest(selenium, importRequestsQueue[i]);
+            this.runImportRequest(importRequestsQueue[i]);
         }
     }
 
-    runImportRequest(selenium, importRequest) {
-        console.log("processing import request", importRequest);
-        (async () => {
-            this.olxService.baseUrl = importRequest.olxAccountUrl;
-            await this.olxService.visit();
-            console.log("loaded");
-            await this.olxService.getAdvertsFromPage();
-
-            await this.olxService.exit();
-        })();
+    async runImportRequest(importRequest) {
+        console.log("processing import request 1", importRequest);
+        this.olxService.baseUrl = importRequest.olxAccountUrl;
+        const response = await this.olxService.visit();
+        const html = await response.text();
+        console.log("response", html);
     }
 };
