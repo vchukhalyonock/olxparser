@@ -81,7 +81,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-    image: evico2-nginx:dev-${GIT_COMMIT:-latest}
     depends_on:
       - client
       - api
