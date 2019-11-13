@@ -8,7 +8,8 @@ const OfferSchema = new Schema({
     caption: String,
     description: String,
     link: String,
-    heading: String,
+    heading: Array,
+    price: Number,
     createdAt: Date
 });
 

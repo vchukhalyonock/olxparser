@@ -13,7 +13,7 @@ class OlxService {
 
     async visit(importRequestUrl = undefined) {
         const url = importRequestUrl ? importRequestUrl : this.baseUrl;
-        await this.seleniumDriver.sleep(1000);
+        await this.seleniumDriver.sleep(2000);
         await this.seleniumDriver.get(url);
         //await this.seleniumDriver.navigate().to(url);
         await this.seleniumDriver.sleep(DEFAULT_TIMEOUT);
@@ -94,9 +94,14 @@ class OlxService {
         );
         if(response.ok) {
             const body = await response.text();
-            console.log(body);
-            const $ = cheerio.load(body);
-            offer.description = $('.clr.lheight20.large').text();
+            const $ = cheerio;
+            offer.description = $('#textContent', body).text().trim();
+            const breadCrumbs = [];
+            $('#breadcrumbTop ul li', body).each((i, elem) => {
+                breadCrumbs.push($('a.link span', elem).text());
+            });
+
+            offer.heading = breadCrumbs;
         } else {
             throw new Error(response.statusText);
         }
