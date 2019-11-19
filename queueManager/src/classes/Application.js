@@ -2,6 +2,8 @@ import Queue from "./Queue";
 import seleniumDriver from '../services/selenium';
 import OlxService from "../services/olx";
 
+// https://www.olx.ua/uk/list/user/1byXw/
+
 export default class Application {
 
     constructor() {
