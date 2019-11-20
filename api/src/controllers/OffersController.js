@@ -30,10 +30,11 @@ class OffersController extends Controller {
     }
 
     async getOffers(req, res, next) {
+        const { importRequestId } = req.params;
         let offers = null;
         let total = 0;
         try {
-            offers = await OffersController.find({}).exec();
+            offers = await OffersController.find({importRequestId}).exec();
             total = await OffersController.countDocuments().exec();
         } catch (e) {
             console.log(e);
