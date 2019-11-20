@@ -17,7 +17,10 @@ import {
 import {
     Edit as EditIcon,
     Delete as DeleteIcon,
-    Queue as QueueIcon
+    Queue as QueueIcon,
+    PauseCircleOutline as PendingIcon,
+    Error as ErrorIcon,
+    DoneAll as DoneIcon,
 } from '@material-ui/icons';
 import Title from "../../../../components/title";
 import {
@@ -71,18 +74,48 @@ class ImportRequestsTable extends Component {
     };
 
     renderStatus(id, status) {
-        if(status === REQUEST_STATUS.NEW) {
-            return (
-                <IconButton onClick={() => this.handleAddToQueue(id)}>
-                    <QueueIcon />
-                </IconButton>
-            );
-        } else {
-            return (
-                <IconButton >
-                    <CircularProgress size="30px"/>
-                </IconButton>
-            )
+        switch (status) {
+            case REQUEST_STATUS.NEW:
+                return (
+                    <IconButton onClick={() => this.handleAddToQueue(id)}>
+                        <QueueIcon />
+                    </IconButton>
+                );
+
+            case REQUEST_STATUS.DONE:
+                return (
+                    <IconButton onClick={() => this.handleAddToQueue(id)}>
+                        <DoneIcon />
+                    </IconButton>
+                );
+
+            case REQUEST_STATUS.IN_PROGRESS:
+                return (
+                    <IconButton >
+                        <CircularProgress size="30px"/>
+                    </IconButton>
+                );
+
+            case REQUEST_STATUS.PENDING:
+                return (
+                    <IconButton onClick={() => {}}>
+                        <PendingIcon />
+                    </IconButton>
+                );
+
+            case REQUEST_STATUS.ERROR:
+                return (
+                    <IconButton onClick={() => this.handleAddToQueue(id)}>
+                        <ErrorIcon />
+                    </IconButton>
+                );
+
+            default:
+                return (
+                    <IconButton onClick={() => this.handleAddToQueue(id)}>
+                        <QueueIcon />
+                    </IconButton>
+                );
         }
     }
 
