@@ -1,6 +1,9 @@
 import Queue from "./Queue";
 import seleniumDriver from '../services/selenium';
 import OlxService from "../services/olx";
+import OffersService from "../services/OffersService";
+import ImportRequestService from "../services/ImportRequestService";
+import { REQUEST_STATUS } from "../models/ImportRequestModel";
 
 // https://www.olx.ua/uk/list/user/1byXw/
 
@@ -9,6 +12,8 @@ export default class Application {
     constructor() {
        this.queue = new Queue();
        this.olxService = new OlxService(seleniumDriver());
+       this.offersService = new OffersService();
+       this.importRequestService = new ImportRequestService();
     }
 
     async init() {
@@ -39,7 +44,9 @@ export default class Application {
             this.olxService.baseUrl = importRequest.olxAccountUrl;
             await this.olxService.visit();
             console.log("loaded");
-            await this.olxService.getAdvertsFromPage();
+            const offers = await this.olxService.getAdvertsFromPage();
+            await this.offersService.saveOffers(importRequest._id, offers);
+            await this.importRequestService.setStatus(importRequest, REQUEST_STATUS.DONE);
         })();
     }
 };

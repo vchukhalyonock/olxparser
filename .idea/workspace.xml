@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mongo-init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/ImportRequestService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/OffersService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Application.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/classes/Application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/models/OffersModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/models/OffersModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/models/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +97,7 @@
       <workItem from="1571738243751" duration="19116000" />
       <workItem from="1571988600677" duration="46003000" />
       <workItem from="1572594067751" duration="25816000" />
-      <workItem from="1573555261538" duration="13005000" />
+      <workItem from="1573555261538" duration="19578000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

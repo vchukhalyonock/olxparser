@@ -92,6 +92,22 @@ services:
     logging:
       driver: none
 
+  mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=olxparser
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=olxparser
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=olxparser
+      - ME_CONFIG_BASICAUTH_USERNAME=olxparser
+      - ME_CONFIG_BASICAUTH_PASSWORD=olxparser
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8081"
+
 
 
 

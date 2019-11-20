@@ -40,6 +40,7 @@ class OlxService {
         console.log("Offers", offers);
         offers = await this.offersLinksProcessing(offers);
         console.log("Offers", offers);
+        return offers;
     }
 
     async getOffersTable() {
@@ -62,6 +63,8 @@ class OlxService {
                 offer.link = await offerLinkElement.findElement(By.css('a')).getAttribute('href');
                 offer.caption = await offerElement.findElement(By.css('strong'))
                     .getText();
+                const price = await offerElement.findElement(By.css('.price strong')).getText();
+                offer.price = price.split(" ")[0];
                 offers.push(offer);
             }
 
@@ -94,14 +97,21 @@ class OlxService {
         );
         if(response.ok) {
             const body = await response.text();
-            const $ = cheerio;
-            offer.description = $('#textContent', body).text().trim();
+            const $ = cheerio.load(body);
+            offer.description = $('#textContent').text().trim();
             const breadCrumbs = [];
-            $('#breadcrumbTop ul li', body).each((i, elem) => {
+            $('#breadcrumbTop ul li').each((i, elem) => {
                 breadCrumbs.push($('a.link span', elem).text());
             });
 
             offer.heading = breadCrumbs;
+
+            const imagesURLs = [];
+            $('.tcenter.img-item').each((i, elem) => {
+                imagesURLs.push($('div img', elem).attr('src'));
+            });
+
+            offer.images = imagesURLs;
         } else {
             throw new Error(response.statusText);
         }

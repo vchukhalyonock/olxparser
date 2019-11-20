@@ -10,6 +10,7 @@ const OfferSchema = new Schema({
     link: String,
     heading: Array,
     price: Number,
+    images: Array,
     createdAt: Date
 });
 
