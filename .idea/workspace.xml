@@ -2,7 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/actions/offers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/OffersTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/containers/OffersContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/containers/OffersFormContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/containers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/list.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/controllers/OffersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/OffersController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/importRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/importRequests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/actions/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/notifications.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/notifications.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/constants/urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/constants/urls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/reducers/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/Router.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/Router.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +118,8 @@
       <workItem from="1571738243751" duration="19116000" />
       <workItem from="1571988600677" duration="46003000" />
       <workItem from="1572594067751" duration="25816000" />
-      <workItem from="1573555261538" duration="22373000" />
+      <workItem from="1573555261538" duration="24462000" />
+      <workItem from="1574338417314" duration="6471000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

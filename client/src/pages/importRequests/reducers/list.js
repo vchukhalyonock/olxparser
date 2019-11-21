@@ -2,7 +2,7 @@ import {
     DELETE_IMPORT_REQUEST,
     GET_IMPORT_REQUESTS,
     UPDATE_IMPORT_REQUEST_STATUS,
-} from "../../../constants/reducers";
+} from "../../../constants/actions";
 
 const initialState = {
     items: []

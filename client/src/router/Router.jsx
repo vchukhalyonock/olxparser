@@ -7,13 +7,17 @@ import {
     DASHBOARD_PATH,
     CREATE_IMPORT_REQUEST_PAGE_PATH,
     EDIT_IMPORT_REQUEST_PAGE_PATH,
-    IMPORT_REQUESTS_PAGE_PATH
+    IMPORT_REQUESTS_PAGE_PATH,
+    OFFERS_PAGE_PATH
 } from "../constants/router";
 import Dashboard from "../pages/dashboard";
 import {
     ImportRequestsContainer,
     ImportRequestsFormContainer
 } from "../pages/importRequests/containers";
+import {
+    OffersContainer
+} from "../pages/offers";
 
 export default () => (
     <Switch>
@@ -34,6 +38,12 @@ export default () => (
             exact
             path={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/:importRequestId`}
             component={ImportRequestsFormContainer}
+        />
+
+        <Route
+            exact
+            path={`${OFFERS_PAGE_PATH}/:importRequestId`}
+            component={OffersContainer}
         />
     </Switch>
 );

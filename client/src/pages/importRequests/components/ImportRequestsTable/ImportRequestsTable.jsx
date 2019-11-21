@@ -12,7 +12,9 @@ import {
     TableHead,
     TableRow,
     IconButton,
-    CircularProgress
+    CircularProgress,
+    Typography,
+    Link
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
@@ -21,6 +23,7 @@ import {
     PauseCircleOutline as PendingIcon,
     Error as ErrorIcon,
     DoneAll as DoneIcon,
+    Info as InfoIcon
 } from '@material-ui/icons';
 import Title from "../../../../components/title";
 import {
@@ -28,7 +31,10 @@ import {
     deleteImportRequest,
     updateImportRequestStatus
 } from "../../../../actions/importRequests";
-import { EDIT_IMPORT_REQUEST_PAGE_PATH } from "../../../../constants/router";
+import {
+    EDIT_IMPORT_REQUEST_PAGE_PATH,
+    OFFERS_PAGE_PATH
+} from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
@@ -140,19 +146,36 @@ class ImportRequestsTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Date</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>OLX Account URL</TableCell>
+                            <TableCell>Date</TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {list.map(item => (
                             <TableRow key={item._id}>
-                                <TableCell>{item.requestedAt}</TableCell>
-                                <TableCell>{item.email}</TableCell>
-                                <TableCell>{item.olxAccountUrl}</TableCell>
                                 <TableCell>
+                                    <Typography>
+                                        {item.email}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography>
+                                        <Link href={item.olxAccountUrl} target='_blank'>
+                                            {item.olxAccountUrl}
+                                        </Link>
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography>
+                                        {item.requestedAt}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+                                        <InfoIcon />
+                                    </IconButton>
                                     <IconButton to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`} component={ListItemLink}>
                                         <EditIcon />
                                     </IconButton>

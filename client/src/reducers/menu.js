@@ -1,4 +1,4 @@
-import { MENU_CLICK } from "../constants/reducers";
+import { MENU_CLICK } from "../constants/actions";
 
 const initialState = {
     title: 'Dashboard'

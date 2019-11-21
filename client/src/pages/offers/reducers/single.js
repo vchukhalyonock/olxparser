@@ -1,12 +1,9 @@
-import {GET_IMPORT_REQUEST} from "../../../constants/actions";
+import { GET_OFFER } from "../../../constants/actions";
 
-const initialState = {
-    email: undefined,
-    olxAccountUrl: undefined
-};
+const initialState = {};
 
 export default function single(state = initialState, action) {
-    if(action.type === GET_IMPORT_REQUEST) {
+    if(action.type === GET_OFFER) {
         return {
             ...state,
             ...action.payload.item,
@@ -14,4 +11,5 @@ export default function single(state = initialState, action) {
         }
     }
     return state;
+
 }

@@ -5,7 +5,7 @@ import {
     UPDATE_IMPORT_REQUEST,
     DELETE_IMPORT_REQUEST,
     UPDATE_IMPORT_REQUEST_STATUS,
-} from "../constants/reducers";
+} from "../constants/actions";
 import { IMPORT_REQUESTS_URL } from "../constants/urls";
 import config from '../config';
 import rest from "../utils/rest";
@@ -15,35 +15,35 @@ const url = `${config.backendUrl}${IMPORT_REQUESTS_URL}`;
 
 const getImportRequests = () => async dispatch => {
     const responseData = await rest(url, METHODS.GET);
-    dispatch({type: GET_IMPORT_REQUESTS, payload: responseData});
+    dispatch({ type: GET_IMPORT_REQUESTS, payload: responseData });
 };
 
 const getImportRequest = (id) => async dispatch => {
     const responseData = await rest(`${url}/${id}`, METHODS.GET);
-    dispatch({type: GET_IMPORT_REQUEST, payload: responseData});
+    dispatch({ type: GET_IMPORT_REQUEST, payload: responseData });
 };
 
 
 const createImportRequest = (importRequest) => async dispatch => {
     const responseData = await rest(url, METHODS.POST, importRequest);
-    dispatch({type: CREATE_IMPORT_REQUEST, payload: responseData});
+    dispatch({ type: CREATE_IMPORT_REQUEST, payload: responseData });
 };
 
 
 const updateImportRequest = (importRequest) => async dispatch => {
     const responseData = await rest(url, METHODS.PUT, importRequest);
-    dispatch({type: UPDATE_IMPORT_REQUEST, payload: responseData});
+    dispatch({ type: UPDATE_IMPORT_REQUEST, payload: responseData });
 };
 
 
 const deleteImportRequest = (id) => async dispatch => {
     await rest(`${url}/${id}`, METHODS.DELETE);
-    dispatch({type: DELETE_IMPORT_REQUEST, payload: {id: id}});
+    dispatch({ type: DELETE_IMPORT_REQUEST, payload: { id } });
 };
 
 const updateImportRequestStatus = (id, status) => async dispatch => {
-    await rest(`${url}/status`, METHODS.PUT, {id, status});
-    dispatch({type: UPDATE_IMPORT_REQUEST_STATUS, payload: {id, status}});
+    await rest(`${url}/status`, METHODS.PUT, { id, status });
+    dispatch({ type: UPDATE_IMPORT_REQUEST_STATUS, payload: { id, status } });
 };
 
 export {

@@ -1,4 +1,4 @@
-import { LOGIN } from "../constants/reducers";
+import { LOGIN } from "../constants/actions";
 import { AUTH_URL } from "../constants/urls";
 import config from "../config";
 import rest from "../utils/rest";

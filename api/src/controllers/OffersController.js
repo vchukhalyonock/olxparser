@@ -34,8 +34,8 @@ class OffersController extends Controller {
         let offers = null;
         let total = 0;
         try {
-            offers = await OffersController.find({importRequestId}).exec();
-            total = await OffersController.countDocuments().exec();
+            offers = await OffersModel.find({importRequestId}).exec();
+            total = await OffersModel.countDocuments().exec();
         } catch (e) {
             console.log(e);
             next(e);
