@@ -36,6 +36,7 @@ import {
     deleteImportRequest,
     updateImportRequestStatus
 } from "../../../../actions/importRequests";
+import { menuClick } from "../../../../actions/menu";
 import {
     EDIT_IMPORT_REQUEST_PAGE_PATH,
     OFFERS_PAGE_PATH
@@ -59,6 +60,7 @@ class ImportRequestsTable extends Component {
 
 
     componentDidMount() {
+        this.props.onCreateTitle('Import Requests');
         this.props.getAllImportRequests();
     }
 
@@ -275,6 +277,9 @@ const mapDispatchToProps = dispatch => ({
     },
     onAddToQueue: (importRequestId) => {
         dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.PENDING));
+    },
+    onCreateTitle: title => {
+        dispatch(menuClick(title));
     }
 });
 

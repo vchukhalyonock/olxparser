@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import {
     string,
     array,
-    number
+    number,
+    object
 } from "prop-types";
 import {
     Table,
@@ -31,6 +32,8 @@ import {
     getOffers,
     deleteOffer
 } from "../../../../actions/offers";
+import { menuClick } from "../../../../actions/menu";
+import { getImportRequest } from "../../../../actions/importRequests";
 import {
     EDIT_OFFERS_PAGE_PATH,
     OFFER_DETAILS_PATH
@@ -53,8 +56,13 @@ class OffersTable extends Component {
     }
 
     componentDidMount() {
-        const { importRequestId } = this.props;
-        this.props.getAllOffers(importRequestId);
+        const {
+            importRequestId,
+            onGetImportRequest,
+            getAllOffers,
+        } = this.props;
+        onGetImportRequest(importRequestId);
+        getAllOffers(importRequestId);
     }
 
     agreeHandler = () => {
@@ -113,7 +121,8 @@ class OffersTable extends Component {
 
 
     render() {
-        const { props: { offers, total }, state: { currentPage, itemsPerPage } } = this;
+        const { props: { offers, total, importRequest, onCreateTitle }, state: { currentPage, itemsPerPage } } = this;
+        onCreateTitle(`Offers for ${importRequest.email} account`);
 
         return (
             <Fragment>
@@ -195,18 +204,21 @@ class OffersTable extends Component {
 OffersTable.propTypes = {
     importRequestId: string.isRequired,
     offers: array.isRequired,
-    total: number.isRequired
+    total: number.isRequired,
+    importRequest: object.isRequired
 };
 
 OffersTable.defaultProps = {
     offers: [],
     total: 0,
-    importRequestId: ''
+    importRequestId: '',
+    importRequest: {}
 };
 
 const mapStateToProps = state => ({
     offers: state.offers.list.items,
-    total: state.offers.list.total
+    total: state.offers.list.total,
+    importRequest: state.importRequests.single
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -215,6 +227,12 @@ const mapDispatchToProps = dispatch => ({
     },
     onDeleteOffer: id => {
         dispatch(deleteOffer(id));
+    },
+    onCreateTitle: title => {
+        dispatch(menuClick(title));
+    },
+    onGetImportRequest: importRequestId => {
+        dispatch(getImportRequest(importRequestId));
     }
 });
 

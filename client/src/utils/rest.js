@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_TOKEN } from "../actions/auth";
 import { METHODS } from "../constants/methods";
 
-export default async function (url, method, data = null) {
+export default async function (url, method, data = undefined) {
     let convertedUrl = url;
 
     const headers = {
@@ -19,7 +19,7 @@ export default async function (url, method, data = null) {
 
     if (method !== METHODS.GET && data) {
         options.body = JSON.stringify(data)
-    } else {
+    } else if(data) {
         convertedUrl += `?${new URLSearchParams(data).toString()}`;
     }
 

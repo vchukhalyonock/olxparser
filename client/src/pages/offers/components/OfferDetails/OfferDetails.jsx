@@ -9,9 +9,13 @@ import {
     Typography,
     GridList,
     GridListTile,
+    Button,
+    Grid,
     withStyles,
 } from "@material-ui/core";
 import { getOffer } from "../../../../actions/offers";
+import ListItemLink from "../../../../components/listItemLink";
+import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 
 const styles = theme => ({
     root: {
@@ -40,7 +44,8 @@ class OfferDetails extends Component {
                 heading,
                 description,
                 price,
-                images
+                images,
+                importRequestId
             },
             classes } = this.props;
 
@@ -67,6 +72,18 @@ class OfferDetails extends Component {
                     </div>)
                     : undefined
                 }
+                <Grid container spacing={3}>
+                    <Grid item xs={10}/>
+                    <Grid item xs={2}>
+                        <Button
+                            variant="contained"
+                            component={ListItemLink}
+                            to={`${OFFERS_PAGE_PATH}/${importRequestId}`}
+                        >
+                            Back to Offers
+                        </Button>
+                    </Grid>
+                </Grid>
             </Fragment>
         );
     }

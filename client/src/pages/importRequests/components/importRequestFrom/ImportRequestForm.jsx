@@ -15,6 +15,7 @@ import {
 } from "../../../../actions/importRequests";
 import { IMPORT_REQUESTS_PAGE_PATH } from "../../../../constants/router";
 import { getImportRequest } from "../../../../actions/importRequests";
+import { menuClick } from "../../../../actions/menu";
 
 const styles = theme => ({
     textField: {
@@ -48,8 +49,11 @@ class ImportRequestForm extends Component {
 
     componentDidMount() {
         const { importRequestId } = this.props;
-        if(importRequestId) {
+        if (importRequestId) {
+            this.props.onCreateTitle("Edit Import Request");
             this.props.getIR(importRequestId);
+        } else {
+            this.props.onCreateTitle("Create Import Request");
         }
     }
 
@@ -159,6 +163,9 @@ const mapDispatchToProps = dispatch => ({
     },
     getIR: (id) => {
         dispatch(getImportRequest(id))
+    },
+    onCreateTitle: title => {
+        dispatch(menuClick(title));
     }
 });
 
