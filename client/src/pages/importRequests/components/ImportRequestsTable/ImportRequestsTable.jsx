@@ -4,13 +4,18 @@ import React,
     Fragment
 } from "react";
 import { connect } from "react-redux";
-import { object } from "prop-types";
+import {
+    array,
+    number
+} from "prop-types";
 import {
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
+    TableFooter,
+    TablePagination,
     IconButton,
     CircularProgress,
     Typography,
@@ -46,7 +51,9 @@ class ImportRequestsTable extends Component {
         super(props);
         this.state = {
             openConfirm: false,
-            importRequestId: undefined
+            importRequestId: undefined,
+            currentPage: 0,
+            itemsPerPage: 10
         }
     }
 
@@ -77,6 +84,39 @@ class ImportRequestsTable extends Component {
 
     handleAddToQueue = (importRequestId) => {
         this.props.onAddToQueue(importRequestId);
+    };
+
+    handleChangePage = (event, newPage) => {
+        const {
+            props: {
+                getAllImportRequests
+            },
+            state: {
+                itemsPerPage
+            }
+        } = this;
+        const offset = newPage * itemsPerPage;
+        this.setState({currentPage: newPage});
+        getAllImportRequests({
+            limit: itemsPerPage,
+            offset
+        });
+    };
+
+    handleChangeRowsPerPage = event => {
+        const {
+            getAllImportRequests
+        } = this.props;
+        const newItemsPerPage = parseInt(event.target.value, 10);
+        const state = {
+            itemsPerPage: newItemsPerPage,
+            currentPage: 0
+        };
+        this.setState(state);
+        getAllImportRequests({
+            limit: newItemsPerPage,
+            offset: 0
+        });
     };
 
     renderStatus(id, status) {
@@ -127,10 +167,15 @@ class ImportRequestsTable extends Component {
 
     render() {
         const {
-            importRequests
-        } = this.props;
-
-        const list = importRequests.list.items;
+            props: {
+                importRequests,
+                total
+            },
+            state: {
+                itemsPerPage,
+                currentPage
+            }
+        } = this;
 
         return (
             <Fragment>
@@ -153,7 +198,7 @@ class ImportRequestsTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {list.map(item => (
+                        {importRequests.map(item => (
                             <TableRow key={item._id}>
                                 <TableCell>
                                     <Typography>
@@ -187,6 +232,19 @@ class ImportRequestsTable extends Component {
                             </TableRow>
                         ))}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                colSpan={5}
+                                count={total}
+                                rowsPerPage={itemsPerPage}
+                                page={currentPage}
+                                onChangePage={this.handleChangePage}
+                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </Fragment>
         )
@@ -194,20 +252,23 @@ class ImportRequestsTable extends Component {
 }
 
 ImportRequestsTable.propTypes = {
-    importRequests: object.isRequired
+    importRequests: array.isRequired,
+    total: number.isRequired
 };
 
 ImportRequestsTable.defaultProps = {
-    importRequests: {lists: {items: []}}
+    importRequests: [],
+    total: 0
 };
 
 const mapStateToProps = state => ({
-    importRequests: state.importRequests
+    importRequests: state.importRequests.list.items,
+    total: state.importRequests.list.total
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAllImportRequests: () => {
-        dispatch(getImportRequests());
+    getAllImportRequests: (options = {}) => {
+        dispatch(getImportRequests(options));
     },
     onDeleteImportRequest: (importRequestId) => {
         dispatch(deleteImportRequest(importRequestId));

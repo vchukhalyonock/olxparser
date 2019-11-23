@@ -1,3 +1,4 @@
+import { merge } from 'lodash';
 import {
     GET_IMPORT_REQUESTS,
     GET_IMPORT_REQUEST,
@@ -12,9 +13,14 @@ import rest from "../utils/rest";
 import { METHODS } from "../constants/methods";
 
 const url = `${config.backendUrl}${IMPORT_REQUESTS_URL}`;
+const defaultQuery = {
+    offset: 0,
+    limit: 10
+};
 
-const getImportRequests = () => async dispatch => {
-    const responseData = await rest(url, METHODS.GET);
+const getImportRequests = (incomingQuery = {}) => async dispatch => {
+    const queryData = merge(defaultQuery, incomingQuery);
+    const responseData = await rest(url, METHODS.GET, queryData);
     dispatch({ type: GET_IMPORT_REQUESTS, payload: responseData });
 };
 

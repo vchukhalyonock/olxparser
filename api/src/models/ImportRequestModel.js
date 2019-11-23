@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2'
 import { mongoConnection } from '../db';
 
 const Schema = mongoose.Schema;
@@ -18,5 +19,7 @@ const ImportRequestSchema = new Schema({
     status: String,
     requestedAt: Date,
 });
+
+ImportRequestSchema.plugin(mongoosePaginate);
 
 export default mongoConnection.model('ImportRequest', ImportRequestSchema);
