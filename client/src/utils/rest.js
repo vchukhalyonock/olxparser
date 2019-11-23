@@ -1,7 +1,9 @@
 import { LOCAL_STORAGE_TOKEN } from "../actions/auth";
-import {METHODS} from "../constants/methods";
+import { METHODS } from "../constants/methods";
 
 export default async function (url, method, data = null) {
+    let convertedUrl = url;
+
     const headers = {
         'Content-Type': 'application/json'
     };
@@ -15,12 +17,14 @@ export default async function (url, method, data = null) {
         headers: headers,
     };
 
-    if(method !== METHODS.GET && data) {
+    if (method !== METHODS.GET && data) {
         options.body = JSON.stringify(data)
+    } else {
+        convertedUrl += `?${new URLSearchParams(data).toString()}`;
     }
 
     const response = await fetch(
-        url,
+        convertedUrl,
         options
     );
 

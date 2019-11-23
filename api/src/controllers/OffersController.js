@@ -30,11 +30,20 @@ class OffersController extends Controller {
     }
 
     async getOffers(req, res, next) {
-        const { importRequestId } = req.params;
+        const {
+            query: {
+                limit ,
+                offset
+            },
+            params: {
+                importRequestId
+            }
+        } = req;
+
         let offers = null;
         let total = 0;
         try {
-            offers = await OffersModel.find({importRequestId}).exec();
+            offers = await OffersModel.paginate({importRequestId}, {limit, offset});
             total = await OffersModel.countDocuments().exec();
         } catch (e) {
             console.log(e);
@@ -43,7 +52,7 @@ class OffersController extends Controller {
 
         return res.json({
             status: 'success',
-            items: offers,
+            items: offers.docs,
             total
         })
     }

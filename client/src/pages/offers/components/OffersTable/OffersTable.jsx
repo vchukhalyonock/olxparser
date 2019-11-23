@@ -5,8 +5,9 @@ import React,
 } from "react";
 import { connect } from "react-redux";
 import {
-    object,
-    string
+    string,
+    array,
+    number
 } from "prop-types";
 import {
     Table,
@@ -14,6 +15,8 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    TablePagination,
+    TableFooter,
     IconButton,
     Typography,
     Link
@@ -43,7 +46,9 @@ class OffersTable extends Component {
         super(props);
         this.state = {
             openConfirm: false,
-            offerId: undefined
+            offerId: undefined,
+            currentPage: 0,
+            itemsPerPage: 10
         }
     }
 
@@ -71,9 +76,44 @@ class OffersTable extends Component {
         });
     };
 
+    handleChangePage = (event, newPage) => {
+        const {
+            props: {
+                importRequestId,
+                getAllOffers
+            },
+            state: {
+                itemsPerPage
+            }
+        } = this;
+        const offset = newPage * itemsPerPage;
+        this.setState({currentPage: newPage});
+        getAllOffers(importRequestId, {
+            limit: itemsPerPage,
+            offset
+        });
+    };
+
+    handleChangeRowsPerPage = event => {
+        const {
+            importRequestId,
+            getAllOffers
+        } = this.props;
+        const newItemsPerPage = parseInt(event.target.value, 10);
+        const state = {
+            itemsPerPage: newItemsPerPage,
+            currentPage: 0
+        };
+        this.setState(state);
+        getAllOffers(importRequestId, {
+            limit: newItemsPerPage,
+            offset: 0
+        });
+    };
+
+
     render() {
-        const { offers } = this.props;
-        const list = offers.list.items;
+        const { props: { offers, total }, state: { currentPage, itemsPerPage } } = this;
 
         return (
             <Fragment>
@@ -97,7 +137,7 @@ class OffersTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {list.map(item => (
+                        {offers.map(item => (
                             <TableRow key={item._id}>
                                 <TableCell>
                                     <Typography>
@@ -133,6 +173,19 @@ class OffersTable extends Component {
                             </TableRow>
                         ))}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                colSpan={5}
+                                count={total}
+                                rowsPerPage={itemsPerPage}
+                                page={currentPage}
+                                onChangePage={this.handleChangePage}
+                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </Fragment>
         );
@@ -141,21 +194,24 @@ class OffersTable extends Component {
 
 OffersTable.propTypes = {
     importRequestId: string.isRequired,
-    offers: object.isRequired
+    offers: array.isRequired,
+    total: number.isRequired
 };
 
 OffersTable.defaultProps = {
-    offers: {list: {items: []}},
+    offers: [],
+    total: 0,
     importRequestId: ''
 };
 
 const mapStateToProps = state => ({
-   offers: state.offers
+    offers: state.offers.list.items,
+    total: state.offers.list.total
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAllOffers: importRequestId => {
-        dispatch(getOffers(importRequestId));
+    getAllOffers: (importRequestId, options = {}) => {
+        dispatch(getOffers(importRequestId, options));
     },
     onDeleteOffer: id => {
         dispatch(deleteOffer(id));

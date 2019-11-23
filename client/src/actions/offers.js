@@ -1,3 +1,4 @@
+import { merge } from 'lodash';
 import {
     GET_OFFERS,
     GET_OFFER,
@@ -15,8 +16,14 @@ import { METHODS } from "../constants/methods";
 const offersUrl = `${config.backendUrl}${OFFERS_URL}`;
 const offerUrl = `${config.backendUrl}${OFFER_URL}`;
 
-const getOffers = importRequestId => async dispatch => {
-    const responseData = await rest(`${offersUrl}/${importRequestId}`, METHODS.GET);
+const defaultQuery = {
+    offset: 0,
+    limit: 10
+};
+
+const getOffers = (importRequestId, incomingQuery = {}) => async dispatch => {
+    const queryData = merge(defaultQuery, incomingQuery);
+    const responseData = await rest(`${offersUrl}/${importRequestId}`, METHODS.GET, queryData);
     dispatch({ type: GET_OFFERS, payload: responseData });
 };
 
