@@ -33,7 +33,7 @@ import {
 } from "../../../../actions/offers";
 import {
     EDIT_OFFERS_PAGE_PATH,
-    OFFERS_PAGE_PATH
+    OFFER_DETAILS_PATH
 } from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
@@ -157,10 +157,10 @@ class OffersTable extends Component {
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
-
+                                    {item.images.length > 0 ? <img src={item.images[0]} width="50px" alt={item.caption}/> : undefined}
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+                                    <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
                                         <InfoIcon />
                                     </IconButton>
                                     <IconButton to={`${EDIT_OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>

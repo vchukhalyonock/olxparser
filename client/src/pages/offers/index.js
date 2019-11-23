@@ -1,7 +1,11 @@
 import reducers from './reducers';
-import { OffersContainer } from "./containers";
+import {
+    OffersContainer,
+    OfferDetailsContainer
+} from "./containers";
 
 export {
     reducers,
-    OffersContainer
+    OffersContainer,
+    OfferDetailsContainer
 }
