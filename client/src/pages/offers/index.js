@@ -1,11 +1,13 @@
 import reducers from './reducers';
 import {
     OffersContainer,
-    OfferDetailsContainer
+    OfferDetailsContainer,
+    OffersFormContainer
 } from "./containers";
 
 export {
     reducers,
     OffersContainer,
-    OfferDetailsContainer
+    OfferDetailsContainer,
+    OffersFormContainer
 }

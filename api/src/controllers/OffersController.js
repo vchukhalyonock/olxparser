@@ -1,5 +1,8 @@
 import Controller, { VERB } from "../core/Controller";
-import { OffersModel } from "../models";
+import {
+    OffersModel,
+    ImportRequestModel
+} from "../models";
 import { OFFERS_URL } from "../constants/urls";
 import Error from "../core/Error";
 
@@ -60,9 +63,15 @@ class OffersController extends Controller {
     async getOffer(req, res, next) {
         const { id } = req.params;
         let offer = null;
+        let importRequest = null;
+        let doc = null;
 
         try {
             offer = await OffersModel.findOne({_id: id}).exec();
+            if (offer) {
+                importRequest = await ImportRequestModel.findOne({_id: offer.importRequestId}).exec();
+                doc = offer._doc;
+            }
         } catch (e) {
             console.log(e);
             next(e);
@@ -74,8 +83,11 @@ class OffersController extends Controller {
 
         return res.json({
             status: 'success',
-            item: offer
-        })
+            item: {
+                ...doc,
+                importRequest
+            }
+        });
     }
 
     async updateOffer(req, res, next) {

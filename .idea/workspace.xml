@@ -3,11 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferDetails/OfferDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferDetails/OfferDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/OffersTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/OffersTable.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/utils/rest.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/utils/rest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/controllers/OffersController.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/controllers/OffersController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/containers/OffersFormContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/containers/OffersFormContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/containers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/containers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/router/Router.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/router/Router.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +99,7 @@
       <workItem from="1571988600677" duration="46003000" />
       <workItem from="1572594067751" duration="25816000" />
       <workItem from="1573555261538" duration="24462000" />
-      <workItem from="1574338417314" duration="18533000" />
+      <workItem from="1574338417314" duration="25605000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

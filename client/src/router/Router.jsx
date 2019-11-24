@@ -9,7 +9,8 @@ import {
     EDIT_IMPORT_REQUEST_PAGE_PATH,
     IMPORT_REQUESTS_PAGE_PATH,
     OFFERS_PAGE_PATH,
-    OFFER_DETAILS_PATH
+    OFFER_DETAILS_PATH,
+    EDIT_OFFERS_PAGE_PATH
 } from "../constants/router";
 import Dashboard from "../pages/dashboard";
 import {
@@ -18,7 +19,8 @@ import {
 } from "../pages/importRequests";
 import {
     OffersContainer,
-    OfferDetailsContainer
+    OfferDetailsContainer,
+    OffersFormContainer
 } from "../pages/offers";
 
 export default () => (
@@ -51,6 +53,11 @@ export default () => (
             exact
             path={`${OFFER_DETAILS_PATH}/:offerId`}
             component={OfferDetailsContainer}
+        />
+        <Route
+            exact
+            path={`${EDIT_OFFERS_PAGE_PATH}/:offerId`}
+            component={OffersFormContainer}
         />
     </Switch>
 );
