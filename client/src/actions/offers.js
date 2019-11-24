@@ -34,7 +34,7 @@ const getOffer = id => async dispatch => {
 
 
 const updateOffer = offer => async dispatch => {
-    const responseData = await rest(offerUrl, METHODS.PUT);
+    const responseData = await rest(offerUrl, METHODS.PUT, offer);
     dispatch({ type: UPDATE_OFFER, payload: responseData, offer });
 };
 

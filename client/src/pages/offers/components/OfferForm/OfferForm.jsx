@@ -83,9 +83,6 @@ class OfferForm extends Component {
         const { offer, onUpdateOffer } = this.props;
 
         const newOffer = {
-            email: this.state.email ? this.state.email : this.props.email,
-            olxAccountUrl: this.state.olxAccountUrl ? this.state.olxAccountUrl : this.props.olxAccountUrl,
-
             heading: this.state.heading ? this.state.heading.split("/") : offer.heading,
             link: this.state.link ? this.state.link : offer.link,
             caption: this.state.caption ? this.state.caption : offer.caption,
