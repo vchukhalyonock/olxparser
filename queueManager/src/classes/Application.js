@@ -25,8 +25,12 @@ export default class Application {
 
     async flow() {
         const queue = this.queue.getQueue();
+        console.log(queue);
         if(queue.pending.length) {
             await this.run(queue.pending);
+        }
+        if(queue.inProgress.length) {
+            await this.run(queue.inProgress);
         }
     }
 

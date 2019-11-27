@@ -2,6 +2,7 @@ import { By, until } from 'selenium-webdriver';
 import { DEFAULT_TIMEOUT } from "../../constants/common";
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
+import { toInteger } from 'lodash';
 
 class OlxService {
 
@@ -15,7 +16,6 @@ class OlxService {
         const url = importRequestUrl ? importRequestUrl : this.baseUrl;
         await this.seleniumDriver.sleep(2000);
         await this.seleniumDriver.get(url);
-        //await this.seleniumDriver.navigate().to(url);
         await this.seleniumDriver.sleep(DEFAULT_TIMEOUT);
     }
 
@@ -35,9 +35,7 @@ class OlxService {
         await this.seleniumDriver.sleep(5000);
         const offersTable = await this.getOffersTable();
         const offersList = await this.getOffersList(offersTable);
-        //console.log('offersList', offersList);
         let offers = await this.offersListProcessing(offersList);
-        console.log("Offers", offers);
         offers = await this.offersLinksProcessing(offers);
         console.log("Offers", offers);
         return offers;
@@ -59,12 +57,11 @@ class OlxService {
             const offerElement = offersList[i];
             const offerLinkElement = await offerElement.findElement(By.css('h3'));
             if(offerLinkElement) {
-                console.log("Offer link element found");
                 offer.link = await offerLinkElement.findElement(By.css('a')).getAttribute('href');
                 offer.caption = await offerElement.findElement(By.css('strong'))
                     .getText();
                 const price = await offerElement.findElement(By.css('.price strong')).getText();
-                offer.price = price.split(" ")[0];
+                offer.price = toInteger(price.split(" ")[0]);
                 offers.push(offer);
             }
 
