@@ -19,34 +19,37 @@ export default class Application {
     async init() {
        console.log("Init queue manager");
        await this.queue.initQueue();
-       this.flow();
+       await this.flow();
     };
 
 
-    flow() {
+    async flow() {
         const queue = this.queue.getQueue();
         if(queue.pending.length) {
-            this.run(queue.pending);
+            await this.run(queue.pending);
         }
     }
 
-    run(importRequestsQueue) {
+    async run(importRequestsQueue) {
         const selenium = seleniumDriver();
         for(let i = 0; i < importRequestsQueue.length; i++) {
-            this.runImportRequest(selenium, importRequestsQueue[i]);
+            await this.runImportRequest(selenium, importRequestsQueue[i]);
         }
-        // (async () => await this.olxService.exit())();
+        await this.olxService.exit();
     }
 
-    runImportRequest(selenium, importRequest) {
+    async runImportRequest(selenium, importRequest) {
         console.log("processing import request", importRequest);
-        (async () => {
-            this.olxService.baseUrl = importRequest.olxAccountUrl;
+        this.olxService.baseUrl = importRequest.olxAccountUrl;
+        try {
+            await this.importRequestService.setStatus(importRequest, REQUEST_STATUS.IN_PROGRESS);
             await this.olxService.visit();
-            console.log("loaded");
             const offers = await this.olxService.getAdvertsFromPage();
             await this.offersService.saveOffers(importRequest._id, offers);
             await this.importRequestService.setStatus(importRequest, REQUEST_STATUS.DONE);
-        })();
+        } catch (err) {
+            console.log(err);
+            await this.importRequestService.setStatus(importRequest, REQUEST_STATUS.ERROR);
+        }
     }
 };
