@@ -4,6 +4,7 @@ import OlxService from "../services/olx";
 import OffersService from "../services/OffersService";
 import ImportRequestService from "../services/ImportRequestService";
 import { REQUEST_STATUS } from "../models/ImportRequestModel";
+import QMService from "../services/QMService";
 
 // https://www.olx.ua/uk/list/user/1byXw/
 
@@ -18,8 +19,12 @@ export default class Application {
 
     async init() {
        console.log("Init queue manager");
-       await this.queue.initQueue();
-       await this.flow();
+       if(await QMService.checkWait()) {
+           await QMService.setActive();
+           await this.queue.initQueue();
+           await this.flow();
+           await QMService.setWait();
+       }
     };
 
 

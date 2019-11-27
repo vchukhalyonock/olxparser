@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/queueManager/src/models/QStatusModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/QMService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Application.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/classes/Application.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/constants/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/constants/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/models/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +98,7 @@
       <workItem from="1572594067751" duration="25816000" />
       <workItem from="1573555261538" duration="24462000" />
       <workItem from="1574338417314" duration="26435000" />
-      <workItem from="1574848315288" duration="2692000" />
+      <workItem from="1574848315288" duration="4228000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>
