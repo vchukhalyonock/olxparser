@@ -26,7 +26,6 @@ class QMService {
 
     static async checkWait() {
         const status = await QStatusModel.findOne({status: QM_STATUSES.WAIT}).exec();
-        console.log('CheckWait', status);
         return status === null;
     }
 
