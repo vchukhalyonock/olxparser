@@ -45,8 +45,11 @@ import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
+import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
 
 class ImportRequestsTable extends Component {
+
+    intervalId;
 
     constructor(props) {
         super(props);
@@ -58,10 +61,18 @@ class ImportRequestsTable extends Component {
         }
     }
 
-
-    componentDidMount() {
+    getData = () => {
         this.props.onCreateTitle('Import Requests');
         this.props.getAllImportRequests();
+    };
+
+    componentDidMount() {
+        this.getData();
+        this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
     }
 
     handleDeleteImportRequest = (importRequestId) => {
