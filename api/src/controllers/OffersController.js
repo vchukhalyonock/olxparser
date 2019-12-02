@@ -47,7 +47,7 @@ class OffersController extends Controller {
         let total = 0;
         try {
             offers = await OffersModel.paginate({importRequestId}, {limit, offset});
-            total = await OffersModel.countDocuments().exec();
+            total = await OffersModel.countDocuments({importRequestId}).exec();
         } catch (e) {
             console.log(e);
             next(e);
