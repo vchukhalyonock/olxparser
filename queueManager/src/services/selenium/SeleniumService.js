@@ -39,8 +39,10 @@ export default class SeleniumService {
     }
 
     async close() {
-        await this.webDriver.close();
-        await this.webDriver.sleep(2000);
-        await this.webDriver.quit();
+        if(this.webDriver) {
+            await this.webDriver.close();
+            await this.webDriver.sleep(2000);
+            await this.webDriver.quit();
+        }
     }
 }
