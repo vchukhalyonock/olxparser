@@ -26,6 +26,13 @@ export default class PageTypeShop {
         return this.selenium.wait(until.elementLocated(By.css('#listContainer > div > span.fbold.next.abs.large > a')), DEFAULT_TIMEOUT);
     }
 
+    async getOffersFromPage(offersTable) {
+        const offersList = await this.getOffersList(offersTable);
+        let offers = await this.offersListProcessing(offersList);
+        offers = await this.offersLinksProcessing(offers);
+        return offers
+    }
+
     async offersListProcessing(offersList) {
         const offers = [];
 

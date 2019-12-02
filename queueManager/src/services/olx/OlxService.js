@@ -50,9 +50,7 @@ class OlxService {
         let offers = [];
         await this.scrollTillDown();
         await this.selectPageTypeHandler();
-        const offersList = await this.pageTypeHandler.getOffersList(this.offersTable);
-        offers = await this.pageTypeHandler.offersListProcessing(offersList);
-        offers = await this.pageTypeHandler.offersLinksProcessing(offers);
+        offers = await this.pageTypeHandler.getOffersFromPage(this.offersTable);
 
         if ("getNextPageLink" in this.pageTypeHandler) {
             let nextPageLink;
@@ -63,9 +61,7 @@ class OlxService {
                     const offersTable = await this.pageTypeHandler.getOffersTable();
                     if (offersTable) {
                         await this.scrollTillDown();
-                        const offersList = await this.pageTypeHandler.getOffersList(offersTable);
-                        let pageOffers = await this.pageTypeHandler.offersListProcessing(offersList);
-                        pageOffers = await this.pageTypeHandler.offersLinksProcessing(pageOffers);
+                        let pageOffers = await this.pageTypeHandler.getOffersFromPage(offersTable);
                         offers = offers.concat(pageOffers);
                     }
                 }
