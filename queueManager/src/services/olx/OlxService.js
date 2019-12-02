@@ -11,6 +11,8 @@ class OlxService {
     constructor(seleniumDriver) {
         this.seleniumDriver = seleniumDriver;
         this.pageTypesHandlers = pageTypes(this.seleniumDriver);
+        this.pageTypeHandler = undefined;
+        this.offersTable = undefined;
     }
 
     async openOffersListPage(importRequestUrl = undefined) {
@@ -31,10 +33,16 @@ class OlxService {
 
     async selectPageTypeHandler() {
         for(let i = 0; i < this.pageTypesHandlers.length; i++) {
-            this.offersTable = await this.pageTypesHandlers[i].getOffersTable();
-            if(this.offersTable) {
-                this.pageTypeHandler = this.pageTypesHandlers[i];
-                return;
+            try {
+                this.offersTable = await this.pageTypesHandlers[i].getOffersTable();
+                console.log(this.offersTable);
+                if(this.offersTable !== undefined) {
+                    this.pageTypeHandler = this.pageTypesHandlers[i];
+                    console.log("Page Type Handler Found");
+                    return;
+                }
+            } catch (e) {
+                console.log("Next page type handler");
             }
         }
     }

@@ -6,7 +6,7 @@ import FlowService from "./FlowService";
 export default class ApplicationService {
     static async run() {
         const queueService = new QueueService()
-        const queue = queueService.getQueue();
+        const queue = await queueService.getQueue();
         console.log(queue);
         const flowService = new FlowService();
         if(await QMService.checkWait()) {

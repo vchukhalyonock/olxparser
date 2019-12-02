@@ -2,20 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/queueManager/src/services/FlowService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queueManager/src/services/QueueService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Application.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/ApplicationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Queue.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/ImportRequestService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/ImportRequestService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/ApplicationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/ApplicationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/FlowService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/FlowService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/QMService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/QMService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/selenium/Selenium.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/selenium/SeleniumService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/selenium/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/selenium/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/selenium/SeleniumService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/selenium/SeleniumService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +107,7 @@
       <workItem from="1574848315288" duration="5328000" />
       <workItem from="1575042582831" duration="515000" />
       <workItem from="1575206699593" duration="3000" />
-      <workItem from="1575285859930" duration="5583000" />
+      <workItem from="1575285859930" duration="8915000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

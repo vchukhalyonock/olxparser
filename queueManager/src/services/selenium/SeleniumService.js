@@ -5,6 +5,11 @@ import config from '../../config';
 export default class SeleniumService {
     webDriver;
 
+    constructor() {
+        this.webDriver = undefined;
+    }
+
+
     init() {
         try {
             const options = new chrome.Options();
@@ -26,8 +31,8 @@ export default class SeleniumService {
         }
     }
 
-    get webDriver() {
-        if(this.webDriver === undefined) {
+    getWebDriver() {
+        if(!this.webDriver) {
             this.webDriver = this.init();
         }
         return this.webDriver;

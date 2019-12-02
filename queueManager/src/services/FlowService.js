@@ -13,17 +13,20 @@ export default class FlowService {
         const importRequestService = new ImportRequestService();
         for(let i = 0; i < queue.length; i++) {
             const importRequest = queue[i];
-            await importRequestService.handleImportRequest(importRequest, selenium.webDriver);
+            console.log("Processing", importRequest);
+            await importRequestService.handleImportRequest(importRequest, selenium.getWebDriver());
         }
         await selenium.close();
     }
 
     getQueueByImportRequestStatus(queue, status) {
         if(status === REQUEST_STATUS.PENDING) {
+            console.log("Run pending");
             return queue.pending;
         }
 
         if(status === REQUEST_STATUS.IN_PROGRESS) {
+            console.log("Run in progress");
             return queue.inProgress;
         }
     }

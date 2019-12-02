@@ -5,6 +5,7 @@ import {
 import { DEFAULT_TIMEOUT } from "../../../constants/common";
 import fetch from "node-fetch";
 import cheerio from "cheerio";
+import { toInteger } from 'lodash';
 
 
 export default class PageTypeSimpleCustomer {
@@ -15,7 +16,7 @@ export default class PageTypeSimpleCustomer {
     }
 
     async getOffersTable() {
-        await this.selenium.wait(until.elementLocated(By.id('offers_table')), DEFAULT_TIMEOUT);
+        return this.selenium.wait(until.elementLocated(By.id('offers_table')), DEFAULT_TIMEOUT);
     }
 
     async getOffersList(offersTable) {
