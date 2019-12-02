@@ -1,3 +1,3 @@
-import seleniumDriver from './Selenium';
+import seleniumService from './SeleniumService';
 
-export default seleniumDriver;
+export default seleniumService;

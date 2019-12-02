@@ -2,12 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/FlowService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/QueueService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/constants/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/constants/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Application.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/ApplicationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/classes/Queue.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/queueManager/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/QMService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/QMService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/models/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/ImportRequestService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/ImportRequestService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/selenium/Selenium.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/selenium/SeleniumService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queueManager/src/services/selenium/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/selenium/index.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +33,11 @@
   </component>
   <component name="ProjectId" id="1Rpo1LCzhyYDTbyw4YDqrWzh0oE" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="TF_FMT" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -35,31 +49,19 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/queueManager/src" />
-      <recent name="$PROJECT_DIR$/client/src/constants" />
-      <recent name="$PROJECT_DIR$/client/src/pages/dashboard" />
-      <recent name="$PROJECT_DIR$/api/src" />
-      <recent name="$PROJECT_DIR$/api/views" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/api/src/models" />
       <recent name="$PROJECT_DIR$/queueManager/src/constants" />
       <recent name="$PROJECT_DIR$/queueManager/src/utils" />
       <recent name="$PROJECT_DIR$/client/src/pages/dashboard" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/queueManager/src/services" />
+      <recent name="$PROJECT_DIR$/queueManager/src" />
+      <recent name="$PROJECT_DIR$/client/src/constants" />
+      <recent name="$PROJECT_DIR$/client/src/pages/dashboard" />
+      <recent name="$PROJECT_DIR$/api/src" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="olx parser client" type="js.build_tools.npm">
@@ -72,6 +74,18 @@
       <envs />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -96,7 +110,10 @@
       <workItem from="1572594067751" duration="25816000" />
       <workItem from="1573555261538" duration="24462000" />
       <workItem from="1574338417314" duration="26435000" />
-      <workItem from="1574848315288" duration="4847000" />
+      <workItem from="1574848315288" duration="5328000" />
+      <workItem from="1575042582831" duration="515000" />
+      <workItem from="1575206699593" duration="3000" />
+      <workItem from="1575285859930" duration="5583000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>
@@ -138,5 +155,11 @@
     <MESSAGE value="Add docker" />
     <MESSAGE value="idea" />
     <option name="LAST_COMMIT_MESSAGE" value="idea" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1575286092552">
+      <screen x="0" y="23" width="1680" height="949" />
+    </state>
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.23.1680.949/48.-1417.2560.1417@0.23.1680.949" timestamp="1575286092552" />
   </component>
 </project>

@@ -1,13 +1,11 @@
-import Application from "./classes/Application";
+import ApplicationService from "./services/ApplicationService";
 import { QM_INTERVAL } from "./constants/common";
-
-const app = new Application();
 
 const run = () => {
     console.log("Restart Queue");
     (async () => {
         try {
-            await app.init();
+            await ApplicationService.run();
         } catch (e) {
             console.log(e);
         }
