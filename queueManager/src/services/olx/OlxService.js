@@ -35,7 +35,6 @@ class OlxService {
         for(let i = 0; i < this.pageTypesHandlers.length; i++) {
             try {
                 this.offersTable = await this.pageTypesHandlers[i].getOffersTable();
-                console.log(this.offersTable);
                 if(this.offersTable !== undefined) {
                     this.pageTypeHandler = this.pageTypesHandlers[i];
                     console.log("Page Type Handler Found");

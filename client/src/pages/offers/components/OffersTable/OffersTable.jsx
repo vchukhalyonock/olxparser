@@ -157,7 +157,7 @@ class OffersTable extends Component {
                                 </TableCell>
                                 <TableCell>
                                     <Typography>
-                                        {`${item.price} UAH`}
+                                        {item.price}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>

@@ -5,7 +5,6 @@ import {
 import { DEFAULT_TIMEOUT } from "../../../constants/common";
 import fetch from "node-fetch";
 import cheerio from "cheerio";
-import { toInteger } from 'lodash';
 
 
 export default class PageTypeSimpleCustomer {
@@ -34,8 +33,8 @@ export default class PageTypeSimpleCustomer {
                 offer.link = await offerLinkElement.findElement(By.css('a')).getAttribute('href');
                 offer.caption = await offerElement.findElement(By.css('strong'))
                     .getText();
-                const price = await offerElement.findElement(By.css('.price strong')).getText();
-                offer.price = toInteger(price.split(" ")[0]);
+                offer.price = await offerElement.findElement(By.css('.price strong')).getText();
+                //offer.price = toInteger(price.split(" ")[0]);
                 offers.push(offer);
             }
 

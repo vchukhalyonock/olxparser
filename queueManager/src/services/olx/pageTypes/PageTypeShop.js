@@ -5,7 +5,6 @@ import {
 import { DEFAULT_TIMEOUT } from "../../../constants/common";
 import fetch from "node-fetch";
 import cheerio from "cheerio";
-import { toInteger } from "lodash";
 
 
 export default class PageTypeShop {
@@ -16,7 +15,7 @@ export default class PageTypeShop {
     }
 
     async getOffersTable() {
-        return this.selenium.wait(until.elementLocated(By.css('#listContainer > table:nth-child(2)')), DEFAULT_TIMEOUT);
+        return this.selenium.wait(until.elementLocated(By.css('#listContainer > table:nth-child(3)')), DEFAULT_TIMEOUT);
     }
 
     async getOffersList(offersTable) {
@@ -34,8 +33,8 @@ export default class PageTypeShop {
                 offer.link = await offerLinkElement.findElement(By.css('a')).getAttribute('href');
                 offer.caption = await offerElement.findElement(By.css('strong'))
                     .getText();
-                const price = await offerElement.findElement(By.css('.price strong')).getText();
-                offer.price = toInteger(price.split(" ")[0]);
+                offer.price = await offerElement.findElement(By.css('.price strong')).getText();
+                //offer.price = toInteger(price.split(" ")[0]);
                 offers.push(offer);
             }
 
