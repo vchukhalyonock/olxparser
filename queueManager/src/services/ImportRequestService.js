@@ -19,7 +19,7 @@ class ImportRequestService {
         try {
             await this.setStatus(importRequest, REQUEST_STATUS.IN_PROGRESS);
             await olxService.openOffersListPage();
-            const offers = await olxService.getAdvertsFromPage();
+            const offers = await olxService.getAdvertsFromAccount();
             await offersService.saveOffers(importRequest._id, offers);
             await this.setStatus(importRequest, REQUEST_STATUS.DONE);
         } catch (err) {

@@ -46,12 +46,34 @@ class OlxService {
         }
     }
 
-    async getAdvertsFromPage() {
+    async getAdvertsFromAccount() {
+        let offers = [];
         await this.scrollTillDown();
         await this.selectPageTypeHandler();
         const offersList = await this.pageTypeHandler.getOffersList(this.offersTable);
-        let offers = await this.pageTypeHandler.offersListProcessing(offersList);
+        offers = await this.pageTypeHandler.offersListProcessing(offersList);
         offers = await this.pageTypeHandler.offersLinksProcessing(offers);
+
+        if ("getNextPageLink" in this.pageTypeHandler) {
+            let nextPageLink;
+            try {
+                while (nextPageLink = await this.pageTypeHandler.getNextPageLink()) {
+                    await nextPageLink.click();
+                    await this.seleniumDriver.sleep(5000);
+                    const offersTable = await this.pageTypeHandler.getOffersTable();
+                    if (offersTable) {
+                        await this.scrollTillDown();
+                        const offersList = await this.pageTypeHandler.getOffersList(offersTable);
+                        let pageOffers = await this.pageTypeHandler.offersListProcessing(offersList);
+                        pageOffers = await this.pageTypeHandler.offersLinksProcessing(pageOffers);
+                        offers = offers.concat(pageOffers);
+                    }
+                }
+            } catch (e) {
+                console.log("Next page not found");
+            }
+        }
+
         console.log("Offers", offers);
         return offers;
     }

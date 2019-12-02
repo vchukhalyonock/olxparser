@@ -22,6 +22,10 @@ export default class PageTypeShop {
         return offersTable.findElements(By.css('.fixed.breakword'));
     }
 
+    async getNextPageLink() {
+        return this.selenium.wait(until.elementLocated(By.css('#listContainer > div > span.fbold.next.abs.large > a')), DEFAULT_TIMEOUT);
+    }
+
     async offersListProcessing(offersList) {
         const offers = [];
 
@@ -34,7 +38,6 @@ export default class PageTypeShop {
                 offer.caption = await offerElement.findElement(By.css('strong'))
                     .getText();
                 offer.price = await offerElement.findElement(By.css('.price strong')).getText();
-                //offer.price = toInteger(price.split(" ")[0]);
                 offers.push(offer);
             }
 
