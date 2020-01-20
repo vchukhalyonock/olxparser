@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/models/OffersModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/OffersModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferDetails/OfferDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferDetails/OfferDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/OffersTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OffersTable/OffersTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +104,7 @@
       <workItem from="1575206699593" duration="3000" />
       <workItem from="1575285859930" duration="14706000" />
       <workItem from="1578741068913" duration="6900000" />
-      <workItem from="1579166164927" duration="3298000" />
+      <workItem from="1579166164927" duration="8732000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>

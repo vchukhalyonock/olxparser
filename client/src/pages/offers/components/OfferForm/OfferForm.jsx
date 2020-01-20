@@ -5,7 +5,7 @@ import React,
 } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { toInteger } from "lodash";
+import { isObject } from "lodash";
 import {
     Button,
     TextField,
@@ -41,19 +41,20 @@ class OfferForm extends Component {
             redirect: false,
             heading: undefined,
             link: undefined,
-            caption: undefined,
+            title: undefined,
             price: undefined,
-            description: undefined
+            description: undefined,
+            images: undefined,
+            details: undefined
         };
-    }
 
-    componentDidMount() {
         const {
             offerId,
             onGetOffer
         } = this.props;
         onGetOffer(offerId);
     }
+
 
     setRedirect  = () => {
         this.setState({redirect: true});
@@ -69,10 +70,12 @@ class OfferForm extends Component {
     cancelHandler = (event) => {
         const newState = {
             heading: undefined,
-            link: undefined,
-            caption: undefined,
+            url: undefined,
+            title: undefined,
             price: undefined,
-            description: undefined
+            description: undefined,
+            images: undefined,
+            details: undefined
         };
         this.setState(newState);
         this.setRedirect();
@@ -84,15 +87,41 @@ class OfferForm extends Component {
 
         const newOffer = {
             heading: this.state.heading ? this.state.heading.split("/") : offer.heading,
-            link: this.state.link ? this.state.link : offer.link,
-            caption: this.state.caption ? this.state.caption : offer.caption,
-            price: this.state.price ? toInteger(this.state.price) : offer.price,
+            url: this.state.url ? this.state.url : offer.url,
+            title: this.state.title ? this.state.title : offer.title,
+            price: this.state.price ? this.state.price : `${offer.price.amount.replace(' ', '')} ${offer.price.volume}`,
             description: this.state.description ? this.state.description : offer.description,
             importRequestId: offer.importRequestId,
             images: offer.images,
+            details: this.state.details ? this.state.details.split("|") : offer.details,
             createdAt: offer.createdAt,
             _id: offer._id
         };
+
+        newOffer.details = newOffer.details
+            .map(detail => {
+                if(!isObject(detail)) {
+                    const parts = detail.split(":");
+                    if (parts.length > 1) {
+                        return {
+                            measure: parts[0].trim(),
+                            value: parts[1].trim()
+                        }
+                    }
+
+                    return null;
+                }
+                return detail;
+            })
+            .filter(item => item != null);
+
+        const priceParts = newOffer.price.split(" ");
+        if(priceParts.length > 1) {
+            newOffer.price = {
+                amount: priceParts[0].trim(),
+                volume: priceParts[1].trim()
+            }
+        }
 
         onUpdateOffer(newOffer);
         this.setRedirect();
@@ -106,7 +135,6 @@ class OfferForm extends Component {
     };
 
 
-
     render() {
         const {
             offer,
@@ -117,27 +145,27 @@ class OfferForm extends Component {
 
         if(offer) {
             return (
-                <Fragment key={offer._id}>
+                <Fragment key={offer.t}>
                     {this.renderRedirect()}
                     <form onSubmit={this.OfferSubmitHandler}>
                         <TextField
-                            id="caption"
-                            label="Caption"
+                            id="title"
+                            label="title"
                             className={classes.textField}
                             margin="normal"
                             required
-                            onChange={e => this.handleAllChange(e, "caption")}
-                            defaultValue={offer.caption}
+                            onChange={e => this.handleAllChange(e, "title")}
+                            defaultValue={offer.title}
                             InputLabelProps={{shrink: true}}
                         />
                         <TextField
-                            id="link"
-                            label="Link"
+                            id="url"
+                            label="url"
                             className={classes.textField}
                             margin="normal"
                             required
-                            onChange={e => this.handleAllChange(e, "link")}
-                            defaultValue={offer.link}
+                            onChange={e => this.handleAllChange(e, "url")}
+                            defaultValue={offer.url}
                             InputLabelProps={{shrink: true}}
                         />
                         <TextField
@@ -163,13 +191,22 @@ class OfferForm extends Component {
                             InputLabelProps={{shrink: true}}
                         />
                         <TextField
+                            id="details"
+                            label="Details"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.handleAllChange(e, "details")}
+                            defaultValue={offer.details ? offer.details.map(details => (`${details.measure} : ${details.value}`)).join("|") : undefined}
+                            InputLabelProps={{shrink: true}}
+                        />
+                        <TextField
                             id="price"
                             label="Price"
                             className={classes.textField}
                             margin="normal"
                             required
                             onChange={e => this.handleAllChange(e, "price")}
-                            defaultValue={toInteger(offer.price)}
+                            defaultValue={offer.price ? `${offer.price.amount.replace(' ', '')} ${offer.price.volume}` : ''}
                             InputLabelProps={{shrink: true}}
                         />
                         <div style={{textAlign: "right"}}>
