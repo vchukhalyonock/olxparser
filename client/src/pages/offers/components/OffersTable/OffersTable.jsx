@@ -138,10 +138,10 @@ class OffersTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Caption</TableCell>
+                            <TableCell>Title</TableCell>
                             <TableCell>Price</TableCell>
                             <TableCell>Heading</TableCell>
-                            <TableCell>Image</TableCell>
+                            <TableCell></TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
@@ -150,14 +150,14 @@ class OffersTable extends Component {
                             <TableRow key={item._id}>
                                 <TableCell>
                                     <Typography>
-                                        <Link href={item.link} target='_blank'>
-                                            {item.caption}
+                                        <Link href={item.url} target='_blank'>
+                                            {item.title}
                                         </Link>
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
                                     <Typography>
-                                        {item.price}
+                                        {item.price.amount} {item.price.volume}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
@@ -166,7 +166,7 @@ class OffersTable extends Component {
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
-                                    {item.images.length > 0 ? <img src={item.images[0]} width="50px" alt={item.caption}/> : undefined}
+                                    {item.images.length > 0 ? <img src={item.images[0]} width="50px" alt={item.title}/> : undefined}
                                 </TableCell>
                                 <TableCell>
                                     <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
