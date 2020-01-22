@@ -205,6 +205,7 @@ class ImportRequestsTable extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Email</TableCell>
+                            <TableCell>Phone</TableCell>
                             <TableCell>OLX Account URL</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell />
@@ -216,6 +217,11 @@ class ImportRequestsTable extends Component {
                                 <TableCell>
                                     <Typography>
                                         {item.email}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography>
+                                        {item.phone}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>

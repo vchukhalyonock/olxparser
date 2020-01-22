@@ -14,8 +14,10 @@ export const REQUEST_STATUS = {
 
 const ImportRequestSchema = new Schema({
     email: String,
+    phone: String,
     olxAccountUrl: String,
     comments: String,
+    errorMessage: String,
     status: String,
     requestedAt: Date,
 });

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/models/ImportRequestModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/models/ImportRequestModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/ImportRequestsTable/ImportRequestsTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/components/importRequestFrom/ImportRequestForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/importRequests/reducers/single.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
