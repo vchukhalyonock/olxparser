@@ -32,26 +32,33 @@ const styles = theme => ({
 
 class OfferDetails extends Component {
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         const { offerId, onGetOffer } = this.props;
         onGetOffer(offerId);
     }
 
+    /* componentDidMount() {
+        const { offerId, onGetOffer } = this.props;
+        onGetOffer(offerId);
+    }*/
+
     render() {
         const {
             offer: {
-                caption,
+                title,
                 heading,
                 description,
                 price,
                 images,
+                details,
                 importRequestId
             },
             classes } = this.props;
 
         return(
             <Fragment>
-                <h1>{caption}</h1>
+                <h1>{title}</h1>
                 {heading
                     ? (<Breadcrumbs>
                         {heading.map((item, index) => (<Typography key={index}>{item}</Typography>))}
@@ -59,13 +66,18 @@ class OfferDetails extends Component {
                     : undefined
                 }
                 <p>{description}</p>
-                <p><strong>{price} UAH</strong></p>
+                <p><strong>{price && price.amount} {price && price.volume}</strong></p>
+                {
+                    details
+                        ? details.map((detail, index) => (<Typography key={index}>{detail.measure} : {detail.value}</Typography>))
+                        : undefined
+                }
                 {images
                     ? (<div className={classes.root}>
                         <GridList cellHeight={160} className={classes.gridList} cols={5}>
                             {images.map(tile => (
                                 <GridListTile key={tile} cols={1}>
-                                    <img src={tile} alt={caption} />
+                                    <img src={tile} alt={title} />
                                 </GridListTile>
                             ))}
                         </GridList>

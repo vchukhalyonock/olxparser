@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cb59bebe-9cd4-42e5-88a5-681e8cca0db6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/OlxService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeShop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/queueManager/src/services/olx/pageTypes/PageTypeSimpleCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/components/OfferForm/OfferForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/offers/reducers/single.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +103,8 @@
       <workItem from="1575042582831" duration="515000" />
       <workItem from="1575206699593" duration="3000" />
       <workItem from="1575285859930" duration="14706000" />
+      <workItem from="1578741068913" duration="6900000" />
+      <workItem from="1579166164927" duration="8732000" />
     </task>
     <task id="LOCAL-00001" summary="Add docker">
       <created>1570374949710</created>
@@ -147,6 +148,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="idea" />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1659" height="252" key="GridCell.Tab.0.bottom" timestamp="1579497212711">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1659" height="252" key="GridCell.Tab.0.bottom/0.23.1680.951@0.23.1680.951" timestamp="1579497212711" />
+    <state width="1659" height="252" key="GridCell.Tab.0.center" timestamp="1579497212710">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1659" height="252" key="GridCell.Tab.0.center/0.23.1680.951@0.23.1680.951" timestamp="1579497212710" />
+    <state width="1659" height="252" key="GridCell.Tab.0.left" timestamp="1579497212709">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1659" height="252" key="GridCell.Tab.0.left/0.23.1680.951@0.23.1680.951" timestamp="1579497212709" />
+    <state width="1659" height="252" key="GridCell.Tab.0.right" timestamp="1579497212711">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1659" height="252" key="GridCell.Tab.0.right/0.23.1680.951@0.23.1680.951" timestamp="1579497212711" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1575286092552">
       <screen x="0" y="23" width="1680" height="949" />
     </state>

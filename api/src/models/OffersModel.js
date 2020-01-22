@@ -5,13 +5,15 @@ import { mongoConnection } from '../db';
 const Schema = mongoose.Schema;
 
 const OfferSchema = new Schema({
-    importRequestId: String,
-    caption: String,
-    description: String,
-    link: String,
     heading: Array,
-    price: String,
+    details: Array,
+    description: String,
+    phone: String,
+    price: Object,
+    title: String,
+    uri: String,
     images: Array,
+    importRequestId: String,
     createdAt: Date
 });
 
