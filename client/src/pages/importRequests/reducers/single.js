@@ -2,7 +2,8 @@ import {GET_IMPORT_REQUEST} from "../../../constants/actions";
 
 const initialState = {
     email: undefined,
-    olxAccountUrl: undefined
+    olxAccountUrl: undefined,
+    t: Date.now()
 };
 
 export default function single(state = initialState, action) {
@@ -10,7 +11,8 @@ export default function single(state = initialState, action) {
         return {
             ...state,
             ...action.payload.item,
-            loaded: true
+            loaded: true,
+            t: Date.now()
         }
     }
     return state;

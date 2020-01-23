@@ -7,6 +7,7 @@ import {
     withStyles
 } from "@material-ui/core";
 import {
+    number,
     string
 } from "prop-types";
 import {
@@ -35,12 +36,17 @@ class ImportRequestForm extends Component {
         this.state = {
             redirect: false,
             email: undefined,
+            phone: undefined,
             olxAccountUrl: undefined
         }
     }
 
     handleEmailChange = (event) => {
         this.setState({email: event.target.value});
+    };
+
+    handlePhoneChange = (event) => {
+        this.setState({phone: event.target.value});
     };
 
     handleOlxAccountUrlChange = (event) => {
@@ -70,6 +76,7 @@ class ImportRequestForm extends Component {
     cancelHandler = (event) => {
         this.setState({
             email: undefined,
+            phone: undefined,
             olxAccountUrl: undefined
         });
         this.setRedirect();
@@ -81,25 +88,33 @@ class ImportRequestForm extends Component {
 
         const converted = {
             email: this.state.email ? this.state.email : this.props.email,
+            phone: this.state.phone ? this.state.phone : this.props.phone,
             olxAccountUrl: this.state.olxAccountUrl ? this.state.olxAccountUrl : this.props.olxAccountUrl
         };
 
-        const { email, olxAccountUrl } = converted;
+        const { email, phone, olxAccountUrl } = converted;
         const { importRequestId } = this.props;
-        this.props.saveIR(email, olxAccountUrl, importRequestId);
+        this.props.saveIR(email, phone, olxAccountUrl, importRequestId);
         this.setRedirect();
         event.preventDefault();
     };
 
     render() {
-        let { classes, email, olxAccountUrl, importRequestId } = this.props;
+        let {
+            classes,
+            email,
+            olxAccountUrl,
+            importRequestId,
+            phone,
+            t
+        } = this.props;
         if(!importRequestId) {
             email = undefined;
             olxAccountUrl = undefined;
         }
 
         return (
-            <Fragment key={email}>
+            <Fragment key={t}>
                 {this.renderRedirect()}
                 <form onSubmit={this.IRSubmitHandler}>
                     <TextField
@@ -110,6 +125,16 @@ class ImportRequestForm extends Component {
                         required
                         onChange={this.handleEmailChange}
                         defaultValue={email}
+                        InputLabelProps={{shrink: true}}
+                    />
+                    <TextField
+                        id="phone"
+                        label="Phone"
+                        className={classes.textField}
+                        margin="normal"
+                        required
+                        onChange={this.handlePhoneChange}
+                        defaultValue={phone}
                         InputLabelProps={{shrink: true}}
                     />
                     <TextField
@@ -134,31 +159,38 @@ class ImportRequestForm extends Component {
 
 ImportRequestForm.propTypes = {
     email: string,
+    phone: string,
     olxAccountUrl: string,
-    importRequestId: string
+    importRequestId: string,
+    t: number
 };
 
 ImportRequestForm.defaultProps = {
     email: undefined,
+    phone: undefined,
     olxAccountUrl: undefined,
-    importRequestId: undefined
+    importRequestId: undefined,
+    t: 0
 };
 
 const mapStateToProps = state => ({
     email: state.importRequests.single.email,
+    phone: state.importRequests.single.phone,
     olxAccountUrl: state.importRequests.single.olxAccountUrl,
+    t: state.importRequests.single.t,
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveIR: (email, olxAccountUrl, importRequestId = undefined) => {
+    saveIR: (email, phone, olxAccountUrl, importRequestId = undefined) => {
         if(importRequestId) {
             dispatch(updateImportRequest({
                 _id: importRequestId,
                 email,
-                olxAccountUrl
+                olxAccountUrl,
+                phone
             }))
         } else {
-            dispatch(createImportRequest({email, olxAccountUrl}));
+            dispatch(createImportRequest({email, olxAccountUrl, phone}));
         }
     },
     getIR: (id) => {

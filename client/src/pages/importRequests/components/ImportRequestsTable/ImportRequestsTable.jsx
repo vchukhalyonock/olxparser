@@ -19,7 +19,8 @@ import {
     IconButton,
     CircularProgress,
     Typography,
-    Link
+    Link,
+    Tooltip
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
@@ -132,7 +133,7 @@ class ImportRequestsTable extends Component {
         });
     };
 
-    renderStatus(id, status) {
+    renderStatus(id, status, errorMessage) {
         switch (status) {
             case REQUEST_STATUS.NEW:
                 return (
@@ -163,11 +164,19 @@ class ImportRequestsTable extends Component {
                 );
 
             case REQUEST_STATUS.ERROR:
-                return (
-                    <IconButton onClick={() => this.handleAddToQueue(id)}>
-                        <ErrorIcon />
-                    </IconButton>
-                );
+                return errorMessage
+                    ? (
+                        <Tooltip title={errorMessage}>
+                            <IconButton onClick={() => this.handleAddToQueue(id)}>
+                                <ErrorIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )
+                    : (
+                        <IconButton onClick={() => this.handleAddToQueue(id)}>
+                            <ErrorIcon />
+                        </IconButton>
+                    );
 
             default:
                 return (
@@ -205,6 +214,7 @@ class ImportRequestsTable extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Email</TableCell>
+                            <TableCell>Phone</TableCell>
                             <TableCell>OLX Account URL</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell />
@@ -216,6 +226,11 @@ class ImportRequestsTable extends Component {
                                 <TableCell>
                                     <Typography>
                                         {item.email}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography>
+                                        {item.phone}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
@@ -240,7 +255,7 @@ class ImportRequestsTable extends Component {
                                     <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
                                         <DeleteIcon />
                                     </IconButton>
-                                    {this.renderStatus(item._id, item.status)}
+                                    {this.renderStatus(item._id, item.status, item.errorMessage)}
                                 </TableCell>
                             </TableRow>
                         ))}
