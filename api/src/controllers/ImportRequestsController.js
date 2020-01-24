@@ -89,6 +89,7 @@ class ImportRequestsController extends Controller {
 
 
     async getImportRequests(req, res, next) {
+        console.log(req.query);
         const {
             limit,
             offset,

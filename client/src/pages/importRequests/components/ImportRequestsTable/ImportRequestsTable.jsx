@@ -6,6 +6,7 @@ import React,
 import { connect } from "react-redux";
 import {
     array,
+    func,
     number
 } from "prop-types";
 import {
@@ -58,13 +59,39 @@ class ImportRequestsTable extends Component {
             openConfirm: false,
             importRequestId: undefined,
             currentPage: 0,
-            itemsPerPage: 10
+            itemsPerPage: 10,
+            previousSearch: ''
         }
     }
 
     getData = () => {
         this.props.onCreateTitle('Import Requests');
-        this.props.getAllImportRequests();
+        const {
+            props: {
+                getAllImportRequests,
+                getSearchString
+            },
+            state: {
+                itemsPerPage,
+                currentPage,
+                previousSearch
+            }
+        } = this;
+
+        const search = getSearchString();
+        let offset;
+        if(previousSearch !== search.toLowerCase()) {
+            offset = 0;
+            this.setState({previousSearch: search.toLowerCase()});
+        } else {
+            offset = currentPage * itemsPerPage;
+        }
+
+        getAllImportRequests({
+            limit: itemsPerPage,
+            offset,
+            search
+        });
     };
 
     componentDidMount() {
@@ -281,7 +308,8 @@ class ImportRequestsTable extends Component {
 
 ImportRequestsTable.propTypes = {
     importRequests: array.isRequired,
-    total: number.isRequired
+    total: number.isRequired,
+    getSearchString: func.isRequired
 };
 
 ImportRequestsTable.defaultProps = {

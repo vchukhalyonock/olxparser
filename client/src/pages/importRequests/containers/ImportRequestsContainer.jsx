@@ -33,8 +33,19 @@ const styles = theme => ({
 
 class ImportRequestsContainer extends Component {
 
-    onChangeSearchHandler = (e) => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: ''
+        }
+    }
 
+    onChangeSearchHandler = (e) => {
+        this.setState({search: e.target.value});
+    };
+
+    getSearchString = () => {
+        return this.state.search;
     };
 
     render() {
@@ -49,7 +60,7 @@ class ImportRequestsContainer extends Component {
                             id="search"
                             label="Search"
                             type="search"
-                            fullWidth={80}
+                            fullWidth={true}
                             startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
                             onChange={this.onChangeSearchHandler}
                         />
@@ -68,7 +79,7 @@ class ImportRequestsContainer extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <ImportRequestsTable />
+                            <ImportRequestsTable getSearchString={this.getSearchString}/>
                         </Paper>
                     </Grid>
                 </Grid>
