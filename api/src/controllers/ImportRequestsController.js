@@ -91,13 +91,34 @@ class ImportRequestsController extends Controller {
     async getImportRequests(req, res, next) {
         const {
             limit,
-            offset
+            offset,
+            search
         } = req.query;
+
+        let query;
+        if(search && search.trim()) {
+            const regexp = new RegExp(search.trim(), 'i');
+            query = {
+                $or: [
+                    {
+                        email: regexp
+                    },
+                    {
+                        olxAccountUrl: regexp
+                    },
+                    {
+                        phone: regexp
+                    }
+                ]
+            }
+        } else {
+            query = {};
+        }
 
         let importRequests = null;
         let total = 0;
         try {
-            importRequests = await ImportRequestModel.paginate({}, { limit, offset });
+            importRequests = await ImportRequestModel.paginate(query, { limit, offset });
             total = await ImportRequestModel.countDocuments().exec();
         } catch (e) {
             console.log(e);
