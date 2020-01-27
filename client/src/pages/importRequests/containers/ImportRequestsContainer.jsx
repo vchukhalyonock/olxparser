@@ -13,6 +13,7 @@ import {
 } from "@material-ui/icons";
 import ImportRequestsTable from "../components/ImportRequestsTable";
 import ListItemLink from "../../../components/listItemLink";
+import Search from "../../../components/search/Search";
 import { CREATE_IMPORT_REQUEST_PAGE_PATH } from "../../../constants/router";
 
 const styles = theme => ({
@@ -55,16 +56,7 @@ class ImportRequestsContainer extends Component {
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <Grid item xs={6}/>
-                    <Grid item xs={4}>
-                        <OutlinedInput
-                            id="search"
-                            label="Search"
-                            type="search"
-                            fullWidth={true}
-                            startAdornment={<InputAdornment position="start"><SearchIcon/></InputAdornment>}
-                            onChange={this.onChangeSearchHandler}
-                        />
-                    </Grid>
+                    <Search onChange={this.onChangeSearchHandler}/>
                     <Grid item xs={2}>
                         <Button
                             variant="contained"

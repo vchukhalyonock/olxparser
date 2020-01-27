@@ -36,17 +36,39 @@ class OffersController extends Controller {
         const {
             query: {
                 limit ,
-                offset
+                offset,
+                search
             },
             params: {
                 importRequestId
             }
         } = req;
 
+        let query;
+        if(search && search.trim()) {
+            const regexp = new RegExp(search.trim(), 'i');
+            query = {
+                importRequestId,
+                $or: [
+                    {
+                        description: regexp
+                    },
+                    {
+                        title: regexp
+                    },
+                    {
+                        url: regexp
+                    }
+                ]
+            }
+        } else {
+            query = { importRequestId };
+        }
+
         let offers = null;
         let total = 0;
         try {
-            offers = await OffersModel.paginate({importRequestId}, {limit, offset});
+            offers = await OffersModel.paginate(query, {limit, offset});
             total = await OffersModel.countDocuments({importRequestId}).exec();
         } catch (e) {
             console.log(e);

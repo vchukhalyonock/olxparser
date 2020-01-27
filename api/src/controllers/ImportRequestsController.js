@@ -1,5 +1,8 @@
 import Controller, { VERB } from '../core/Controller';
-import { ImportRequestModel } from '../models';
+import {
+    ImportRequestModel,
+    OffersModel
+    } from '../models';
 import { REQUEST_STATUS } from "../models/ImportRequestModel";
 import { IMPORT_REQUEST_URL } from "../constants/urls";
 import Error from "../core/Error";
@@ -89,7 +92,6 @@ class ImportRequestsController extends Controller {
 
 
     async getImportRequests(req, res, next) {
-        console.log(req.query);
         const {
             limit,
             offset,
@@ -158,6 +160,7 @@ class ImportRequestsController extends Controller {
     async deleteImportRequest(req, res, next) {
         const { id } = req.params;
         try {
+            await OffersModel.deleteMany({importRequestId: id}).exec();
             await ImportRequestModel.deleteOne({_id: id}).exec();
         } catch (e) {
             console.log(e);
