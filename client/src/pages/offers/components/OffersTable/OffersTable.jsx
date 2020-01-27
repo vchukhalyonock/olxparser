@@ -8,7 +8,7 @@ import {
     string,
     array,
     number,
-    object
+    object, func
 } from "prop-types";
 import {
     Table,
@@ -41,9 +41,12 @@ import {
 import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
+import {IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT} from "../../../../constants/common";
 
 
 class OffersTable extends Component {
+
+    intervalId;
 
     constructor(props) {
         super(props);
@@ -51,19 +54,51 @@ class OffersTable extends Component {
             openConfirm: false,
             offerId: undefined,
             currentPage: 0,
-            itemsPerPage: 10
+            itemsPerPage: 10,
+            previousSearch: ''
         }
     }
 
     componentDidMount() {
-        const {
-            importRequestId,
-            onGetImportRequest,
-            getAllOffers,
-        } = this.props;
-        onGetImportRequest(importRequestId);
-        getAllOffers(importRequestId);
+        this.getData();
+        this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
+    }
+
+    getData = () => {
+        const {
+            props: {
+                importRequestId,
+                getAllOffers,
+                getSearchString,
+                onGetImportRequest
+            },
+            state: {
+                itemsPerPage,
+                currentPage,
+                previousSearch
+            }
+        } = this;
+
+        const search = getSearchString();
+        let offset;
+        if(previousSearch !== search.toLowerCase()) {
+            offset = 0;
+            this.setState({previousSearch: search.toLowerCase()});
+        } else {
+            offset = currentPage * itemsPerPage;
+        }
+
+        onGetImportRequest(importRequestId);
+        getAllOffers(importRequestId, {
+            limit: itemsPerPage,
+            offset,
+            search
+        });
+    };
 
     agreeHandler = () => {
         this.props.onDeleteOffer(this.state.offerId);
@@ -121,7 +156,18 @@ class OffersTable extends Component {
 
 
     render() {
-        const { props: { offers, total, importRequest, onCreateTitle }, state: { currentPage, itemsPerPage } } = this;
+        const {
+            props: {
+                offers,
+                total,
+                importRequest,
+                onCreateTitle
+            },
+            state: {
+                currentPage,
+                itemsPerPage
+            }
+        } = this;
         onCreateTitle(`Offers for ${importRequest.email} account`);
 
         return (
@@ -205,7 +251,8 @@ OffersTable.propTypes = {
     importRequestId: string.isRequired,
     offers: array.isRequired,
     total: number.isRequired,
-    importRequest: object.isRequired
+    importRequest: object.isRequired,
+    getSearchString: func.isRequired
 };
 
 OffersTable.defaultProps = {

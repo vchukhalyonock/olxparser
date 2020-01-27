@@ -1,16 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import {
     Container,
     Grid,
-    makeStyles,
     Paper,
     Button,
+    withStyles
 } from "@material-ui/core";
 import ImportRequestsTable from "../components/ImportRequestsTable";
 import ListItemLink from "../../../components/listItemLink";
+import Search from "../../../components/search/Search";
 import { CREATE_IMPORT_REQUEST_PAGE_PATH } from "../../../constants/router";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
@@ -24,34 +25,55 @@ const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1)
     },
-}));
+});
 
-export default () => {
-    const classes = useStyles();
+class ImportRequestsContainer extends Component {
 
-    return (
-        <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-                <Grid item xs={10}/>
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        className={classes.button}
-                        component={ListItemLink}
-                        to={CREATE_IMPORT_REQUEST_PAGE_PATH}
-                    >
-                        Create IR
-                    </Button>
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: ''
+        }
+    }
+
+    onChangeSearchHandler = (e) => {
+        this.setState({search: e.target.value});
+    };
+
+    getSearchString = () => {
+        return this.state.search;
+    };
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <Container maxWidth="lg" className={classes.container}>
+                <Grid container spacing={3}>
+                    <Grid item xs={6}/>
+                    <Search onChange={this.onChangeSearchHandler}/>
+                    <Grid item xs={2}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            className={classes.button}
+                            component={ListItemLink}
+                            to={CREATE_IMPORT_REQUEST_PAGE_PATH}
+                        >
+                            Create IR
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <ImportRequestsTable getSearchString={this.getSearchString}/>
+                        </Paper>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <ImportRequestsTable />
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
 
-    );
-};
+        );
+    }
+}
+
+export default withStyles(styles)(ImportRequestsContainer);

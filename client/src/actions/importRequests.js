@@ -15,7 +15,8 @@ import { METHODS } from "../constants/methods";
 const url = `${config.backendUrl}${IMPORT_REQUESTS_URL}`;
 const defaultQuery = {
     offset: 0,
-    limit: 10
+    limit: 10,
+    search: ''
 };
 
 const getImportRequests = (incomingQuery = {}) => async dispatch => {
