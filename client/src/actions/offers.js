@@ -18,7 +18,8 @@ const offerUrl = `${config.backendUrl}${OFFER_URL}`;
 
 const defaultQuery = {
     offset: 0,
-    limit: 10
+    limit: 10,
+    search: ''
 };
 
 const getOffers = (importRequestId, incomingQuery = {}) => async dispatch => {

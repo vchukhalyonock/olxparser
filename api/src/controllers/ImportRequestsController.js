@@ -122,7 +122,7 @@ class ImportRequestsController extends Controller {
         let total = 0;
         try {
             importRequests = await ImportRequestModel.paginate(query, { limit, offset });
-            total = await ImportRequestModel.countDocuments().exec();
+            total = await ImportRequestModel.countDocuments(query).exec();
         } catch (e) {
             console.log(e);
             next(e);

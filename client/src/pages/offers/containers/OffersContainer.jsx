@@ -1,13 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import {
     Container,
     Grid,
-    makeStyles,
-    Paper
+    Paper,
+    Button, withStyles
 } from "@material-ui/core";
 import OffersTable from "../components/OffersTable";
+import Search from "../../../components/search";
+import ListItemLink from "../../../components/listItemLink";
 
-const useStyles = makeStyles(theme => ({
+const styles  = theme => ({
     container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
@@ -21,22 +23,69 @@ const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1)
     },
-}));
+});
 
-export default (props) => {
-    const classes = useStyles();
+class OffersContainer extends Component {
 
-    return (
-        <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-                <Grid item xs={10}/>
-                <Grid item xs={2} />
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <OffersTable importRequestId={props.match.params.importRequestId}/>
-                    </Paper>
+    constructor(props) {
+        super(props);
+        this.state = {
+            search: ''
+        }
+    }
+
+    onChangeSearchHandler = (e) => {
+        this.setState({search: e.target.value});
+    };
+
+    getSearchString = () => {
+        return this.state.search;
+    };
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <Container maxWidth="lg" className={classes.container}>
+                <Grid container spacing={3}>
+                    <Grid item xs={4}/>
+                    <Search onChange={this.onChangeSearchHandler}/>
+                    <Grid item xs={2}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            className={classes.button}
+                            component={ListItemLink}
+                            to=''
+                        >
+                            Export Selected
+                        </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            className={classes.button}
+                            component={ListItemLink}
+                            to=''
+                        >
+                            Export All
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <OffersTable
+                                importRequestId={this.props.match.params.importRequestId}
+                                getSearchString={this.getSearchString}
+                            />
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
-    );
+            </Container>
+        );
+    }
 };
+
+export default withStyles(styles)(OffersContainer);

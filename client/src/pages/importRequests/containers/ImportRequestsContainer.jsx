@@ -4,13 +4,8 @@ import {
     Grid,
     Paper,
     Button,
-    OutlinedInput,
-    InputAdornment,
     withStyles
 } from "@material-ui/core";
-import {
-    Search as SearchIcon
-} from "@material-ui/icons";
 import ImportRequestsTable from "../components/ImportRequestsTable";
 import ListItemLink from "../../../components/listItemLink";
 import Search from "../../../components/search/Search";
