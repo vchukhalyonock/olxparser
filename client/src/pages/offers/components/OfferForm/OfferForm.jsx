@@ -9,7 +9,7 @@ import { isObject } from "lodash";
 import {
     Button,
     TextField,
-    withStyles
+    withStyles,
 } from "@material-ui/core";
 import {
     string,
@@ -21,6 +21,7 @@ import {
 } from "../../../../actions/offers";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
+import SingleHeading from "../../../../components/singleHeading";
 
 const styles = theme => ({
     textField: {
@@ -30,7 +31,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-    },
+    }
 });
 
 class OfferForm extends Component {
@@ -180,16 +181,13 @@ class OfferForm extends Component {
                             defaultValue={offer.description}
                             InputLabelProps={{shrink: true}}
                         />
-                        <TextField
-                            id="heading"
-                            label="Heading"
-                            className={classes.textField}
-                            margin="normal"
-                            required
-                            onChange={e => this.handleAllChange(e, "heading")}
-                            defaultValue={offer.heading ? offer.heading.join("/") : undefined}
-                            InputLabelProps={{shrink: true}}
-                        />
+                        <hr/>
+                        <h3>Heading</h3>
+                        {offer.heading && offer.heading.map((item, index) => (
+                            <SingleHeading index={index} value={item} key={index}/>
+                        ))}
+                        <Button variant="contained" color="primary">+</Button>
+                        <hr/>
                         <TextField
                             id="details"
                             label="Details"
