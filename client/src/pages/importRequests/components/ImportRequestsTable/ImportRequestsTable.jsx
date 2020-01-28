@@ -55,14 +55,12 @@ const headCells = [
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
     { id: 'phone', numeric: false, disablePadding: true, label: 'Phone' },
     { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL' },
-    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Date' },
+    { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date' },
 ];
 
 class ImportRequestsTable extends Component {
 
     intervalId;
-    order;
-    orderBy;
 
     constructor(props) {
         super(props);
@@ -97,7 +95,11 @@ class ImportRequestsTable extends Component {
         let offset;
         if(previousSearch !== search.toLowerCase()) {
             offset = 0;
-            this.setState({previousSearch: search.toLowerCase()});
+            this.setState({
+                previousSearch: search.toLowerCase(),
+                orderBy: '',
+                order: ''
+            });
         } else {
             offset = currentPage * itemsPerPage;
         }

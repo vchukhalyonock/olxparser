@@ -92,7 +92,6 @@ class ImportRequestsController extends Controller {
 
 
     async getImportRequests(req, res, next) {
-        console.log(req.query);
         const {
             limit,
             offset,
@@ -100,6 +99,9 @@ class ImportRequestsController extends Controller {
             order,
             orderBy
         } = req.query;
+
+        const queryOrderBy = orderBy === '' ? 'requestedAt' : orderBy;
+        const queryOrder = order === '' ? 'desc' : order;
 
         let query;
         if(search && search.trim()) {
@@ -130,7 +132,7 @@ class ImportRequestsController extends Controller {
                     limit,
                     offset,
                     sort: [
-                        [orderBy, order]
+                        [queryOrderBy, queryOrder]
                     ]
                 });
             total = await ImportRequestModel.countDocuments(query).exec();
@@ -141,7 +143,7 @@ class ImportRequestsController extends Controller {
 
         return res.json({
             status: 'success',
-            items: importRequests.docs,
+            items: importRequests.docs === null ? [] : importRequests.docs,
             total
         })
     }
