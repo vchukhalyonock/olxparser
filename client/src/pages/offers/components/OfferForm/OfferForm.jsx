@@ -9,7 +9,7 @@ import { isObject } from "lodash";
 import {
     Button,
     TextField,
-    withStyles,
+    withStyles
 } from "@material-ui/core";
 import {
     string,
@@ -22,6 +22,7 @@ import {
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
 import SingleHeading from "../../../../components/singleHeading";
+import SingleDetail from "../../../../components/singleDetail";
 
 const styles = theme => ({
     textField: {
@@ -188,15 +189,12 @@ class OfferForm extends Component {
                         ))}
                         <Button variant="contained" color="primary">+</Button>
                         <hr/>
-                        <TextField
-                            id="details"
-                            label="Details"
-                            className={classes.textField}
-                            margin="normal"
-                            onChange={e => this.handleAllChange(e, "details")}
-                            defaultValue={offer.details ? offer.details.map(details => (`${details.measure} : ${details.value}`)).join("|") : undefined}
-                            InputLabelProps={{shrink: true}}
-                        />
+                        <h3>Details</h3>
+                        {offer.details && offer.details.map((item, index) => (
+                            <SingleDetail index={index} value={item} key={index}/>
+                        ))}
+                        <Button variant="contained" color="primary">+</Button>
+                        <hr/>
                         <TextField
                             id="price"
                             label="Price"
