@@ -37,12 +37,17 @@ class OffersController extends Controller {
             query: {
                 limit ,
                 offset,
-                search
+                search,
+                order,
+                orderBy
             },
             params: {
                 importRequestId
             }
         } = req;
+
+        const queryOrderBy = orderBy === '' ? 'requestedAt' : orderBy;
+        const queryOrder = order === '' ? 'desc' : order;
 
         let query;
         if(search && search.trim()) {
@@ -68,7 +73,16 @@ class OffersController extends Controller {
         let offers = null;
         let total = 0;
         try {
-            offers = await OffersModel.paginate(query, {limit, offset});
+            offers = await OffersModel
+                .paginate(
+                    query,
+                    {
+                        limit,
+                        offset,
+                        sort: [
+                            [queryOrderBy, queryOrder]
+                        ]
+                    });
             total = await OffersModel.countDocuments(query).exec();
         } catch (e) {
             console.log(e);

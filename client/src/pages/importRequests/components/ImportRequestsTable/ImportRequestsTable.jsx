@@ -50,6 +50,7 @@ import Confirm from "../../../../components/confirm";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
 import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
+import SortingHeader from "../../../../components/sortingHeader";
 
 const headCells = [
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
@@ -299,21 +300,12 @@ class ImportRequestsTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            {headCells.map(headCell => (
-                                <TableCell
-                                    key={headCell.id}
-                                    align={headCell.numeric ? 'right' : 'left'}
-                                    sortDirection={orderBy === headCell.id ? order : false}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === headCell.id}
-                                        direction={orderBy === headCell.id ? order : 'asc'}
-                                        onClick={() => this.sortHandler(headCell.id)}
-                                    >
-                                        {headCell.label}
-                                    </TableSortLabel>
-                                </TableCell>
-                            ))}
+                            <SortingHeader
+                                headCells={headCells}
+                                orderBy={orderBy}
+                                order={order}
+                                sortHandler={this.sortHandler}
+                            />
                             <TableCell />
                         </TableRow>
                     </TableHead>
