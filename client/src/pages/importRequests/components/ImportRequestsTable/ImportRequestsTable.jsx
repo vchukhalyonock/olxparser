@@ -21,8 +21,7 @@ import {
     CircularProgress,
     Typography,
     Link,
-    Tooltip,
-    TableSortLabel
+    Tooltip
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
