@@ -8,7 +8,8 @@ import {
     string,
     array,
     number,
-    object, func
+    object,
+    func
 } from "prop-types";
 import {
     Table,
@@ -21,7 +22,7 @@ import {
     IconButton,
     Typography,
     Link,
-    TableSortLabel
+    Checkbox
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
@@ -203,6 +204,10 @@ class OffersTable extends Component {
         this.setState({orderBy: newOrderBy, order: newOrder});
     };
 
+    isSelected = (id) => {
+        const { selectedItems } = this.props;
+        return selectedItems.includes(id);
+    };
 
     render() {
         const {
@@ -210,7 +215,10 @@ class OffersTable extends Component {
                 offers,
                 total,
                 importRequest,
-                onCreateTitle
+                onCreateTitle,
+                numSelected,
+                offerCheckBoxHandler,
+                offerCheckBoxSelectAllHandler
             },
             state: {
                 currentPage,
@@ -220,6 +228,7 @@ class OffersTable extends Component {
             }
         } = this;
         onCreateTitle(`Offers for ${importRequest.email} account`);
+        const allIds = offers.map(offer => offer._id);
 
         return (
             <Fragment>
@@ -235,6 +244,13 @@ class OffersTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            <TableCell padding="checkbox">
+                                <Checkbox
+                                    indeterminate={numSelected > 0 && numSelected < itemsPerPage && numSelected < total}
+                                    checked={total > 0 && (numSelected === itemsPerPage || numSelected === total)}
+                                    onChange={() => offerCheckBoxSelectAllHandler(allIds)}
+                                />
+                            </TableCell>
                             <SortingHeader
                                 headCells={headCells}
                                 orderBy={orderBy}
@@ -246,36 +262,46 @@ class OffersTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {offers.map(item => (
-                            <TableRow key={item._id}>
-                                <TableCell>
-                                    <Typography>
-                                        <Link href={item.url} target='_blank'>
-                                            {item.title}
-                                        </Link>
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {item.description}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    {item.images.length > 0 ? <img src={item.images[0]} width="50px" alt={item.title}/> : undefined}
-                                </TableCell>
-                                <TableCell>
-                                    <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
-                                        <InfoIcon />
-                                    </IconButton>
-                                    <IconButton to={`${EDIT_OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => this.handleDeleteOffer(item._id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {offers.map(item => {
+                            const isItemSelected = this.isSelected(item._id);
+
+                            return (
+                                <TableRow key={item._id}>
+                                    <TableCell padding="checkbox">
+                                        <Checkbox
+                                            checked={isItemSelected}
+                                            onChange={() => offerCheckBoxHandler(item._id)}
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            <Link href={item.url} target='_blank'>
+                                                {item.title}
+                                            </Link>
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            {item.description}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        {item.images.length > 0 ? <img src={item.images[0]} width="50px" alt={item.title}/> : undefined}
+                                    </TableCell>
+                                    <TableCell>
+                                        <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                        <IconButton to={`${EDIT_OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => this.handleDeleteOffer(item._id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
                     </TableBody>
                     <TableFooter>
                         <TableRow>
@@ -301,7 +327,11 @@ OffersTable.propTypes = {
     offers: array.isRequired,
     total: number.isRequired,
     importRequest: object.isRequired,
-    getSearchString: func.isRequired
+    getSearchString: func.isRequired,
+    offerCheckBoxHandler: func.isRequired,
+    offerCheckBoxSelectAllHandler: func.isRequired,
+    numSelected: number.isRequired,
+    selectedItems: array.isRequired
 };
 
 OffersTable.defaultProps = {

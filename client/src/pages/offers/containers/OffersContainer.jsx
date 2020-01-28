@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import OffersTable from "../components/OffersTable";
 import Search from "../../../components/search";
-import ListItemLink from "../../../components/listItemLink";
 
 const styles  = theme => ({
     container: {
@@ -30,7 +29,9 @@ class OffersContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            numSelected: 0,
+            selectedItems: []
         }
     }
 
@@ -42,8 +43,48 @@ class OffersContainer extends Component {
         return this.state.search;
     };
 
+    componentWillUnmount() {
+        this.setState({
+           numSelected: 0,
+           selectedItems: []
+        });
+    }
+
+    offerCheckBoxHandler = (id) => {
+        const { selectedItems } = this.state;
+        let index;
+        if((index = selectedItems.indexOf(id)) < 0) {
+            selectedItems.push(id);
+        } else {
+            selectedItems.splice(index, 1);
+        }
+
+        this.setState({selectedItems, numSelected: selectedItems.length});
+    };
+
+    offerCheckBoxSelectAllHandler = (allIds) => {
+        const { numSelected } = this.state;
+        let selectedItems = [];
+        if (numSelected > 0) {
+            selectedItems.length = 0;
+        } else {
+            selectedItems = allIds;
+        };
+
+        this.setState({selectedItems, numSelected: selectedItems.length});
+    };
+
+    exportSelectedHandler = () => {
+
+    };
+
+    exportAllHandler = () => {
+
+    }
+
     render() {
         const { classes } = this.props;
+        const { numSelected, selectedItems } = this.state;
 
         return (
             <Container maxWidth="lg" className={classes.container}>
@@ -56,7 +97,7 @@ class OffersContainer extends Component {
                             color="primary"
                             size="medium"
                             className={classes.button}
-                            component={ListItemLink}
+                            onClick={this.exportSelectedHandler}
                             to=''
                         >
                             Export Selected
@@ -68,7 +109,7 @@ class OffersContainer extends Component {
                             color="primary"
                             size="medium"
                             className={classes.button}
-                            component={ListItemLink}
+                            onClick={this.exportAllHandler}
                             to=''
                         >
                             Export All
@@ -79,6 +120,10 @@ class OffersContainer extends Component {
                             <OffersTable
                                 importRequestId={this.props.match.params.importRequestId}
                                 getSearchString={this.getSearchString}
+                                numSelected={numSelected}
+                                selectedItems={selectedItems}
+                                offerCheckBoxHandler={this.offerCheckBoxHandler}
+                                offerCheckBoxSelectAllHandler={this.offerCheckBoxSelectAllHandler}
                             />
                         </Paper>
                     </Grid>
