@@ -20,7 +20,8 @@ import {
     TableFooter,
     IconButton,
     Typography,
-    Link
+    Link,
+    TableSortLabel
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
@@ -42,7 +43,12 @@ import ListItemLink from "../../../../components/listItemLink";
 import Confirm from "../../../../components/confirm";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
 import {IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT} from "../../../../constants/common";
+import SortingHeader from "../../../../components/sortingHeader";
 
+const headCells = [
+    { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
+    { id: 'description', numeric: false, disablePadding: true, label: 'Description' }
+];
 
 class OffersTable extends Component {
 
@@ -55,7 +61,9 @@ class OffersTable extends Component {
             offerId: undefined,
             currentPage: 0,
             itemsPerPage: 10,
-            previousSearch: ''
+            previousSearch: '',
+            orderBy: '',
+            order: ''
         }
     }
 
@@ -79,7 +87,9 @@ class OffersTable extends Component {
             state: {
                 itemsPerPage,
                 currentPage,
-                previousSearch
+                previousSearch,
+                orderBy,
+                order
             }
         } = this;
 
@@ -96,7 +106,9 @@ class OffersTable extends Component {
         getAllOffers(importRequestId, {
             limit: itemsPerPage,
             offset,
-            search
+            search,
+            orderBy,
+            order
         });
     };
 
@@ -123,26 +135,42 @@ class OffersTable extends Component {
         const {
             props: {
                 importRequestId,
-                getAllOffers
+                getAllOffers,
+                getSearchString
             },
             state: {
-                itemsPerPage
+                itemsPerPage,
+                orderBy,
+                order
             }
         } = this;
+
+        const search = getSearchString();
         const offset = newPage * itemsPerPage;
         this.setState({currentPage: newPage});
         getAllOffers(importRequestId, {
             limit: itemsPerPage,
-            offset
+            offset,
+            search,
+            orderBy,
+            order
         });
     };
 
     handleChangeRowsPerPage = event => {
         const {
-            importRequestId,
-            getAllOffers
-        } = this.props;
+            props: {
+                importRequestId,
+                getAllOffers,
+                getSearchString
+            },
+            state: {
+                orderBy,
+                order
+            }
+        } = this;
         const newItemsPerPage = parseInt(event.target.value, 10);
+        const search = getSearchString();
         const state = {
             itemsPerPage: newItemsPerPage,
             currentPage: 0
@@ -150,8 +178,29 @@ class OffersTable extends Component {
         this.setState(state);
         getAllOffers(importRequestId, {
             limit: newItemsPerPage,
-            offset: 0
+            offset: 0,
+            search,
+            orderBy,
+            order
         });
+    };
+
+    sortHandler = (id) => {
+        const {
+            orderBy,
+            order
+        } = this.state;
+
+        let newOrderBy, newOrder;
+        if (orderBy !== id) {
+            newOrderBy = id;
+            newOrder = 'asc';
+        } else {
+            newOrderBy = orderBy;
+            newOrder = order === 'asc' ? 'desc' : 'asc';
+        }
+
+        this.setState({orderBy: newOrderBy, order: newOrder});
     };
 
 
@@ -165,7 +214,9 @@ class OffersTable extends Component {
             },
             state: {
                 currentPage,
-                itemsPerPage
+                itemsPerPage,
+                orderBy,
+                order
             }
         } = this;
         onCreateTitle(`Offers for ${importRequest.email} account`);
@@ -184,9 +235,12 @@ class OffersTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell>Heading</TableCell>
+                            <SortingHeader
+                                headCells={headCells}
+                                orderBy={orderBy}
+                                order={order}
+                                sortHandler={this.sortHandler}
+                            />
                             <TableCell></TableCell>
                             <TableCell />
                         </TableRow>
@@ -203,12 +257,7 @@ class OffersTable extends Component {
                                 </TableCell>
                                 <TableCell>
                                     <Typography>
-                                        {item.price.amount} {item.price.volume}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {item.heading.join('/')}
+                                        {item.description}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>

@@ -95,8 +95,13 @@ class ImportRequestsController extends Controller {
         const {
             limit,
             offset,
-            search
+            search,
+            order,
+            orderBy
         } = req.query;
+
+        const queryOrderBy = orderBy === '' ? 'requestedAt' : orderBy;
+        const queryOrder = order === '' ? 'desc' : order;
 
         let query;
         if(search && search.trim()) {
@@ -121,7 +126,15 @@ class ImportRequestsController extends Controller {
         let importRequests = null;
         let total = 0;
         try {
-            importRequests = await ImportRequestModel.paginate(query, { limit, offset });
+            importRequests = await ImportRequestModel.paginate(
+                query,
+                {
+                    limit,
+                    offset,
+                    sort: [
+                        [queryOrderBy, queryOrder]
+                    ]
+                });
             total = await ImportRequestModel.countDocuments(query).exec();
         } catch (e) {
             console.log(e);
@@ -130,7 +143,7 @@ class ImportRequestsController extends Controller {
 
         return res.json({
             status: 'success',
-            items: importRequests.docs,
+            items: importRequests.docs === null ? [] : importRequests.docs,
             total
         })
     }
