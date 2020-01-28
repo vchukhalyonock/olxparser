@@ -92,10 +92,13 @@ class ImportRequestsController extends Controller {
 
 
     async getImportRequests(req, res, next) {
+        console.log(req.query);
         const {
             limit,
             offset,
-            search
+            search,
+            order,
+            orderBy
         } = req.query;
 
         let query;
@@ -121,7 +124,15 @@ class ImportRequestsController extends Controller {
         let importRequests = null;
         let total = 0;
         try {
-            importRequests = await ImportRequestModel.paginate(query, { limit, offset });
+            importRequests = await ImportRequestModel.paginate(
+                query,
+                {
+                    limit,
+                    offset,
+                    sort: [
+                        [orderBy, order]
+                    ]
+                });
             total = await ImportRequestModel.countDocuments(query).exec();
         } catch (e) {
             console.log(e);

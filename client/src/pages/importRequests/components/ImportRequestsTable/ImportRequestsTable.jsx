@@ -21,7 +21,8 @@ import {
     CircularProgress,
     Typography,
     Link,
-    Tooltip
+    Tooltip,
+    TableSortLabel
 } from '@material-ui/core';
 import {
     Edit as EditIcon,
@@ -32,6 +33,7 @@ import {
     DoneAll as DoneIcon,
     Info as InfoIcon
 } from '@material-ui/icons';
+import moment from "moment";
 import Title from "../../../../components/title";
 import {
     getImportRequests,
@@ -49,9 +51,18 @@ import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifi
 import { REQUEST_STATUS } from "../../../../constants/statuses";
 import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
 
+const headCells = [
+    { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
+    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone' },
+    { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL' },
+    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Date' },
+];
+
 class ImportRequestsTable extends Component {
 
     intervalId;
+    order;
+    orderBy;
 
     constructor(props) {
         super(props);
@@ -60,7 +71,9 @@ class ImportRequestsTable extends Component {
             importRequestId: undefined,
             currentPage: 0,
             itemsPerPage: 10,
-            previousSearch: ''
+            previousSearch: '',
+            orderBy: '',
+            order: ''
         }
     }
 
@@ -74,7 +87,9 @@ class ImportRequestsTable extends Component {
             state: {
                 itemsPerPage,
                 currentPage,
-                previousSearch
+                previousSearch,
+                orderBy,
+                order
             }
         } = this;
 
@@ -90,7 +105,9 @@ class ImportRequestsTable extends Component {
         getAllImportRequests({
             limit: itemsPerPage,
             offset,
-            search
+            search,
+            orderBy,
+            order
         });
     };
 
@@ -130,25 +147,42 @@ class ImportRequestsTable extends Component {
     handleChangePage = (event, newPage) => {
         const {
             props: {
-                getAllImportRequests
+                getAllImportRequests,
+                getSearchString
             },
             state: {
-                itemsPerPage
+                itemsPerPage,
+                orderBy,
+                order
             }
         } = this;
+
+        const search = getSearchString();
         const offset = newPage * itemsPerPage;
         this.setState({currentPage: newPage});
         getAllImportRequests({
             limit: itemsPerPage,
-            offset
+            offset,
+            search,
+            orderBy,
+            order
         });
     };
 
     handleChangeRowsPerPage = event => {
         const {
-            getAllImportRequests
-        } = this.props;
+            props: {
+                getAllImportRequests,
+                getSearchString
+            },
+            state: {
+                orderBy,
+                order
+            }
+        } = this;
+
         const newItemsPerPage = parseInt(event.target.value, 10);
+        const search = getSearchString();
         const state = {
             itemsPerPage: newItemsPerPage,
             currentPage: 0
@@ -156,7 +190,10 @@ class ImportRequestsTable extends Component {
         this.setState(state);
         getAllImportRequests({
             limit: newItemsPerPage,
-            offset: 0
+            offset: 0,
+            search,
+            orderBy,
+            order
         });
     };
 
@@ -214,6 +251,24 @@ class ImportRequestsTable extends Component {
         }
     }
 
+    sortHandler = (id) => {
+        const {
+            orderBy,
+            order
+        } = this.state;
+
+        let newOrderBy, newOrder;
+        if (orderBy !== id) {
+            newOrderBy = id;
+            newOrder = 'asc';
+        } else {
+            newOrderBy = orderBy;
+            newOrder = order === 'asc' ? 'desc' : 'asc';
+        }
+
+        this.setState({orderBy: newOrderBy, order: newOrder});
+    };
+
     render() {
         const {
             props: {
@@ -222,7 +277,9 @@ class ImportRequestsTable extends Component {
             },
             state: {
                 itemsPerPage,
-                currentPage
+                currentPage,
+                orderBy,
+                order
             }
         } = this;
 
@@ -240,52 +297,64 @@ class ImportRequestsTable extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Phone</TableCell>
-                            <TableCell>OLX Account URL</TableCell>
-                            <TableCell>Date</TableCell>
+                            {headCells.map(headCell => (
+                                <TableCell
+                                    key={headCell.id}
+                                    align={headCell.numeric ? 'right' : 'left'}
+                                    sortDirection={orderBy === headCell.id ? order : false}
+                                >
+                                    <TableSortLabel
+                                        active={orderBy === headCell.id}
+                                        direction={orderBy === headCell.id ? order : 'asc'}
+                                        onClick={() => this.sortHandler(headCell.id)}
+                                    >
+                                        {headCell.label}
+                                    </TableSortLabel>
+                                </TableCell>
+                            ))}
                             <TableCell />
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {importRequests.map(item => (
-                            <TableRow key={item._id}>
-                                <TableCell>
-                                    <Typography>
-                                        {item.email}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {item.phone}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        <Link href={item.olxAccountUrl} target='_blank'>
-                                            {item.olxAccountUrl}
-                                        </Link>
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {item.requestedAt}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                        <InfoIcon />
-                                    </IconButton>
-                                    <IconButton to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                    {this.renderStatus(item._id, item.status, item.errorMessage)}
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                <TableRow key={item._id}>
+                                    <TableCell>
+                                        <Typography>
+                                            {item.email}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            {item.phone}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            <Link href={item.olxAccountUrl} target='_blank'>
+                                                {item.olxAccountUrl}
+                                            </Link>
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            {moment(item.requestedAt).format( "DD-MM-YYYY HH:mm")}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+                                            <InfoIcon />
+                                        </IconButton>
+                                        <IconButton to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                        {this.renderStatus(item._id, item.status, item.errorMessage)}
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        )}
                     </TableBody>
                     <TableFooter>
                         <TableRow>
