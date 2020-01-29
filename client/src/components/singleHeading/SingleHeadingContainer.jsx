@@ -23,7 +23,7 @@ class SingleHeadingContainer extends Component {
                 index={index}
                 value={item}
                 key={index}
-                removeHeading={() => this.handleRemoveHadingItem(index)}
+                removeHeading={this.handleRemoveHadingItem}
             />
         ));
         this.setState({localHeading});
@@ -44,7 +44,7 @@ class SingleHeadingContainer extends Component {
             index={index}
             value=""
             key={index}
-            removeHeading={() => this.handleRemoveHadingItem(index)}
+            removeHeading={this.handleRemoveHadingItem}
         />);
         const newLocalHeading = concat(localHeading, newHeading);
         this.setState({localHeading: newLocalHeading});

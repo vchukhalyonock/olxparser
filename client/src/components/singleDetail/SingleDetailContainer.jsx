@@ -22,7 +22,7 @@ class SingleDetailContainer extends Component {
                 index={index}
                 value={item}
                 key={index}
-                removeDetails={() => this.handleRemoveDetailItem(index)}
+                removeDetails={this.handleRemoveDetailItem}
             />
         ));
 
@@ -44,7 +44,7 @@ class SingleDetailContainer extends Component {
             index={index}
             value={{}}
             key={index}
-            removeDetails={() => this.handleRemoveDetailItem(index)}
+            removeDetails={this.handleRemoveDetailItem}
         />);
         const newLocalDetails = concat(localDetails, newDetail);
         this.setState({localDetails: newLocalDetails});
