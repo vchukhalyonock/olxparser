@@ -1,3 +1,7 @@
 import SingleHeading from './SingleHeading';
+import SingleHeadingContainer from "./SingleHeadingContainer";
 
-export default SingleHeading;
+export {
+    SingleHeading,
+    SingleHeadingContainer
+};

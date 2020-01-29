@@ -21,7 +21,7 @@ import {
 } from "../../../../actions/offers";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
-import SingleHeading from "../../../../components/singleHeading";
+import { SingleHeadingContainer } from "../../../../components/singleHeading";
 import SingleDetail from "../../../../components/singleDetail";
 
 const styles = theme => ({
@@ -136,7 +136,6 @@ class OfferForm extends Component {
         this.setState(newState);
     };
 
-
     render() {
         const {
             offer,
@@ -175,7 +174,6 @@ class OfferForm extends Component {
                             label="Description"
                             className={classes.textField}
                             margin="normal"
-                            required
                             multiline
                             rows={4}
                             onChange={e => this.handleAllChange(e, "description")}
@@ -183,11 +181,9 @@ class OfferForm extends Component {
                             InputLabelProps={{shrink: true}}
                         />
                         <hr/>
-                        <h3>Heading</h3>
-                        {offer.heading && offer.heading.map((item, index) => (
-                            <SingleHeading index={index} value={item} key={index}/>
-                        ))}
-                        <Button variant="contained" color="primary">+</Button>
+                        <SingleHeadingContainer
+                            heading={offer.heading ? offer.heading : []}
+                        />
                         <hr/>
                         <h3>Details</h3>
                         {offer.details && offer.details.map((item, index) => (
@@ -200,7 +196,6 @@ class OfferForm extends Component {
                             label="Price"
                             className={classes.textField}
                             margin="normal"
-                            required
                             onChange={e => this.handleAllChange(e, "price")}
                             defaultValue={offer.price ? `${offer.price.amount.replace(' ', '')} ${offer.price.volume}` : ''}
                             InputLabelProps={{shrink: true}}

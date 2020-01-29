@@ -1,7 +1,8 @@
 import React from "react";
 import {
     number,
-    string
+    string,
+    func
 } from "prop-types";
 import {
     Button,
@@ -24,7 +25,8 @@ const useStyles = makeStyles(theme => ({
 const SingleHeading = (props) => {
     const {
         index,
-        value
+        value,
+        removeHeading
     } = props;
 
     const classes = useStyles();
@@ -50,6 +52,7 @@ const SingleHeading = (props) => {
                     variant="contained"
                     color="secondary"
                     className={classes.deleteHeadingButton}
+                    onClick={() => removeHeading(index)}
                 >
                     -
                 </Button>
@@ -61,6 +64,7 @@ const SingleHeading = (props) => {
 SingleHeading.propTypes = {
     index: number.isRequired,
     value: string.isRequired,
+    removeHeading: func.isRequired
 };
 
 export default SingleHeading;
