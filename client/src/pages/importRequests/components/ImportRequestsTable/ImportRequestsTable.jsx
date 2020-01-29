@@ -146,6 +146,10 @@ class ImportRequestsTable extends Component {
         this.props.onAddToQueue(importRequestId);
     };
 
+    handleAddToDone = (importRequestId) => {
+        this.props.onAddToDone(importRequestId);
+    }
+
     handleChangePage = (event, newPage) => {
         const {
             props: {
@@ -224,7 +228,7 @@ class ImportRequestsTable extends Component {
 
             case REQUEST_STATUS.PENDING:
                 return (
-                    <IconButton onClick={() => {}}>
+                    <IconButton onClick={() => this.handleAddToDone(id)}>
                         <PendingIcon />
                     </IconButton>
                 );
@@ -393,6 +397,9 @@ const mapDispatchToProps = dispatch => ({
     },
     onAddToQueue: (importRequestId) => {
         dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.PENDING));
+    },
+    onAddToDone: (importRequestId) => {
+        dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.DONE));
     },
     onCreateTitle: title => {
         dispatch(menuClick(title));
