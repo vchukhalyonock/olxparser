@@ -6,7 +6,6 @@ import React,
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
-    isObject,
     concat
 } from "lodash";
 import {
@@ -60,6 +59,26 @@ class OfferForm extends Component {
         onGetOffer(offerId);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.offer !== this.props.offer) {
+            if(nextProps.offer.heading) {
+                const newHeading = nextProps.offer.heading.map((item, index) => ({
+                    index,
+                    value: item
+                }));
+                this.setState({heading: newHeading});
+            }
+
+            if(nextProps.offer.details) {
+                const newDetails = nextProps.offer.details.map((item, index) => ({
+                    index,
+                    ...item
+                }));
+                this.setState({details: newDetails});
+            }
+        }
+    }
+
     setRedirect  = () => {
         this.setState({redirect: true});
     };
@@ -90,34 +109,20 @@ class OfferForm extends Component {
         const { offer, onUpdateOffer } = this.props;
 
         const newOffer = {
-            heading: this.state.heading ? this.state.heading.split("/") : offer.heading,
+            heading: this.state.heading.map(item => item.value),
             url: this.state.url ? this.state.url : offer.url,
             title: this.state.title ? this.state.title : offer.title,
             price: this.state.price ? this.state.price : `${offer.price.amount.replace(' ', '')} ${offer.price.volume}`,
             description: this.state.description ? this.state.description : offer.description,
             importRequestId: offer.importRequestId,
             images: offer.images,
-            details: this.state.details ? this.state.details.split("|") : offer.details,
+            details: this.state.details.map(item => ({
+                measure: item.measure,
+                value: item.value
+            })),
             createdAt: offer.createdAt,
             _id: offer._id
         };
-
-        newOffer.details = newOffer.details
-            .map(detail => {
-                if(!isObject(detail)) {
-                    const parts = detail.split(":");
-                    if (parts.length > 1) {
-                        return {
-                            measure: parts[0].trim(),
-                            value: parts[1].trim()
-                        }
-                    }
-
-                    return null;
-                }
-                return detail;
-            })
-            .filter(item => item != null);
 
         const priceParts = newOffer.price.split(" ");
         if(priceParts.length > 1) {
@@ -203,6 +208,7 @@ class OfferForm extends Component {
             classes,
             onCreateTitle
         } = this.props;
+
         onCreateTitle(`Edit offer ${offer._id} for ${offer.importRequest ? offer.importRequest.email : undefined} account`);
 
         if(offer) {
