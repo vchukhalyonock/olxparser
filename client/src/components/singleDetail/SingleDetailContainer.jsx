@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import {
-    array
+    array,
+    func
 } from "prop-types";
 import { Button } from "@material-ui/core";
 import { concat } from "lodash";
@@ -15,7 +16,7 @@ class SingleDetailContainer extends Component {
     }
 
     componentDidMount() {
-        const { details } = this.props;
+        const { details, handleChange } = this.props;
 
         const localDetails = details.map((item, index) => (
             <SingleDetail
@@ -23,6 +24,7 @@ class SingleDetailContainer extends Component {
                 value={item}
                 key={index}
                 removeDetails={this.handleRemoveDetailItem}
+                handleChange={handleChange}
             />
         ));
 
@@ -31,12 +33,15 @@ class SingleDetailContainer extends Component {
 
     handleRemoveDetailItem = (index) => {
         const { localDetails } = this.state;
+        const { removeDetailItem } = this.props;
         const newLocalDetails = localDetails.filter(item => item.props.index !== index);
         this.setState({localDetails: newLocalDetails});
+        removeDetailItem(index);
     };
 
     handleAddDetailsItem = () => {
         const { localDetails } = this.state;
+        const { handleChange } = this.props;
         const index = localDetails.length > 0
             ? localDetails[localDetails.length - 1].props.index + 1
             : 0;
@@ -45,6 +50,7 @@ class SingleDetailContainer extends Component {
             value={{}}
             key={index}
             removeDetails={this.handleRemoveDetailItem}
+            handleChange={handleChange}
         />);
         const newLocalDetails = concat(localDetails, newDetail);
         this.setState({localDetails: newLocalDetails});
@@ -70,7 +76,9 @@ class SingleDetailContainer extends Component {
 }
 
 SingleDetailContainer.propTypes = {
-    details: array.isRequired
+    details: array.isRequired,
+    handleChange: func.isRequired,
+    removeDetailItem: func.isRequired
 };
 
 export default SingleDetailContainer;

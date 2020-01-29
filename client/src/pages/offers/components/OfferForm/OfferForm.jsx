@@ -5,7 +5,10 @@ import React,
 } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { isObject } from "lodash";
+import {
+    isObject,
+    concat
+} from "lodash";
 import {
     Button,
     TextField,
@@ -47,7 +50,7 @@ class OfferForm extends Component {
             price: undefined,
             description: undefined,
             images: undefined,
-            details: undefined
+            details: undefined,
         };
 
         const {
@@ -56,7 +59,6 @@ class OfferForm extends Component {
         } = this.props;
         onGetOffer(offerId);
     }
-
 
     setRedirect  = () => {
         this.setState({redirect: true});
@@ -136,6 +138,65 @@ class OfferForm extends Component {
         this.setState(newState);
     };
 
+    handleDetailsChange = (event, detailsFieldId) => {
+        const { details } = this.state;
+        let newDetails = details === undefined ? [] : details.map(item => item);
+        const match = detailsFieldId.match(/detail-(measure|value)-([0-9]+)/);
+        const fieldType = match[1];
+        const index = match[2];
+        const detailItemArray = newDetails.filter(item => item.index === index);
+        const detailItem = detailItemArray.length > 0 ? detailItemArray[0] : { index };
+        if(fieldType === 'measure') {
+            detailItem.measure = event.target.value;
+        } else {
+            detailItem.value = event.target.value;
+        }
+
+        if(detailItemArray.length === 0) {
+            newDetails = concat(newDetails, detailItem);
+        }
+
+        this.setState({details: newDetails});
+    };
+
+    handleHeadingChange = (event, headingFieldId) => {
+        const { heading } = this.state;
+        let newHeading = heading === undefined ? [] : heading.map(item => item);
+        const index = headingFieldId.match(/heading-([0-9]+)/)[1];
+        const headingItem = {
+            index,
+            value: event.target.value
+        };
+        let changed = false;
+        newHeading = newHeading.map(item => {
+            if(item.index === index) {
+                item.value = headingItem.value;
+                changed = true;
+            }
+
+            return item;
+        });
+
+        if(!changed) {
+            newHeading = concat(newHeading, headingItem);
+        }
+
+        this.setState({heading: newHeading});
+    };
+
+    handleRemoveHeadingItem = (index) => {
+        const { heading } = this.state;
+        const newHeading = heading.filter(item => +item.index !== index)
+        this.setState({ heading: newHeading });
+    };
+
+
+    handleRemoveDetailItem = (index) => {
+        const { details } = this.state;
+        const newDetails = details.filter(item => +item.index !== index);
+        this.setState({ details: newDetails });
+    };
+
     render() {
         const {
             offer,
@@ -183,9 +244,15 @@ class OfferForm extends Component {
                         <hr/>
                         <SingleHeadingContainer
                             heading={offer.heading ? offer.heading : []}
+                            handleChange={this.handleHeadingChange}
+                            removeHeadingItem={this.handleRemoveHeadingItem}
                         />
                         <hr/>
-                        <SingleDetailContainer details={offer.details ? offer.details : []}/>
+                        <SingleDetailContainer
+                            details={offer.details ? offer.details : []}
+                            handleChange={this.handleDetailsChange}
+                            removeDetailItem={this.handleRemoveDetailItem}
+                        />
                         <hr/>
                         <TextField
                             id="price"

@@ -22,14 +22,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SingleDetail = (props) => {
-    const {
+const SingleDetail = ({
         index,
         value,
-        removeDetails
-    } = props;
+        removeDetails,
+        handleChange
+}) => {
+
 
     const classes = useStyles();
+    const measureFieldId = `detail-measure-${index}`;
+    const valueFieldId = `detail-value-${index}`;
 
     return (
         <Grid
@@ -38,24 +41,26 @@ const SingleDetail = (props) => {
         >
             <Grid item xs={4}>
                 <TextField
-                    id={`detail-measure-${index}`}
+                    id={measureFieldId}
                     label="Measure"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required
                     defaultValue={value.measure}
                     InputLabelProps={{shrink: true}}
+                    onChange={e => handleChange(e, measureFieldId)}
                 />
             </Grid>
             <Grid item xs={5}>
                 <TextField
-                    id={`detail-value-${index}`}
+                    id={valueFieldId}
                     label="Value"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required
                     defaultValue={value.value}
                     InputLabelProps={{shrink: true}}
+                    onChange={e => handleChange(e, valueFieldId)}
                 />
             </Grid>
             <Grid item xs>
@@ -75,7 +80,8 @@ const SingleDetail = (props) => {
 SingleDetail.propTypes = {
     index: number.isRequired,
     value: object.isRequired,
-    removeDetails: func.isRequired
+    removeDetails: func.isRequired,
+    handleChange: func.isRequired
 };
 
 export default SingleDetail;

@@ -22,14 +22,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SingleHeading = (props) => {
-    const {
+const SingleHeading = ({
         index,
         value,
-        removeHeading
-    } = props;
-
+        removeHeading,
+        handleChange
+}) => {
     const classes = useStyles();
+    const fieldId = `heading-${index}`;
 
     return (
         <Grid
@@ -38,13 +38,14 @@ const SingleHeading = (props) => {
         >
             <Grid item xs={9}>
                 <TextField
-                    id={`heading-${index}`}
+                    id={fieldId}
                     label="Heading"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required
                     defaultValue={value}
                     InputLabelProps={{shrink: true}}
+                    onChange={e => handleChange(e, fieldId)}
                 />
             </Grid>
             <Grid item xs>
@@ -64,7 +65,8 @@ const SingleHeading = (props) => {
 SingleHeading.propTypes = {
     index: number.isRequired,
     value: string.isRequired,
-    removeHeading: func.isRequired
+    removeHeading: func.isRequired,
+    handleChange: func.isRequired
 };
 
 export default SingleHeading;

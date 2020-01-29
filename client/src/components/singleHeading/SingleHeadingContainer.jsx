@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import {
-    array
+    array,
+    func
 } from "prop-types";
 import { Button } from "@material-ui/core";
 import { concat } from "lodash";
@@ -17,26 +18,30 @@ class SingleHeadingContainer extends Component {
     }
 
     componentDidMount() {
-        const { heading } = this.props;
+        const { heading, handleChange } = this.props;
         const localHeading = heading.map((item, index) => (
             <SingleHeading
                 index={index}
                 value={item}
                 key={index}
                 removeHeading={this.handleRemoveHadingItem}
+                handleChange={handleChange}
             />
         ));
         this.setState({localHeading});
     }
 
     handleRemoveHadingItem = (index) => {
+        const { removeHeadingItem } = this.props;
         const { localHeading } = this.state;
         const newLocalHeading = localHeading.filter(item => item.props.index !== index);
         this.setState({localHeading: newLocalHeading});
+        removeHeadingItem(index);
     };
 
     handleAddHadingItem = () => {
         const { localHeading } = this.state;
+        const { handleChange } = this.props;
         const index = localHeading.length > 0
             ? localHeading[localHeading.length - 1].props.index + 1
             : 0;
@@ -45,6 +50,7 @@ class SingleHeadingContainer extends Component {
             value=""
             key={index}
             removeHeading={this.handleRemoveHadingItem}
+            handleChange={handleChange}
         />);
         const newLocalHeading = concat(localHeading, newHeading);
         this.setState({localHeading: newLocalHeading});
@@ -70,7 +76,9 @@ class SingleHeadingContainer extends Component {
 }
 
 SingleHeadingContainer.propTypes = {
-    heading: array.isRequired
+    heading: array.isRequired,
+    handleChange: func.isRequired,
+    removeHeadingItem: func.isRequired
 };
 
 export default SingleHeadingContainer;
