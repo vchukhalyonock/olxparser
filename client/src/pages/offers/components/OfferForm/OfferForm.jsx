@@ -5,7 +5,9 @@ import React,
 } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { isObject } from "lodash";
+import {
+    concat
+} from "lodash";
 import {
     Button,
     TextField,
@@ -21,6 +23,8 @@ import {
 } from "../../../../actions/offers";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
+import { SingleHeadingContainer } from "../../../../components/singleHeading";
+import { SingleDetailContainer } from "../../../../components/singleDetail";
 
 const styles = theme => ({
     textField: {
@@ -30,7 +34,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-    },
+    }
 });
 
 class OfferForm extends Component {
@@ -45,7 +49,7 @@ class OfferForm extends Component {
             price: undefined,
             description: undefined,
             images: undefined,
-            details: undefined
+            details: undefined,
         };
 
         const {
@@ -55,6 +59,25 @@ class OfferForm extends Component {
         onGetOffer(offerId);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.offer !== this.props.offer) {
+            if(nextProps.offer.heading) {
+                const newHeading = nextProps.offer.heading.map((item, index) => ({
+                    index,
+                    value: item
+                }));
+                this.setState({heading: newHeading});
+            }
+
+            if(nextProps.offer.details) {
+                const newDetails = nextProps.offer.details.map((item, index) => ({
+                    index,
+                    ...item
+                }));
+                this.setState({details: newDetails});
+            }
+        }
+    }
 
     setRedirect  = () => {
         this.setState({redirect: true});
@@ -86,34 +109,20 @@ class OfferForm extends Component {
         const { offer, onUpdateOffer } = this.props;
 
         const newOffer = {
-            heading: this.state.heading ? this.state.heading.split("/") : offer.heading,
+            heading: this.state.heading.map(item => item.value),
             url: this.state.url ? this.state.url : offer.url,
             title: this.state.title ? this.state.title : offer.title,
             price: this.state.price ? this.state.price : `${offer.price.amount.replace(' ', '')} ${offer.price.volume}`,
             description: this.state.description ? this.state.description : offer.description,
             importRequestId: offer.importRequestId,
             images: offer.images,
-            details: this.state.details ? this.state.details.split("|") : offer.details,
+            details: this.state.details.map(item => ({
+                measure: item.measure,
+                value: item.value
+            })),
             createdAt: offer.createdAt,
             _id: offer._id
         };
-
-        newOffer.details = newOffer.details
-            .map(detail => {
-                if(!isObject(detail)) {
-                    const parts = detail.split(":");
-                    if (parts.length > 1) {
-                        return {
-                            measure: parts[0].trim(),
-                            value: parts[1].trim()
-                        }
-                    }
-
-                    return null;
-                }
-                return detail;
-            })
-            .filter(item => item != null);
 
         const priceParts = newOffer.price.split(" ");
         if(priceParts.length > 1) {
@@ -134,6 +143,64 @@ class OfferForm extends Component {
         this.setState(newState);
     };
 
+    handleDetailsChange = (event, detailsFieldId) => {
+        const { details } = this.state;
+        let newDetails = details === undefined ? [] : details.map(item => item);
+        const match = detailsFieldId.match(/detail-(measure|value)-([0-9]+)/);
+        const fieldType = match[1];
+        const index = match[2];
+        const detailItemArray = newDetails.filter(item => item.index === index);
+        const detailItem = detailItemArray.length > 0 ? detailItemArray[0] : { index };
+        if(fieldType === 'measure') {
+            detailItem.measure = event.target.value;
+        } else {
+            detailItem.value = event.target.value;
+        }
+
+        if(detailItemArray.length === 0) {
+            newDetails = concat(newDetails, detailItem);
+        }
+
+        this.setState({details: newDetails});
+    };
+
+    handleHeadingChange = (event, headingFieldId) => {
+        const { heading } = this.state;
+        let newHeading = heading === undefined ? [] : heading.map(item => item);
+        const index = headingFieldId.match(/heading-([0-9]+)/)[1];
+        const headingItem = {
+            index,
+            value: event.target.value
+        };
+        let changed = false;
+        newHeading = newHeading.map(item => {
+            if(item.index === index) {
+                item.value = headingItem.value;
+                changed = true;
+            }
+
+            return item;
+        });
+
+        if(!changed) {
+            newHeading = concat(newHeading, headingItem);
+        }
+
+        this.setState({heading: newHeading});
+    };
+
+    handleRemoveHeadingItem = (index) => {
+        const { heading } = this.state;
+        const newHeading = heading.filter(item => +item.index !== index)
+        this.setState({ heading: newHeading });
+    };
+
+
+    handleRemoveDetailItem = (index) => {
+        const { details } = this.state;
+        const newDetails = details.filter(item => +item.index !== index);
+        this.setState({ details: newDetails });
+    };
 
     render() {
         const {
@@ -141,6 +208,7 @@ class OfferForm extends Component {
             classes,
             onCreateTitle
         } = this.props;
+
         onCreateTitle(`Edit offer ${offer._id} for ${offer.importRequest ? offer.importRequest.email : undefined} account`);
 
         if(offer) {
@@ -173,38 +241,30 @@ class OfferForm extends Component {
                             label="Description"
                             className={classes.textField}
                             margin="normal"
-                            required
                             multiline
                             rows={4}
                             onChange={e => this.handleAllChange(e, "description")}
                             defaultValue={offer.description}
                             InputLabelProps={{shrink: true}}
                         />
-                        <TextField
-                            id="heading"
-                            label="Heading"
-                            className={classes.textField}
-                            margin="normal"
-                            required
-                            onChange={e => this.handleAllChange(e, "heading")}
-                            defaultValue={offer.heading ? offer.heading.join("/") : undefined}
-                            InputLabelProps={{shrink: true}}
+                        <hr/>
+                        <SingleHeadingContainer
+                            heading={offer.heading ? offer.heading : []}
+                            handleChange={this.handleHeadingChange}
+                            removeHeadingItem={this.handleRemoveHeadingItem}
                         />
-                        <TextField
-                            id="details"
-                            label="Details"
-                            className={classes.textField}
-                            margin="normal"
-                            onChange={e => this.handleAllChange(e, "details")}
-                            defaultValue={offer.details ? offer.details.map(details => (`${details.measure} : ${details.value}`)).join("|") : undefined}
-                            InputLabelProps={{shrink: true}}
+                        <hr/>
+                        <SingleDetailContainer
+                            details={offer.details ? offer.details : []}
+                            handleChange={this.handleDetailsChange}
+                            removeDetailItem={this.handleRemoveDetailItem}
                         />
+                        <hr/>
                         <TextField
                             id="price"
                             label="Price"
                             className={classes.textField}
                             margin="normal"
-                            required
                             onChange={e => this.handleAllChange(e, "price")}
                             defaultValue={offer.price ? `${offer.price.amount.replace(' ', '')} ${offer.price.volume}` : ''}
                             InputLabelProps={{shrink: true}}
