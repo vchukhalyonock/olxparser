@@ -39,7 +39,7 @@ const SingleDetail = (props) => {
             <Grid item xs={4}>
                 <TextField
                     id={`detail-measure-${index}`}
-                    label={`Measure ${index}`}
+                    label="Measure"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required
@@ -50,7 +50,7 @@ const SingleDetail = (props) => {
             <Grid item xs={5}>
                 <TextField
                     id={`detail-value-${index}`}
-                    label={`Value ${index}`}
+                    label="Value"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required

@@ -39,7 +39,7 @@ const SingleHeading = (props) => {
             <Grid item xs={9}>
                 <TextField
                     id={`heading-${index}`}
-                    label={`Heading ${index}`}
+                    label="Heading"
                     className={classes.textFieldHeading}
                     margin="normal"
                     required
