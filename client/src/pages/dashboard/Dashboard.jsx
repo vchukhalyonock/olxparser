@@ -6,8 +6,6 @@ import {
     Paper,
 } from '@material-ui/core';
 
-import Orders from '../../components/orders';
-
 const useStyles = makeStyles(theme => ({
     container: {
         paddingTop: theme.spacing(4),
@@ -30,7 +28,6 @@ export default function Dashboard() {
                 {/* Recent Orders */}
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <Orders />
                     </Paper>
                 </Grid>
             </Grid>
