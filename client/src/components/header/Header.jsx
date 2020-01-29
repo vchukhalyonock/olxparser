@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import PropTypes, { string } from 'prop-types';
 import {
     AppBar,
-    Badge,
     CssBaseline,
     Divider,
     Drawer,
@@ -15,8 +14,7 @@ import {
 import clsx from "clsx";
 import {
     ChevronLeft as ChevronLeftIcon,
-    Menu as MenuIcon,
-    Notifications as NotificationsIcon
+    Menu as MenuIcon
 } from "@material-ui/icons";
 import { APPLICATION_NAME } from "../../constants/titles";
 import MenuItems from "../menuItems";
