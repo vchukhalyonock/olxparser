@@ -1,3 +1,8 @@
 import SingleDetail from './SingleDetail';
-export default SingleDetail;
+import SingleDetailContainer from "./SingleDetailContainer";
+
+export {
+    SingleDetail,
+    SingleDetailContainer
+};
 

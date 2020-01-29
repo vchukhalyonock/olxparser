@@ -22,7 +22,7 @@ import {
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
 import { SingleHeadingContainer } from "../../../../components/singleHeading";
-import SingleDetail from "../../../../components/singleDetail";
+import { SingleDetailContainer } from "../../../../components/singleDetail";
 
 const styles = theme => ({
     textField: {
@@ -185,11 +185,7 @@ class OfferForm extends Component {
                             heading={offer.heading ? offer.heading : []}
                         />
                         <hr/>
-                        <h3>Details</h3>
-                        {offer.details && offer.details.map((item, index) => (
-                            <SingleDetail index={index} value={item} key={index}/>
-                        ))}
-                        <Button variant="contained" color="primary">+</Button>
+                        <SingleDetailContainer details={offer.details ? offer.details : []}/>
                         <hr/>
                         <TextField
                             id="price"

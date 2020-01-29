@@ -36,7 +36,6 @@ class SingleHeadingContainer extends Component {
     };
 
     handleAddHadingItem = () => {
-        console.log("Add item");
         const { localHeading } = this.state;
         const index = localHeading.length > 0
             ? localHeading[localHeading.length - 1].props.index + 1

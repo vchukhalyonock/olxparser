@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    func,
     number,
     object
 } from "prop-types";
@@ -24,7 +25,8 @@ const useStyles = makeStyles(theme => ({
 const SingleDetail = (props) => {
     const {
         index,
-        value
+        value,
+        removeDetails
     } = props;
 
     const classes = useStyles();
@@ -61,6 +63,7 @@ const SingleDetail = (props) => {
                     variant="contained"
                     color="secondary"
                     className={classes.deleteHeadingButton}
+                    onClick={() => removeDetails(index)}
                 >
                     -
                 </Button>
@@ -72,6 +75,7 @@ const SingleDetail = (props) => {
 SingleDetail.propTypes = {
     index: number.isRequired,
     value: object.isRequired,
+    removeDetails: func.isRequired
 };
 
 export default SingleDetail;
