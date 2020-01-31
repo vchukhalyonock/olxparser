@@ -11,7 +11,7 @@ const OfferSchema = new Schema({
     phone: String,
     price: Object,
     title: String,
-    uri: String,
+    url: String,
     images: Array,
     importRequestId: String,
     createdAt: Date
