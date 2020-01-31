@@ -3,12 +3,14 @@ import DefaultController from './DefaultController';
 import ImportRequestsController from './ImportRequestsController';
 import AuthController from './AuthController';
 import OffersController from './OffersController';
+import ImportController from "./ExportController";
 
 const controllers = {
     DefaultController,
     ImportRequestsController,
     AuthController,
-    OffersController
+    OffersController,
+    ImportController
 };
 
 export function initControllers(router) {
