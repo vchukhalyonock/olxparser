@@ -35,11 +35,19 @@ class ExportController extends Controller {
             throw new Error("Not found", 404);
         }
 
-        const offers = await OffersModel
-            .find({ importRequestId })
-            .where('_id')
-            .in(offersIds)
-            .exec();
+        let offers;
+
+        if(offersIds.length === 0) {
+            offers = await OffersModel
+                .find({ importRequestId })
+                .exec();
+        } else {
+            offers = await OffersModel
+                .find({ importRequestId })
+                .where('_id')
+                .in(offersIds)
+                .exec();
+        }
 
         const YML = YMLConverter(importRequest, offers);
 

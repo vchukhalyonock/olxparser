@@ -24,7 +24,7 @@ export const currencyAssoc = [
     },
     {
         names: ['eur', '€'],
-        id: 'UER'
+        id: 'EUR'
     }
 ];
 
