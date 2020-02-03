@@ -1,7 +1,12 @@
 import { LOCAL_STORAGE_TOKEN } from "../actions/auth";
 import { METHODS } from "../constants/methods";
 
-export default async function (url, method, data = undefined) {
+export const DATA_TYPE = {
+    JSON: 'json',
+    XML: 'xml'
+};
+
+export default async function (url, method, data = undefined, dataType = DATA_TYPE.JSON) {
     let convertedUrl = url;
 
     const headers = {
@@ -31,7 +36,18 @@ export default async function (url, method, data = undefined) {
     let responseData = false;
 
     if(response.ok) {
-        responseData = await response.json();
+        switch (dataType) {
+            case DATA_TYPE.JSON:
+                responseData = await response.json();
+                break;
+
+            case DATA_TYPE.XML:
+                responseData = await response.text();
+                break;
+
+            default:
+                break;
+        }
     }
 
     return responseData;

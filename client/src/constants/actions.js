@@ -14,3 +14,5 @@ export const GET_OFFERS = "GET_OFFERS";
 export const GET_OFFER = "GET_OFFER";
 export const DELETE_OFFER = "DELETE_OFFER";
 export const UPDATE_OFFER = "UPDATE_OFFER";
+export const EXPORT_OFFERS = "EXPORT_OFFERS";
+
