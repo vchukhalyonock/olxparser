@@ -3,11 +3,13 @@ import {
     GET_OFFERS,
     GET_OFFER,
     UPDATE_OFFER,
-    DELETE_OFFER
+    DELETE_OFFER,
+    EXPORT_OFFERS
 } from "../constants/actions";
 import {
     OFFER_URL,
-    OFFERS_URL
+    OFFERS_URL,
+    EXPORT_YANDEX_MARKET_URL
 } from "../constants/urls";
 import config from "../config";
 import rest from "../utils/rest";
@@ -45,9 +47,22 @@ const deleteOffer = id => async dispatch => {
     dispatch({ type: DELETE_OFFER, payload: { id } });
 };
 
+const exportOffers = (importRequestId, offerIds) => async dispatch => {
+    const responseData = await rest(
+        EXPORT_YANDEX_MARKET_URL,
+        METHODS.POST,
+        {
+            importRequestId,
+            offerIds
+        }
+    );
+    dispatch({ type: EXPORT_OFFERS, payload: responseData});
+};
+
 export {
     getOffer,
     getOffers,
     updateOffer,
-    deleteOffer
+    deleteOffer,
+    exportOffers
 }
