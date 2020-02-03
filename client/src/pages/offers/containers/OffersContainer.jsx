@@ -81,7 +81,6 @@ class OffersContainer extends Component {
     };
 
     exportSelectedHandler = () => {
-        console.log("SelectedItems", this.state.selectedItems);
         const offersIds = this.state.selectedItems;
         const importRequestId = this.props.match.params.importRequestId;
 
@@ -102,7 +101,21 @@ class OffersContainer extends Component {
     };
 
     exportAllHandler = () => {
-
+        const importRequestId = this.props.match.params.importRequestId;
+        rest(
+            `${config.backendUrl}${EXPORT_YANDEX_MARKET_URL}`,
+            METHODS.POST,
+            {
+                importRequestId,
+                offersIds: []
+            },
+            DATA_TYPE.XML
+        ).then((response) => {
+            const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
+            saveAs(blob, `${importRequestId}_export_all_${moment().format("DD_MM_YYYY_hh_mm")}.yml`);
+        }).catch((error) => {
+            console.log(error);
+        });
     };
 
     render() {
