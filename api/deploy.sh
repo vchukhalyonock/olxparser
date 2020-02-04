@@ -18,6 +18,6 @@ echo "Remove local arch....."
 rm backend_build.tgz
 
 echo "Extract and run on remote...."
-ssh adm-14@46.149.86.128 -p 4422  'cd ~ && tar xvfz backend_build.tgz && pm2 restart dist/index'
+ssh adm-14@46.149.86.128 -p 4422  'cd ~ && tar xvfz backend_build.tgz'
 
 echo "Finished"
