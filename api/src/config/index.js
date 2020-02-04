@@ -4,7 +4,7 @@ export default {
         password: 'adminka'
     },
     mongodb: {
-        host: 'mongo',
+        host: 'localhost',
         port: '27017',
         dbname: 'olxparser',
         user: 'olxparser',
