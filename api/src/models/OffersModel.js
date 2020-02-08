@@ -13,6 +13,7 @@ const OfferSchema = new Schema({
     title: String,
     url: String,
     images: Array,
+    srcImages: Array,
     importRequestId: String,
     createdAt: Date
 });
