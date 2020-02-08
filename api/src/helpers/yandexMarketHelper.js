@@ -80,5 +80,6 @@ const convertOffer = (offer, categoryId) => ({
         categoryId: toString(categoryId),
         name: truncate(offer.title, {length: 120}),
         description: offer.description,
-        param: offer.details.map(({measure, value}) => ({ name: measure, value }))
+        param: offer.details.map(({measure, value}) => ({ name: measure, value })),
+        picture: offer.images
     });
