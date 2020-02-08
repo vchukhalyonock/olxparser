@@ -37,12 +37,7 @@ class OfferDetails extends Component {
         const { offerId, onGetOffer } = this.props;
         onGetOffer(offerId);
     }
-
-    /* componentDidMount() {
-        const { offerId, onGetOffer } = this.props;
-        onGetOffer(offerId);
-    }*/
-
+    
     render() {
         const {
             offer: {
@@ -50,7 +45,7 @@ class OfferDetails extends Component {
                 heading,
                 description,
                 price,
-                images,
+                srcImages,
                 details,
                 importRequestId
             },
@@ -72,10 +67,10 @@ class OfferDetails extends Component {
                         ? details.map((detail, index) => (<Typography key={index}>{detail.measure} : {detail.value}</Typography>))
                         : undefined
                 }
-                {images
+                {srcImages
                     ? (<div className={classes.root}>
                         <GridList cellHeight={160} className={classes.gridList} cols={5}>
-                            {images.map(tile => (
+                            {srcImages.map(tile => (
                                 <GridListTile key={tile} cols={1}>
                                     <img src={tile} alt={title} />
                                 </GridListTile>
