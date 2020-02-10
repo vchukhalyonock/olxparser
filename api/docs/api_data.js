@@ -558,5 +558,327 @@ define({ "api": [
     "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PutImportRequestStatus"
+  },
+  {
+    "type": "delete",
+    "url": "/offers/offer/:id",
+    "title": "deleteOffer",
+    "group": "Offers",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"ImportRequest\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "DeleteOffersOfferId"
+  },
+  {
+    "type": "get",
+    "url": "/offers/:importRequestId",
+    "title": "getAllOffers",
+    "group": "Offers",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "importRequestId",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "search",
+            "description": "<p>search string</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "order",
+            "description": "<p>order direction 'asc' or 'desc'</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "orderBy",
+            "description": "<p>order by field. description, phone, title, url, createdAt, importRequestId</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": \"success\",\n\"items\": [\n{\n     \"heading\": [\n         \"Объявление Любомль\",\n         \"Запчасти для транспорта Любомль\",\n         \"Автозапчасти и аксессуары Любомль\",\n         \"Автозапчасти Любомль\"\n     ],\n     \"details\": [\n         {\n             \"measure\": \"Объявление от\",\n             \"value\": \"Частного лица\"\n         },\n         {\n             \"measure\": \"Тип запчасти / аксессуара\",\n             \"value\": \"Автозапчасти\"\n         },\n         {\n             \"measure\": \"Состояние\",\n             \"value\": \"Б/у\"\n         },\n         {\n             \"measure\": \"Вид запчасти\",\n             \"value\": \"Кузовные детали\"\n         }\n     ],\n     \"images\": [\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/knvcp49p86y42-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/xxk3kdbfi9rg2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/s7hfrs49firi2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/mh5100g3hc0b2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/7nnjq46xde3y-UA/image;s=644x461\"\n     ],\n     \"_id\": \"5e33e43c53ee0c235830424a\",\n     \"description\": \"В наличиї есть все запчастини по Audi Q7.\\nДетальна информация по тел.  688 - Показать номер -\",\n     \"phone\": \"380 688 282085\",\n     \"price\": {\n         \"amount\": \"15 000\",\n         \"volume\": \"грн.\"\n     },\n     \"title\": \"Морда, фары, капот, дверіAudi Q7 запчасти\",\n     \"url\": \"https://www.olx.ua/obyavlenie/morda-fary-kapot-dveraudi-q7-zapchasti-IDFCo4r.html?sd=1#e644acc915\",\n     \"importRequestId\": \"5e33f3fc4b180800249037d0\",\n     \"createdAt\": \"2020-01-31T08:24:28.246Z\",\n     \"__v\": 0\n},\n.....\n],\n\"total\": 15\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n     \"status\": 404,\n     \"errors\": \"Resource not found\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "GetOffersImportrequestid"
+  },
+  {
+    "type": "get",
+    "url": "/offers/offer/:id",
+    "title": "getOffer",
+    "group": "Offers",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": \"success\",\n\"item\":\n{\n     \"heading\": [\n         \"Объявление Любомль\",\n         \"Запчасти для транспорта Любомль\",\n         \"Автозапчасти и аксессуары Любомль\",\n         \"Автозапчасти Любомль\"\n     ],\n     \"details\": [\n         {\n             \"measure\": \"Объявление от\",\n             \"value\": \"Частного лица\"\n         },\n         {\n             \"measure\": \"Тип запчасти / аксессуара\",\n             \"value\": \"Автозапчасти\"\n         },\n         {\n             \"measure\": \"Состояние\",\n             \"value\": \"Б/у\"\n         },\n         {\n             \"measure\": \"Вид запчасти\",\n             \"value\": \"Кузовные детали\"\n         }\n     ],\n     \"images\": [\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\",\n         \"http://192.168.2.50/qweqdqdqe134234123/134234-23423-rdsd-w-rfwerr/1.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/knvcp49p86y42-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/xxk3kdbfi9rg2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/s7hfrs49firi2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/mh5100g3hc0b2-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/7nnjq46xde3y-UA/image;s=644x461\"\n     ],\n     \"_id\": \"5e33e43c53ee0c235830424a\",\n     \"description\": \"В наличиї есть все запчастини по Audi Q7.\\nДетальна информация по тел.  688 - Показать номер -\",\n     \"phone\": \"380 688 282085\",\n     \"price\": {\n         \"amount\": \"15 000\",\n         \"volume\": \"грн.\"\n     },\n     \"title\": \"Морда, фары, капот, дверіAudi Q7 запчасти\",\n     \"url\": \"https://www.olx.ua/obyavlenie/morda-fary-kapot-dveraudi-q7-zapchasti-IDFCo4r.html?sd=1#e644acc915\",\n     \"importRequestId\": \"5e33f3fc4b180800249037d0\",\n     \"createdAt\": \"2020-01-31T08:24:28.246Z\",\n     \"__v\": 0\n}\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n     \"status\": 404,\n     \"errors\": \"Resource not found\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "GetOffersOfferId"
+  },
+  {
+    "type": "put",
+    "url": "/offers/offer",
+    "title": "updateOffer",
+    "group": "Offers",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>import request ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     \"heading\":[\n         \"Объявление Узин\",\n         \"Электроника Узин\",\n         \"Аудиотехника Узин\",\n         \"Магнитолы Узин\"\n     ],\n     \"url\":\"https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted\",\n     \"title\":\"Бобинный магнитофон Dokorder 1140 (19, 38 скорость)\",\n     \"price\":{\n         \"amount\":\"3900\",\n         \"volume\":\"$\"\n     },\n     \"description\":\"Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии.\n             В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.\",\n     \"importRequestId\":\"5e3d5113669ecc3dcd489823\",\n     \"images\":[\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg\",\n          \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/5hk0vi4qdstv-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/w6m0hm7qlb0o1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/rm8jemxtpfzd-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/40pacxt1q4gl3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/2b2gnzyekowc3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/26hxjiwna67v1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/cbb6thpmrk8i1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/e6hwy3g6ujje3-UA/image;s=644x461\"\n     ],\n     \"details\":[\n         {\n             \"measure\":\"Объявление от\",\n             \"value\":\"Бизнес\"\n         },\n         {\n             \"measure\":\"Вид аудиотехники\",\n             \"value\":\"Магнитолы\"\n         },\n         {\n             \"measure\":\"Состояние\",\n             \"value\":\"Б/у\"\n         }\n     ],\n     \"createdAt\":\"2020-02-08T10:53:08.606Z\",\n     \"_id\":\"5e3e931423e2900e0422a96f\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"OFFERS\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "PutOffersOffer"
   }
 ] });
