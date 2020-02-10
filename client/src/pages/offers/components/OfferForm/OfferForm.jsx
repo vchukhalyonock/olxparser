@@ -49,6 +49,7 @@ class OfferForm extends Component {
             price: undefined,
             description: undefined,
             images: undefined,
+            srcImages: undefined,
             details: undefined,
         };
 
@@ -98,6 +99,7 @@ class OfferForm extends Component {
             price: undefined,
             description: undefined,
             images: undefined,
+            srcImages: undefined,
             details: undefined
         };
         this.setState(newState);
@@ -116,6 +118,7 @@ class OfferForm extends Component {
             description: this.state.description ? this.state.description : offer.description,
             importRequestId: offer.importRequestId,
             images: offer.images,
+            srcImages: offer.srcImages,
             details: this.state.details.map(item => ({
                 measure: item.measure,
                 value: item.value
