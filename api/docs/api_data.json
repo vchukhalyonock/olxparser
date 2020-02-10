@@ -62,6 +62,87 @@
     "name": "PostAuth"
   },
   {
+    "type": "post",
+    "url": "/export/yandex-market",
+    "title": "exportAsYandexMarket",
+    "group": "Export",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "importRequestId",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "offersIds",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     \"importRequestId\":\"5e3d5113669ecc3dcd489823\",\n     \"offersIds\":[\n         \"5e3e931423e2900e0422a96e\",\n         \"5e3e931423e2900e0422a96f\"\n     ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n    <yml_catalog date=\"2020-02-10 11:55\">\n        <shop>\n            <name>7@test.com</name>\n            <company>0678106485</company>\n            <url>https://www.olx.ua/list/user/5rd2K/</url>\n            <currencies>\n                <currency id=\"USD\" rate=\"СВ\"/>\n                <currency id=\"UAH\" rate=\"1\"/>\n                <currency id=\"EUR\" rate=\"СВ\"/>\n                </currencies>\n                <delivery-options/>\n                <categories>\n                    <category id=\"1\">Объявление Узин</category>\n                    <category id=\"2\" parentId=\"1\">Электроника Узин</category>\n                    <category id=\"3\" parentId=\"2\">Аудиотехника Узин</category>\n                    <category id=\"4\" parentId=\"3\">Акустические системы Узин</category>\n                    <category id=\"5\" parentId=\"3\">Магнитолы Узин</category>\n                </categories>\n                <offers>\n                    <offer id=\"5e3e931423e2900e0422\" available=\"true\">\n                         <url>https://www.olx.ua/obyavlenie/akustika-rft-IDGYNeE.html?sd=1#dcfb000ef3</url>\n                         <price>2800</price>\n                         <currencyId>UAH</currencyId>\n                         <categoryId>4</categoryId>\n                         <name>Aкустика RFT</name>\n                         <description>\n                             <![CDATA[Акустика RFT. Полностью рабочая. В очень хорошем состоянии. Позже добавлю описание.]]>\n                         </description>\n                         <param name=\"Объявление от\">Бизнес</param>\n                         <param name=\"Вид аудиотехники\">Акустические системы</param>\n                         <param name=\"Состояние\">Б/у</param>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/0.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/1.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/2.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/3.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/4.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/5.jpg</picture>\n                         <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/akustika-rft-IDGYNeE/6.jpg</picture>\n                  </offer>\n                  <offer id=\"5e3e931423e2900e0422\" available=\"true\">\n                      <url>https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted</url>\n                      <price>3900</price>\n                      <currencyId>USD</currencyId>\n                      <categoryId>5</categoryId>\n                      <name>Бобинный магнитофон Dokorder 1140 (19, 38 скорость)</name>\n                      <description>\n                          <![CDATA[Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии. В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.]]>\n                      </description>\n                      <param name=\"Объявление от\">Бизнес</param>\n                      <param name=\"Вид аудиотехники\">Магнитолы</param>\n                      <param name=\"Состояние\">Б/у</param>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg</picture>\n                      <picture>http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg</picture>\n                  </offer>\n              </offers>\n          </shop>\n</yml_catalog>",
+          "type": "xml"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/ExportController.js",
+    "groupTitle": "Export",
+    "name": "PostExportYandexMarket"
+  },
+  {
     "type": "delete",
     "url": "/import-request/:id",
     "title": "deleteImportRequest",
