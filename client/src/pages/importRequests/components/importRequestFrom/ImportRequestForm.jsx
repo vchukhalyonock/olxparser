@@ -17,6 +17,11 @@ import {
 import { IMPORT_REQUESTS_PAGE_PATH } from "../../../../constants/router";
 import { getImportRequest } from "../../../../actions/importRequests";
 import { menuClick } from "../../../../actions/menu";
+import {
+    EMAIL_VALIDATE_REGEX,
+    OLX_URL_VALIDATE_REGEXP,
+    PHONE_VALIDATE_REGEX
+} from "../../../../constants/common";
 
 const styles = theme => ({
     textField: {
@@ -37,7 +42,10 @@ class ImportRequestForm extends Component {
             redirect: false,
             email: undefined,
             phone: undefined,
-            olxAccountUrl: undefined
+            olxAccountUrl: undefined,
+            emailError: false,
+            phoneError: false,
+            urlError: false
         }
     }
 
@@ -77,7 +85,10 @@ class ImportRequestForm extends Component {
         this.setState({
             email: undefined,
             phone: undefined,
-            olxAccountUrl: undefined
+            olxAccountUrl: undefined,
+            emailError: false,
+            phoneError: false,
+            urlError: false
         });
         this.setRedirect();
         event.preventDefault();
@@ -85,6 +96,9 @@ class ImportRequestForm extends Component {
 
 
     IRSubmitHandler = (event) => {
+
+        event.preventDefault();
+        let errors = false;
 
         const converted = {
             email: this.state.email ? this.state.email : this.props.email,
@@ -94,9 +108,31 @@ class ImportRequestForm extends Component {
 
         const { email, phone, olxAccountUrl } = converted;
         const { importRequestId } = this.props;
-        this.props.saveIR(email, phone, olxAccountUrl, importRequestId);
-        this.setRedirect();
-        event.preventDefault();
+
+        const emailError = email.search(EMAIL_VALIDATE_REGEX) === -1;
+        const phoneError = phone.search(PHONE_VALIDATE_REGEX) === -1;
+        const urlError = olxAccountUrl.search(OLX_URL_VALIDATE_REGEXP) === -1;
+
+        if(emailError || phoneError || urlError) {
+            errors = true;
+        }
+
+        if(errors) {
+            const errorState = {
+                emailError,
+                phoneError,
+                urlError
+            };
+            this.setState(errorState);
+        } else {
+            this.setState({
+                emailError: false,
+                phoneError: false,
+                urlError: false
+            });
+            this.props.saveIR(email, phone, olxAccountUrl, importRequestId);
+            this.setRedirect();
+        }
     };
 
     render() {
@@ -108,6 +144,13 @@ class ImportRequestForm extends Component {
             phone,
             t
         } = this.props;
+
+        const {
+            emailError,
+            phoneError,
+            urlError
+        } = this.state;
+
         if(!importRequestId) {
             email = undefined;
             olxAccountUrl = undefined;
@@ -118,6 +161,7 @@ class ImportRequestForm extends Component {
                 {this.renderRedirect()}
                 <form onSubmit={this.IRSubmitHandler}>
                     <TextField
+                        error={emailError}
                         id="email"
                         label="Email"
                         className={classes.textField}
@@ -128,6 +172,7 @@ class ImportRequestForm extends Component {
                         InputLabelProps={{shrink: true}}
                     />
                     <TextField
+                        error={phoneError}
                         id="phone"
                         label="Phone"
                         className={classes.textField}
@@ -138,6 +183,7 @@ class ImportRequestForm extends Component {
                         InputLabelProps={{shrink: true}}
                     />
                     <TextField
+                        error={urlError}
                         id="olxLink"
                         label="OLX Link"
                         className={classes.textField}
