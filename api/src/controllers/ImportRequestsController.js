@@ -44,12 +44,56 @@ class ImportRequestsController extends Controller {
         ]
     }
 
+    /**
+     * @api {post} /import-request createImportRequest
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} email
+     * @apiParam {String} phone
+     * @apiParam {String} olxAccountUrl
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *     "email": "test@test.com",
+     *     "phone": "322223322",
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "status": 500,
+     *     "errors": "Invalid params"
+     * }
+     */
     async addImportRequest(req, res, next) {
         const importRequest = {
             ...req.body,
             status: REQUEST_STATUS.NEW,
             requestedAt: new Date(),
         };
+
+        if(!importRequest.email || !importRequest.phone || !importRequest.olxAccountUrl) {
+            next(new Error("Invalid params"));
+        }
+
         const importRequestModel = new ImportRequestModel(importRequest);
         try {
             await importRequestModel.save();
@@ -62,8 +106,61 @@ class ImportRequestsController extends Controller {
     }
 
 
+
+    /**
+     * @api {put} /import-request updateImportRequest
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} _id import request ID
+     * @apiParam {String} email
+     * @apiParam {String} phone
+     * @apiParam {String} olxAccountUrl
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *     "_id": "5e412380ea93af05d584bb2b",
+     *     "email": "test@test.com",
+     *     "phone": "322223322",
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "status": 500,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async updateImportRequest(req, res, next) {
         const newRequest = req.body;
+
+        if(!newRequest.email || !newRequest.phone || !newRequest.olxAccountUrl || !newRequest._id) {
+            next(new Error("Invalid params"));
+        }
+
         try {
             await ImportRequestModel.updateOne({_id: newRequest._id}, newRequest).exec();
         } catch (e) {
@@ -74,8 +171,57 @@ class ImportRequestsController extends Controller {
         return res.json({status: "success"});
     }
 
+
+    /**
+     * @api {put} /import-request/status updateImportRequestStatus
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id import request ID
+     * @apiParam {String} status import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *     "id": "5e412380ea93af05d584bb2b",
+     *     "status": "DONE",
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "status": 500,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async updateImportRequestStatus(req, res, next) {
         const { id, status } = req.body;
+
+        if(!id || !status) {
+            next(new Error("Invalid params"));
+        }
+
         try {
             const importRequest = await ImportRequestModel.findOne({_id: id}).exec();
             if(importRequest) {
@@ -91,6 +237,56 @@ class ImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {get} /import-request getAllImportRequest
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} limit
+     * @apiParam {Number} offset
+     * @apiParam {String} [search] search string
+     * @apiParam {String} [order] order direction 'asc' or 'desc'
+     * @apiParam {String} [orderBy] order by field. email, phone, olxAccountUrl, status, requestedAt
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "items": [
+     *      {
+     *          "_id": "5e33f3024b180800249037cd",
+     *          "email": "rus@mail.com",
+     *          "olxAccountUrl": "https://ruslanif.olx.ua/",
+     *          "phone": "+380980900367",
+     *          "status": "NEW",
+     *          "requestedAt": "2020-01-31T09:27:30.112Z",
+     *          "__v": 0
+     *      },
+     *      {
+     *          "_id": "5e33f35d4b180800249037ce",
+     *          "email": "euro@test.com",
+     *          "olxAccountUrl": "https://europedivan.olx.ua/shop/",
+     *          "phone": "0969382848",
+     *          "status": "DONE",
+     *          "requestedAt": "2020-01-31T09:29:01.712Z",
+     *          "__v": 0
+     *      },
+     *      ],
+     *      "total": 10
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     */
     async getImportRequests(req, res, next) {
         const {
             limit,
@@ -149,6 +345,46 @@ class ImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {get} /import-request/:id getImportRequest
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "item": {
+     *          "_id": "5e33f3024b180800249037cd",
+     *          "email": "rus@mail.com",
+     *          "olxAccountUrl": "https://ruslanif.olx.ua/",
+     *          "phone": "+380980900367",
+     *          "status": "NEW",
+     *          "requestedAt": "2020-01-31T09:27:30.112Z",
+     *          "__v": 0
+     *          }
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     *      "status": 404,
+     *      "errors": "Not found"
+     * }
+     */
     async getImportRequest(req, res, next) {
         const { id } = req.params;
         let importRequest = null;
@@ -157,11 +393,7 @@ class ImportRequestsController extends Controller {
             importRequest = await ImportRequestModel.findOne({_id: id}).exec();
         } catch (e) {
             console.log(e);
-            next(e);
-        }
-
-        if(!importRequest) {
-            throw new Error("Not found", 404);
+            next(new Error("Not found", 404));
         }
 
         return res.json({
@@ -170,8 +402,43 @@ class ImportRequestsController extends Controller {
         })
     }
 
+
+    /**
+     * @api {delete} /import-request/:id deleteImportRequest
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async deleteImportRequest(req, res, next) {
         const { id } = req.params;
+
+        if(!id) {
+            next(new Error("Invalid params"));
+        }
+
         try {
             await OffersModel.deleteMany({importRequestId: id}).exec();
             await ImportRequestModel.deleteOne({_id: id}).exec();
