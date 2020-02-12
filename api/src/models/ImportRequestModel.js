@@ -20,6 +20,7 @@ const ImportRequestSchema = new Schema({
     errorMessage: String,
     status: String,
     requestedAt: Date,
+    processedAt: Date
 });
 
 ImportRequestSchema.plugin(mongoosePaginate);
