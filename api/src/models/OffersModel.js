@@ -15,6 +15,8 @@ const OfferSchema = new Schema({
     images: Array,
     srcImages: Array,
     importRequestId: String,
+    headingId: String,
+    headingAsString: String,
     createdAt: Date
 });
 
