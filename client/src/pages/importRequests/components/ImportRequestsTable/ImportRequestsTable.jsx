@@ -80,7 +80,8 @@ class ImportRequestsTable extends Component {
         const {
             props: {
                 getAllImportRequests,
-                getSearchString
+                getSearchString,
+                getFilterString
             },
             state: {
                 itemsPerPage,
@@ -92,6 +93,7 @@ class ImportRequestsTable extends Component {
         } = this;
 
         const search = getSearchString();
+        const filter = getFilterString();
         let offset;
         if(previousSearch !== search.toLowerCase()) {
             offset = 0;
@@ -109,7 +111,8 @@ class ImportRequestsTable extends Component {
             offset,
             search,
             orderBy,
-            order
+            order,
+            filter
         });
     };
 
@@ -375,7 +378,8 @@ class ImportRequestsTable extends Component {
 ImportRequestsTable.propTypes = {
     importRequests: array.isRequired,
     total: number.isRequired,
-    getSearchString: func.isRequired
+    getSearchString: func.isRequired,
+    getFilterString: func.isRequired
 };
 
 ImportRequestsTable.defaultProps = {

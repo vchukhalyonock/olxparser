@@ -55,6 +55,10 @@ class ImportRequestsContainer extends Component {
         return this.state.search;
     };
 
+    getFilterString = () => {
+        return this.state.filter;
+    };
+
     onChangeFilterHandler = (e) => {
         this.setState({filter: e.target.value});
     };
@@ -95,7 +99,10 @@ class ImportRequestsContainer extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <ImportRequestsTable getSearchString={this.getSearchString}/>
+                            <ImportRequestsTable
+                                getSearchString={this.getSearchString}
+                                getFilterString={this.getFilterString}
+                            />
                         </Paper>
                     </Grid>
                 </Grid>
