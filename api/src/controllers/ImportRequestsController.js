@@ -5,7 +5,14 @@ import {
     } from '../models';
 import { REQUEST_STATUS } from "../models/ImportRequestModel";
 import { IMPORT_REQUEST_URL } from "../constants/urls";
+import { FILTER_IMPORT_REQUESTS } from "../constants/common";
 import Error from "../core/Error";
+import {
+    getLastHourDate,
+    getLastDayDate,
+    getLastMonthDate
+} from "../utils/common";
+import { merge } from "lodash";
 
 class ImportRequestsController extends Controller {
 
@@ -247,6 +254,7 @@ class ImportRequestsController extends Controller {
      * @apiParam {String} [search] search string
      * @apiParam {String} [order] order direction 'asc' or 'desc'
      * @apiParam {String} [orderBy] order by field. email, phone, olxAccountUrl, status, requestedAt
+     * @apiParam {String} [filter] filtering by import or processed dates. 'all', 'hour_requested', 'day_requested', 'month_requested', 'hour_processed', 'day_processed', 'month_processed'
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -293,11 +301,69 @@ class ImportRequestsController extends Controller {
             offset,
             search,
             order,
-            orderBy
+            orderBy,
+            filter
         } = req.query;
 
         const queryOrderBy = orderBy === '' ? 'requestedAt' : orderBy;
         const queryOrder = order === '' ? 'desc' : order;
+
+        let queryFilter;
+
+        switch (filter) {
+            case FILTER_IMPORT_REQUESTS.HOUR_REQUESTED:
+                queryFilter = {
+                    requestedAt: {
+                        $gte: getLastHourDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.DAY_REQUESTED:
+                queryFilter = {
+                    requestedAt: {
+                        $gte: getLastDayDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.MONTH_REQUESTED:
+                queryFilter = {
+                    requestedAt: {
+                        $gte: getLastMonthDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.HOUR_PROCESSED:
+                queryFilter = {
+                    processedAt: {
+                        $gte: getLastHourDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.DAY_PROCESSED:
+                queryFilter = {
+                    processedAt: {
+                        $gte: getLastDayDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.MONTH_PROCESSED:
+                queryFilter = {
+                    processedAt: {
+                        $gte: getLastMonthDate()
+                    }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.ALL:
+            default:
+                queryFilter = {};
+                break;
+        }
 
         let query;
         if(search && search.trim()) {
@@ -318,6 +384,8 @@ class ImportRequestsController extends Controller {
         } else {
             query = {};
         }
+
+        query = merge(query, queryFilter);
 
         let importRequests = null;
         let total = 0;

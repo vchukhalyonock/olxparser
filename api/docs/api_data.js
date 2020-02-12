@@ -57,7 +57,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/AuthController.js",
+    "filename": "./src/controllers/AuthController.js",
     "groupTitle": "Authentication",
     "name": "PostAuth"
   },
@@ -138,7 +138,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ExportController.js",
+    "filename": "./src/controllers/ExportController.js",
     "groupTitle": "Export",
     "name": "PostExportYandexMarket"
   },
@@ -205,7 +205,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "DeleteImportRequestId"
   },
@@ -252,6 +252,13 @@ define({ "api": [
             "optional": true,
             "field": "orderBy",
             "description": "<p>order by field. email, phone, olxAccountUrl, status, requestedAt</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "filter",
+            "description": "<p>filtering by import or processed dates. 'all', 'hour_requested', 'day_requested', 'month_requested', 'hour_processed', 'day_processed', 'month_processed'</p>"
           }
         ]
       }
@@ -295,7 +302,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "GetImportRequest"
   },
@@ -362,7 +369,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "GetImportRequestId"
   },
@@ -450,7 +457,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PostImportRequest"
   },
@@ -550,7 +557,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PutImportRequest"
   },
@@ -636,7 +643,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/ImportRequestsController.js",
+    "filename": "./src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PutImportRequestStatus"
   },
@@ -703,7 +710,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/OffersController.js",
+    "filename": "./src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "DeleteOffersOfferId"
   },
@@ -805,7 +812,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/OffersController.js",
+    "filename": "./src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "GetOffersImportrequestid"
   },
@@ -872,7 +879,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/OffersController.js",
+    "filename": "./src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "GetOffersOfferId"
   },
@@ -958,7 +965,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "src/controllers/OffersController.js",
+    "filename": "./src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "PutOffersOffer"
   }
