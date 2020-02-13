@@ -130,7 +130,8 @@ HeadingForm.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    heading: state.headings.single.heading
+    heading: state.headings.single.heading,
+    t: state.headings.single.t
 });
 
 const mapDispatchToProps = dispatch => ({

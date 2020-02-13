@@ -80,7 +80,7 @@ class ImportRequestsContainer extends Component {
                             value={filter}
                         >
                             {filterItems.map(item => (
-                                <MenuItem value={item.value}>{item.option}</MenuItem>
+                                <MenuItem key={item.value} value={item.value}>{item.option}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
