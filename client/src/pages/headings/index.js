@@ -1,7 +1,11 @@
 import reducers from './reducers';
-import { HeadingsContainer } from "./containers";
+import {
+    HeadingsContainer,
+    HeadingFormContainer
+} from "./containers";
 
 export {
     reducers,
-    HeadingsContainer
+    HeadingsContainer,
+    HeadingFormContainer
 }

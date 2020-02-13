@@ -12,10 +12,10 @@ import {
 } from "prop-types";
 import {
     createImportRequest,
-    updateImportRequest
+    updateImportRequest,
+    getImportRequest
 } from "../../../../actions/importRequests";
 import { IMPORT_REQUESTS_PAGE_PATH } from "../../../../constants/router";
-import { getImportRequest } from "../../../../actions/importRequests";
 import { menuClick } from "../../../../actions/menu";
 import {
     EMAIL_VALIDATE_REGEX,

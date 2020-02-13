@@ -13,7 +13,7 @@ import {
 import HeadingsTable from "../components/headingsTable";
 import ListItemLink from "../../../components/listItemLink";
 import Search from "../../../components/search/Search";
-import {CREATE_HEADING_PAGE_PATH, CREATE_IMPORT_REQUEST_PAGE_PATH} from "../../../constants/router";
+import { CREATE_HEADING_PAGE_PATH } from "../../../constants/router";
 import { headingsFilterItems } from "../../../constants/common";
 
 const styles = theme => ({
@@ -78,7 +78,7 @@ class HeadingsContainer extends Component {
                             value={filter}
                         >
                             {headingsFilterItems.map(item => (
-                                <MenuItem value={item.value}>{item.option}</MenuItem>
+                                <MenuItem key={item.value} value={item.value}>{item.option}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>

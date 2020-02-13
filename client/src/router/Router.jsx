@@ -11,7 +11,7 @@ import {
     OFFERS_PAGE_PATH,
     OFFER_DETAILS_PATH,
     EDIT_OFFERS_PAGE_PATH,
-    HEADINGS_PAGE_PATH
+    HEADINGS_PAGE_PATH, CREATE_HEADING_PAGE_PATH, EDIT_HEADINGS_PAGE_PATH
 } from "../constants/router";
 import Dashboard from "../pages/dashboard";
 import {
@@ -24,7 +24,8 @@ import {
     OffersFormContainer
 } from "../pages/offers";
 import {
-    HeadingsContainer
+    HeadingsContainer,
+    HeadingFormContainer
 } from "../pages/headings";
 
 export default () => (
@@ -67,6 +68,16 @@ export default () => (
             exact
             path={HEADINGS_PAGE_PATH}
             component={HeadingsContainer}
+        />
+        <Route
+            exact
+            path={CREATE_HEADING_PAGE_PATH}
+            component={HeadingFormContainer}
+        />
+        <Route
+            exact
+            path={`${EDIT_HEADINGS_PAGE_PATH}/:headingId`}
+            component={HeadingFormContainer}
         />
     </Switch>
 );

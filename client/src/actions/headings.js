@@ -33,12 +33,12 @@ const getHeading = id => async dispatch => {
 
 
 const createHeading = heading => async dispatch => {
-    const responseData = await rest(headingsUrl, METHODS.POST, heading);
+    const responseData = await rest(headingsUrl, METHODS.POST, { heading });
     dispatch({ type: CREATE_HEADING, payload: responseData });
 };
 
 const updateHeading = (id, heading) => async dispatch => {
-    const responseData = await rest(`${headingsUrl}/${id}`, METHODS.PUT, heading);
+    const responseData = await rest(`${headingsUrl}/${id}`, METHODS.PUT, { heading });
     dispatch({ type: UPDATE_HEADING, payload: responseData });
 };
 
