@@ -143,6 +143,225 @@ define({ "api": [
     "name": "PostExportYandexMarket"
   },
   {
+    "type": "delete",
+    "url": "/headings/:id",
+    "title": "deleteHeading",
+    "group": "Headings",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/HeadingController.js",
+    "groupTitle": "Headings",
+    "name": "DeleteHeadingsId"
+  },
+  {
+    "type": "get",
+    "url": "/headings",
+    "title": "getAllHeadings",
+    "group": "Headings",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "search",
+            "description": "<p>search string</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "order",
+            "description": "<p>order direction 'asc' or 'desc'</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "orderBy",
+            "description": "<p>order by field. id, name, createdAt</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\",\n     \"items\": [\n     {\n         \"_id\": 0,\n         \"heading\": \"test/test1/test333\",\n         \"createdAt\": \"2020-02-13T09:55:20.541Z\",\n         \"__v\": 0\n     },\n     {\n         \"_id\": 1,\n         \"heading\": \"test/test1/test22343\",\n         \"createdAt\": \"2020-02-13T09:55:56.949Z\",\n         \"__v\": 0\n     }\n     ],\n     \"total\": 2\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/HeadingController.js",
+    "groupTitle": "Headings",
+    "name": "GetHeadings"
+  },
+  {
+    "type": "get",
+    "url": "/headings/:id",
+    "title": "getHeading",
+    "group": "Headings",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\",\n     \"item\": {\n         \"_id\": 1,\n         \"heading\": \"test/test1/test22343\",\n         \"createdAt\": \"2020-02-13T09:55:56.949Z\",\n         \"__v\": 0\n     }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n     \"status\": 404,\n     \"errors\": \"Not found\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/HeadingController.js",
+    "groupTitle": "Headings",
+    "name": "GetHeadingsId"
+  },
+  {
     "type": "post",
     "url": "/headings",
     "title": "createHeading",
@@ -207,12 +426,12 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Heading already exists!!!\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Heading already exists!!!\"\n}",
           "type": "json"
         }
       ]
@@ -220,6 +439,92 @@ define({ "api": [
     "filename": "./src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "PostHeadings"
+  },
+  {
+    "type": "post",
+    "url": "/headings/:id",
+    "title": "updateHeading",
+    "group": "Headings",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "heading",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     \"heading\": \"test/test1/test322\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Heading already exists!!!\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/HeadingController.js",
+    "groupTitle": "Headings",
+    "name": "PostHeadingsId"
   },
   {
     "type": "delete",

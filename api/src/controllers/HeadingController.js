@@ -36,6 +36,50 @@ class HeadingController extends Controller {
     }
 
 
+    /**
+     * @api {get} /headings getAllHeadings
+     * @apiGroup Headings
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} limit
+     * @apiParam {Number} offset
+     * @apiParam {String} [search] search string
+     * @apiParam {String} [order] order direction 'asc' or 'desc'
+     * @apiParam {String} [orderBy] order by field. id, name, createdAt
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "items": [
+     *      {
+     *          "_id": 0,
+     *          "heading": "test/test1/test333",
+     *          "createdAt": "2020-02-13T09:55:20.541Z",
+     *          "__v": 0
+     *      },
+     *      {
+     *          "_id": 1,
+     *          "heading": "test/test1/test22343",
+     *          "createdAt": "2020-02-13T09:55:56.949Z",
+     *          "__v": 0
+     *      }
+     *      ],
+     *      "total": 2
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     */
     async getHeadings(req, res, next) {
         const {
             query: {
@@ -96,14 +140,56 @@ class HeadingController extends Controller {
     }
 
 
+    /**
+     * @api {get} /headings/:id getHeading
+     * @apiGroup Headings
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "item": {
+     *          "_id": 1,
+     *          "heading": "test/test1/test22343",
+     *          "createdAt": "2020-02-13T09:55:56.949Z",
+     *          "__v": 0
+     *      }
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     *      "status": 404,
+     *      "errors": "Not found"
+     * }
+     *
+     */
     async getHeading(req, res, next) {
         const { id } = req.params;
-        let heading = null;
+        let heading;
 
         try {
             heading = await HeadingModel.findOne({_id: id}).exec();
         } catch (e) {
             console.log(e);
+            return next(new Error("Not found", 404));
+        }
+
+        if(!heading) {
             return next(new Error("Not found", 404));
         }
 
@@ -183,8 +269,51 @@ class HeadingController extends Controller {
     }
 
 
+    /**
+     * @api {post} /headings/:id updateHeading
+     * @apiGroup Headings
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id
+     * @apiParam {String} heading
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *      "heading": "test/test1/test322"
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Heading already exists!!!"
+     * }
+     */
     async updateHeading(req, res, next) {
-        const { id } = req.param;
+        const { id } = req.params;
         const heading = {
             ...req.body
         };
@@ -197,15 +326,11 @@ class HeadingController extends Controller {
             return next(new Error("Heading already exists!!!", 400));
         }
 
-        const session = await HeadingModel.startSession();
-        await session.startTransaction();
-
         try {
             await HeadingModel
-                .updateOne({_id: id}, heading, { session })
+                .updateOne({_id: id}, heading)
                 .exec();
         } catch (e) {
-            await session.abortTransaction();
             console.log(e);
             return next(e);
         }
@@ -214,23 +339,43 @@ class HeadingController extends Controller {
         if(offersIds) {
             try {
                 await OffersModel
-                    .updateMany({ headingId: id }, { headingString: heading.heading }, { session })
+                    .updateMany({ headingId: id }, { headingString: heading.heading })
                     .exec();
             } catch (e) {
-                await session.abortTransaction();
                 console.log(e);
                 return next(e);
             }
         }
 
-        await session.commitTransaction();
-
-        session.endSession();
-
         return res.json({status: 'success'});
     }
 
 
+
+    /**
+     * @api {delete} /headings/:id deleteHeading
+     * @apiGroup Headings
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     */
     async deleteHeading(req, res, next) {
         const { id } = req.params;
 
@@ -238,34 +383,24 @@ class HeadingController extends Controller {
             return next(new Error("Invalid params"));
         }
 
-        if(!await HeadingService.isExist()) {
-            return next(new Error("Not found", 404));
-        }
-
-        const session = await HeadingModel.startSession();
-
         try{
             await HeadingModel
-                .deleteOne({_id: id}, session)
+                .deleteOne({_id: id})
                 .exec();
         } catch (e) {
-            await session.abortTransaction();
             console.log(e);
             return next(e);
         }
 
         try {
             await OffersModel
-                .updateMany({ headingId: id }, { headingId: null, headingString: ''}, session)
+                .updateMany({ headingId: id }, { headingId: null, headingString: ''})
                 .exec();
         } catch (e) {
-            await session.abortTransaction();
             console.log(e);
             return next(e);
         }
 
-
-        await session.commitTransaction();
 
         return res.json({status: 'success'});
     }
