@@ -10,7 +10,7 @@ import {
     FormControl,
     withStyles
 } from "@material-ui/core";
-import HeadingsTable from "../components/HeadingsTable";
+import HeadingsTable from "../components/headingsTable";
 import ListItemLink from "../../../components/listItemLink";
 import Search from "../../../components/search/Search";
 import {CREATE_HEADING_PAGE_PATH, CREATE_IMPORT_REQUEST_PAGE_PATH} from "../../../constants/router";
