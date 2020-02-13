@@ -13,3 +13,11 @@ export const filterItems = [
     { value: 'day_processed', option: 'Last Day Processed' },
     { value: 'month_processed', option: 'Last Month Processed' }
 ];
+
+
+export const headingsFilterItems = [
+    { value: 'all', option: "All" },
+    { value: 'hour', option: 'Last Hour Added' },
+    { value: 'day', option: 'Last Day Added' },
+    { value: 'month', option: 'Last Month Added' },
+];
