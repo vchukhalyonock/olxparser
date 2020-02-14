@@ -372,7 +372,7 @@ class ImportRequestsController extends Controller {
 
             case FILTER_IMPORT_REQUESTS.IN_PROGRESS:
                 queryFilter = {
-                    status: REQUEST_STATUS.IN_PROGRES
+                    status: REQUEST_STATUS.IN_PROGRESS
                 };
                 break;
 
