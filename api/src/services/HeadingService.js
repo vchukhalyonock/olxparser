@@ -41,7 +41,6 @@ class HeadingService {
     getCity(heading) {
         const re = /^\S+\s+(\S+)/g;
         const matches = re.exec(heading);
-        console.log("MATCH", matches);
         if(matches && matches.length > 1) {
             return matches[1];
         } else {
