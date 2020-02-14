@@ -319,14 +319,12 @@ class OffersController extends Controller {
      * @apiGroup Offers
      * @apiVersion 1.0.0
      *
-     * @apiParam {String} id import request ID
-     * @apiParam {String} status import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR
-     *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
      *
      * @apiParamExample {json} Request-Example:
      * {
+     *      _id: "234234aqrlk309e00err",
      *      "heading":[
      *          "Объявление Узин",
      *          "Электроника Узин",
@@ -420,6 +418,98 @@ class OffersController extends Controller {
     }
 
 
+
+    /**
+     * @api {post} /offers createOffer
+     * @apiGroup Offers
+     * @apiVersion 1.0.0
+     *
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *      "heading":[
+     *          "Объявление Узин",
+     *          "Электроника Узин",
+     *          "Аудиотехника Узин",
+     *          "Магнитолы Узин"
+     *      ],
+     *      "url":"https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted",
+     *      "title":"Бобинный магнитофон Dokorder 1140 (19, 38 скорость)",
+     *      "price":{
+     *          "amount":"3900",
+     *          "volume":"$"
+     *      },
+     *      "description":"Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии.
+     *              В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.",
+     *      "importRequestId":"5e3d5113669ecc3dcd489823",
+     *      "images":[
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg",
+     *          "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg",
+     *           "http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg"
+     *      ],
+     *      "srcImages": [
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/5hk0vi4qdstv-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/w6m0hm7qlb0o1-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/rm8jemxtpfzd-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/40pacxt1q4gl3-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/2b2gnzyekowc3-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/26hxjiwna67v1-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/cbb6thpmrk8i1-UA/image;s=644x461",
+     *          "https://apollo-ireland.akamaized.net:443/v1/files/e6hwy3g6ujje3-UA/image;s=644x461"
+     *      ],
+     *      "details":[
+     *          {
+     *              "measure":"Объявление от",
+     *              "value":"Бизнес"
+     *          },
+     *          {
+     *              "measure":"Вид аудиотехники",
+     *              "value":"Магнитолы"
+     *          },
+     *          {
+     *              "measure":"Состояние",
+     *              "value":"Б/у"
+     *          }
+     *      ],
+     *      "createdAt":"2020-02-08T10:53:08.606Z",
+     *      "_id":"5e3e931423e2900e0422a96f"
+     * }
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"OFFERS\""
+     * }
+     */
     async createOffer(req, res, next) {
         const offer = req.body;
         try {

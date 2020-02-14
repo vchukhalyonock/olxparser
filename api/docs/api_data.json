@@ -594,6 +594,73 @@
     "name": "DeleteImportRequestId"
   },
   {
+    "type": "delete",
+    "url": "/import-request/:id/offers",
+    "title": "deleteImportRequestOffers",
+    "group": "ImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"ImportRequest\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/ImportRequestsController.js",
+    "groupTitle": "ImportRequest",
+    "name": "DeleteImportRequestIdOffers"
+  },
+  {
     "type": "get",
     "url": "/import-request",
     "title": "getAllImportRequest",
@@ -1268,38 +1335,11 @@
     "name": "GetOffersOfferId"
   },
   {
-    "type": "put",
-    "url": "/offers/offer",
-    "title": "updateOffer",
+    "type": "post",
+    "url": "/offers",
+    "title": "createOffer",
     "group": "Offers",
     "version": "1.0.0",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "id",
-            "description": "<p>import request ID</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "status",
-            "description": "<p>import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n     \"heading\":[\n         \"Объявление Узин\",\n         \"Электроника Узин\",\n         \"Аудиотехника Узин\",\n         \"Магнитолы Узин\"\n     ],\n     \"url\":\"https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted\",\n     \"title\":\"Бобинный магнитофон Dokorder 1140 (19, 38 скорость)\",\n     \"price\":{\n         \"amount\":\"3900\",\n         \"volume\":\"$\"\n     },\n     \"description\":\"Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии.\n             В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.\",\n     \"importRequestId\":\"5e3d5113669ecc3dcd489823\",\n     \"images\":[\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg\",\n          \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/5hk0vi4qdstv-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/w6m0hm7qlb0o1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/rm8jemxtpfzd-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/40pacxt1q4gl3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/2b2gnzyekowc3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/26hxjiwna67v1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/cbb6thpmrk8i1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/e6hwy3g6ujje3-UA/image;s=644x461\"\n     ],\n     \"details\":[\n         {\n             \"measure\":\"Объявление от\",\n             \"value\":\"Бизнес\"\n         },\n         {\n             \"measure\":\"Вид аудиотехники\",\n             \"value\":\"Магнитолы\"\n         },\n         {\n             \"measure\":\"Состояние\",\n             \"value\":\"Б/у\"\n         }\n     ],\n     \"createdAt\":\"2020-02-08T10:53:08.606Z\",\n     \"_id\":\"5e3e931423e2900e0422a96f\"\n}",
-          "type": "json"
-        }
-      ]
-    },
     "header": {
       "fields": {
         "Header": [
@@ -1320,6 +1360,83 @@
           }
         ]
       }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     \"heading\":[\n         \"Объявление Узин\",\n         \"Электроника Узин\",\n         \"Аудиотехника Узин\",\n         \"Магнитолы Узин\"\n     ],\n     \"url\":\"https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted\",\n     \"title\":\"Бобинный магнитофон Dokorder 1140 (19, 38 скорость)\",\n     \"price\":{\n         \"amount\":\"3900\",\n         \"volume\":\"$\"\n     },\n     \"description\":\"Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии.\n             В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.\",\n     \"importRequestId\":\"5e3d5113669ecc3dcd489823\",\n     \"images\":[\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg\",\n          \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/5hk0vi4qdstv-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/w6m0hm7qlb0o1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/rm8jemxtpfzd-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/40pacxt1q4gl3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/2b2gnzyekowc3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/26hxjiwna67v1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/cbb6thpmrk8i1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/e6hwy3g6ujje3-UA/image;s=644x461\"\n     ],\n     \"details\":[\n         {\n             \"measure\":\"Объявление от\",\n             \"value\":\"Бизнес\"\n         },\n         {\n             \"measure\":\"Вид аудиотехники\",\n             \"value\":\"Магнитолы\"\n         },\n         {\n             \"measure\":\"Состояние\",\n             \"value\":\"Б/у\"\n         }\n     ],\n     \"createdAt\":\"2020-02-08T10:53:08.606Z\",\n     \"_id\":\"5e3e931423e2900e0422a96f\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"OFFERS\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "PostOffers"
+  },
+  {
+    "type": "put",
+    "url": "/offers/offer",
+    "title": "updateOffer",
+    "group": "Offers",
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     _id: \"234234aqrlk309e00err\",\n     \"heading\":[\n         \"Объявление Узин\",\n         \"Электроника Узин\",\n         \"Аудиотехника Узин\",\n         \"Магнитолы Узин\"\n     ],\n     \"url\":\"https://www.olx.ua/obyavlenie/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs.html#dcfb000ef3;promoted\",\n     \"title\":\"Бобинный магнитофон Dokorder 1140 (19, 38 скорость)\",\n     \"price\":{\n         \"amount\":\"3900\",\n         \"volume\":\"$\"\n     },\n     \"description\":\"Топовая модель от фирмы Denki  Onkyo. Состояние головок как новые. Полностью рабочий аппарат в идеальном состоянии.\n             В Гугле очень много информации о данной модели. По записи и воспроизведении многим моделям с более высоким ценником даст фору.\",\n     \"importRequestId\":\"5e3d5113669ecc3dcd489823\",\n     \"images\":[\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/0.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/1.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/2.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/3.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/4.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/5.jpg\",\n         \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/6.jpg\",\n          \"http://192.168.50.110/5e3d5113669ecc3dcd489823/bobinnyy-magnitofon-dokorder-1140-19-38-skorost-IDGYMWs/7.jpg\"\n     ],\n     \"srcImages\": [\n         \"https://apollo-ireland.akamaized.net:443/v1/files/5hk0vi4qdstv-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/w6m0hm7qlb0o1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/rm8jemxtpfzd-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/40pacxt1q4gl3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/2b2gnzyekowc3-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/26hxjiwna67v1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/cbb6thpmrk8i1-UA/image;s=644x461\",\n         \"https://apollo-ireland.akamaized.net:443/v1/files/e6hwy3g6ujje3-UA/image;s=644x461\"\n     ],\n     \"details\":[\n         {\n             \"measure\":\"Объявление от\",\n             \"value\":\"Бизнес\"\n         },\n         {\n             \"measure\":\"Вид аудиотехники\",\n             \"value\":\"Магнитолы\"\n         },\n         {\n             \"measure\":\"Состояние\",\n             \"value\":\"Б/у\"\n         }\n     ],\n     \"createdAt\":\"2020-02-08T10:53:08.606Z\",\n     \"_id\":\"5e3e931423e2900e0422a96f\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [

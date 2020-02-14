@@ -524,6 +524,35 @@ class ImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {delete} /import-request/:id/offers deleteImportRequestOffers
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async deleteImportRequestOffers(req, res, next) {
         const { id } = req.params;
 
