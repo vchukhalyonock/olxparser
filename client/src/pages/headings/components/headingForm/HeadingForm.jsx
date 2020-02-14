@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import {
+    bool,
     number,
     string
 } from "prop-types";
@@ -35,12 +36,14 @@ class HeadingForm extends Component {
         super(props);
         this.state = {
             redirect: false,
-            heading: undefined
+            heading: undefined,
+            cancel: false
         }
     }
 
     componentDidMount() {
         const { headingId } = this.props;
+        this.setState({cancel: false});
         if (headingId) {
             this.props.onCreateTitle("Edit Heading");
             this.props.onGetHeading(headingId);
@@ -54,7 +57,18 @@ class HeadingForm extends Component {
     };
 
     setRedirect  = () => {
-        this.setState({redirect: true});
+        this.setState({
+            heading: undefined,
+            redirect: true
+        });
+    };
+
+    setCancel = () => {
+        this.setState({
+            heading: undefined,
+            redirect: true,
+            cancel: true
+        });
     };
 
     renderRedirect = () => {
@@ -64,10 +78,7 @@ class HeadingForm extends Component {
     };
 
     cancelHandler = (event) => {
-        this.setState({
-            heading: undefined
-        });
-        this.setRedirect();
+        this.setCancel();
         event.preventDefault();
     };
 
@@ -75,9 +86,6 @@ class HeadingForm extends Component {
         event.preventDefault();
 
         const heading = this.state.heading ? this.state.heading : this.props.heading;
-        this.setState({
-            heading: undefined
-        });
         this.props.saveHeading(this.props.headingId, heading);
         this.setRedirect();
     };
@@ -87,7 +95,9 @@ class HeadingForm extends Component {
             headingId,
             classes,
             heading,
-            t
+            t,
+            error,
+            loaded
         } = this.props;
 
         if(!headingId) {
@@ -96,8 +106,8 @@ class HeadingForm extends Component {
 
         return (
             <Fragment key={t}>
-                <Alert severity="error">Heading already exists!</Alert>
-                {this.renderRedirect()}
+                {(!loaded && error) && (<Alert severity="error">Heading already exists!</Alert>)}
+                {((!error && loaded) || this.state.cancel) && this.renderRedirect()}
                 <form onSubmit={this.headingSubmitHandler}>
                     <TextField
                         id="heading"
@@ -122,18 +132,24 @@ class HeadingForm extends Component {
 HeadingForm.propTypes = {
     heading: string,
     t: number,
-    headingId: string
+    headingId: string,
+    error: bool,
+    loaded: bool
 };
 
 HeadingForm.defaultProps = {
     heading: undefined,
     t: 0,
-    headingId: undefined
+    headingId: undefined,
+    error: false,
+    loaded: false
 };
 
 const mapStateToProps = state => ({
     heading: state.headings.single.heading,
-    t: state.headings.single.t
+    t: state.headings.single.t,
+    error: state.headings.single.error,
+    loaded: state.headings.single.loaded
 });
 
 const mapDispatchToProps = dispatch => ({
