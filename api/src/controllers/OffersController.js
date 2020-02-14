@@ -5,10 +5,16 @@ import {
 } from "../models";
 import { OFFERS_URL } from "../constants/urls";
 import Error from "../core/Error";
+import offerService from "../services/OfferService";
 
 class OffersController extends Controller {
     get routes() {
         return [
+            {
+                route: OFFERS_URL,
+                verb: VERB.POST,
+                handler: this.createOffer
+            },
             {
                 route: `${OFFERS_URL}/offer`,
                 verb: VERB.PUT,
@@ -408,6 +414,19 @@ class OffersController extends Controller {
         } catch (e) {
             console.log(e);
             next(e);
+        }
+
+        return res.json({status: "success"});
+    }
+
+
+    async createOffer(req, res, next) {
+        const offer = req.body;
+        try {
+            await offerService.importOffer(offer);
+        } catch (e) {
+            console.log(e);
+            return next(e);
         }
 
         return res.json({status: "success"});

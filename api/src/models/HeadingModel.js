@@ -6,7 +6,11 @@ import { mongoConnection } from "../db";
 const Schema = mongoose.Schema;
 
 const HeadingSchema = new Schema({
-    heading: String,
+    heading: {
+        type: String,
+        index: true,
+        unique: true
+    },
     createdAt: Date
 });
 

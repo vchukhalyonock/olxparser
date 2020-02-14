@@ -34,6 +34,11 @@ class ImportRequestsController extends Controller {
                 handler: this.getImportRequest
             },
             {
+                route: `${IMPORT_REQUEST_URL}/:id/offers`,
+                verb: VERB.DELETE,
+                handler: this.deleteImportRequestOffers
+            },
+            {
                 route: `${IMPORT_REQUEST_URL}/:id`,
                 verb: VERB.DELETE,
                 handler: this.deleteImportRequest
@@ -504,12 +509,30 @@ class ImportRequestsController extends Controller {
         const { id } = req.params;
 
         if(!id) {
-            next(new Error("Invalid params"));
+            next(new Error("Invalid params", 400));
         }
 
         try {
             await OffersModel.deleteMany({importRequestId: id}).exec();
             await ImportRequestModel.deleteOne({_id: id}).exec();
+        } catch (e) {
+            console.log(e);
+            next(e);
+        }
+
+        return res.json({status: 'success'});
+    }
+
+
+    async deleteImportRequestOffers(req, res, next) {
+        const { id } = req.params;
+
+        if(!id) {
+            next(new Error("Invalid params", 400));
+        }
+
+        try {
+            await OffersModel.deleteMany({importRequestId: id}).exec();
         } catch (e) {
             console.log(e);
             next(e);
