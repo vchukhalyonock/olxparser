@@ -364,6 +364,18 @@ class ImportRequestsController extends Controller {
                 };
                 break;
 
+            case FILTER_IMPORT_REQUESTS.PENDING:
+                queryFilter = {
+                    status: REQUEST_STATUS.PENDING
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.IN_PROGRESS:
+                queryFilter = {
+                    status: REQUEST_STATUS.IN_PROGRES
+                };
+                break;
+
             case FILTER_IMPORT_REQUESTS.ALL:
             default:
                 queryFilter = {};
