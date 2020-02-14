@@ -6,6 +6,7 @@ import {
     TextField,
     withStyles
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import {
     number,
     string
@@ -95,6 +96,7 @@ class HeadingForm extends Component {
 
         return (
             <Fragment key={t}>
+                <Alert severity="error">Heading already exists!</Alert>
                 {this.renderRedirect()}
                 <form onSubmit={this.headingSubmitHandler}>
                     <TextField
