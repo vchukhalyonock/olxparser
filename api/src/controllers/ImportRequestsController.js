@@ -191,6 +191,7 @@ class ImportRequestsController extends Controller {
      *
      * @apiParam {String} id import request ID
      * @apiParam {String} status import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR
+     * @apiParam {String} [errorMessage]
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -228,7 +229,11 @@ class ImportRequestsController extends Controller {
      * }
      */
     async updateImportRequestStatus(req, res, next) {
-        const { id, status } = req.body;
+        const {
+            id,
+            status,
+            errorMessage
+        } = req.body;
 
         if(!id || !status) {
             next(new Error("Invalid params"));
@@ -238,6 +243,7 @@ class ImportRequestsController extends Controller {
             const importRequest = await ImportRequestModel.findOne({_id: id}).exec();
             if(importRequest) {
                 importRequest.status = status;
+                importRequest.errorMessage = errorMessage || '';
                 await importRequest.save();
             }
         } catch (e) {

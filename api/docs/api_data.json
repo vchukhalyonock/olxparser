@@ -1034,6 +1034,13 @@
             "optional": false,
             "field": "status",
             "description": "<p>import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "errorMessage",
+            "description": ""
           }
         ]
       },
