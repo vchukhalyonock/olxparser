@@ -27,7 +27,7 @@ import {
 import { getHeadings } from "../../../../actions/headings";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
-import { OfferDetailContainer } from "../../../../components/singleDetail";
+import { OfferDetailContainer } from "../../../../components/offerDetail";
 
 const styles = theme => ({
     textField: {
