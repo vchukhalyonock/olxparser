@@ -1411,6 +1411,69 @@
   },
   {
     "type": "put",
+    "url": "/offers/heading",
+    "title": "setOffersHeading",
+    "group": "Offers",
+    "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     offers: [\n         '5e47189561d5c706ea214d21',\n         '5e47189561d5c706ea214d22'\n     ],\n     heading: {\n         value: 13,\n         option: 'Запчасти для транспорта/Шины, диски и колёса/Колеса в сборе'\n     }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./src/controllers/OffersController.js",
+    "groupTitle": "Offers",
+    "name": "PutOffersHeading"
+  },
+  {
+    "type": "put",
     "url": "/offers/offer",
     "title": "updateOffer",
     "group": "Offers",

@@ -430,6 +430,48 @@ class OffersController extends Controller {
     }
 
 
+    /**
+     * @api {put} /offers/heading setOffersHeading
+     * @apiGroup Offers
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *      offers: [
+     *          '5e47189561d5c706ea214d21',
+     *          '5e47189561d5c706ea214d22'
+     *      ],
+     *      heading: {
+     *          value: 13,
+     *          option: 'Запчасти для транспорта/Шины, диски и колёса/Колеса в сборе'
+     *      }
+     * }
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "status": 500,
+     *     "errors": "Invalid params"
+     * }
+     *
+     */
     async setHeading(req, res, next) {
         const {
             offers,
