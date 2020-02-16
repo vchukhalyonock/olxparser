@@ -8,7 +8,7 @@ import { concat } from "lodash";
 import { SingleHeading } from "./index";
 
 
-class SingleHeadingContainer extends Component {
+class OfferHeadingContainer extends Component {
 
     constructor(props) {
         super(props);
@@ -75,10 +75,10 @@ class SingleHeadingContainer extends Component {
     }
 }
 
-SingleHeadingContainer.propTypes = {
+OfferHeadingContainer.propTypes = {
     heading: array.isRequired,
     handleChange: func.isRequired,
     removeHeadingItem: func.isRequired
 };
 
-export default SingleHeadingContainer;
+export default OfferHeadingContainer;

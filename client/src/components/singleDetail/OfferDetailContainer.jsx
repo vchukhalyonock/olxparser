@@ -7,7 +7,7 @@ import { Button } from "@material-ui/core";
 import { concat } from "lodash";
 import { SingleDetail } from "./index";
 
-class SingleDetailContainer extends Component {
+class OfferDetailContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,10 +75,10 @@ class SingleDetailContainer extends Component {
     }
 }
 
-SingleDetailContainer.propTypes = {
+OfferDetailContainer.propTypes = {
     details: array.isRequired,
     handleChange: func.isRequired,
     removeDetailItem: func.isRequired
 };
 
-export default SingleDetailContainer;
+export default OfferDetailContainer;

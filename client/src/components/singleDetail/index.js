@@ -1,8 +1,8 @@
 import SingleDetail from './SingleDetail';
-import SingleDetailContainer from "./SingleDetailContainer";
+import OfferDetailContainer from "./OfferDetailContainer";
 
 export {
     SingleDetail,
-    SingleDetailContainer
+    OfferDetailContainer
 };
 

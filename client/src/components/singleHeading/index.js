@@ -1,7 +1,7 @@
 import SingleHeading from './SingleHeading';
-import SingleHeadingContainer from "./SingleHeadingContainer";
+import OfferHeadingContainer from "./OfferHeadingContainer";
 
 export {
     SingleHeading,
-    SingleHeadingContainer
+    OfferHeadingContainer
 };

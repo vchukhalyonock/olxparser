@@ -23,8 +23,8 @@ import {
 } from "../../../../actions/offers";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
-import { SingleHeadingContainer } from "../../../../components/singleHeading";
-import { SingleDetailContainer } from "../../../../components/singleDetail";
+import { OfferHeadingContainer } from "../../../../components/singleHeading";
+import { OfferDetailContainer } from "../../../../components/singleDetail";
 
 const styles = theme => ({
     textField: {
@@ -251,13 +251,13 @@ class OfferForm extends Component {
                             InputLabelProps={{shrink: true}}
                         />
                         <hr/>
-                        <SingleHeadingContainer
+                        <OfferHeadingContainer
                             heading={offer.heading ? offer.heading : []}
                             handleChange={this.handleHeadingChange}
                             removeHeadingItem={this.handleRemoveHeadingItem}
                         />
                         <hr/>
-                        <SingleDetailContainer
+                        <OfferDetailContainer
                             details={offer.details ? offer.details : []}
                             handleChange={this.handleDetailsChange}
                             removeDetailItem={this.handleRemoveDetailItem}
