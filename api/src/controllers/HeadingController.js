@@ -100,13 +100,7 @@ class HeadingController extends Controller {
             query = {
                 $or: [
                     {
-                        email: regexp
-                    },
-                    {
-                        olxAccountUrl: regexp
-                    },
-                    {
-                        phone: regexp
+                        heading: regexp
                     }
                 ]
             }

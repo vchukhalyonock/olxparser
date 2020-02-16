@@ -14,16 +14,19 @@ import {
     withStyles
 } from "@material-ui/core";
 import {
+    Autocomplete
+} from "@material-ui/lab";
+import {
     string,
-    object
+    object, array
 } from "prop-types";
 import {
     updateOffer,
     getOffer
 } from "../../../../actions/offers";
+import { getHeadings } from "../../../../actions/headings";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
-import { OfferHeadingContainer } from "../../../../components/singleHeading";
 import { OfferDetailContainer } from "../../../../components/singleDetail";
 
 const styles = theme => ({
@@ -34,8 +37,15 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
 });
+
+
+const convertHeadings = headings => headings.map(item => ({value: item._id, option: item.heading}));
 
 class OfferForm extends Component {
 
@@ -55,9 +65,11 @@ class OfferForm extends Component {
 
         const {
             offerId,
-            onGetOffer
+            onGetOffer,
+            onGetHeadings
         } = this.props;
         onGetOffer(offerId);
+        onGetHeadings('');
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -111,7 +123,8 @@ class OfferForm extends Component {
         const { offer, onUpdateOffer } = this.props;
 
         const newOffer = {
-            heading: this.state.heading.map(item => item.value),
+            headingId: this.state.heading ? this.state.heading.value : offer.headingId,
+            headingString: this.state.heading ? this.state.heading.option : offer.headingString,
             url: this.state.url ? this.state.url : offer.url,
             title: this.state.title ? this.state.title : offer.title,
             price: this.state.price ? this.state.price : `${offer.price.amount.replace(' ', '')} ${offer.price.volume}`,
@@ -205,9 +218,15 @@ class OfferForm extends Component {
         this.setState({ details: newDetails });
     };
 
+
+    handleHeadingsSelect = (e, value) => {
+        this.setState({ heading: value });
+    };
+
     render() {
         const {
             offer,
+            headings,
             classes,
             onCreateTitle
         } = this.props;
@@ -215,6 +234,11 @@ class OfferForm extends Component {
         onCreateTitle(`Edit offer ${offer._id} for ${offer.importRequest ? offer.importRequest.email : undefined} account`);
 
         if(offer) {
+            const convertedHeadings = headings ? convertHeadings(headings) : [];
+            const currentHeading = {
+                value: offer.headingId,
+                option: offer.headingString
+            };
             return (
                 <Fragment key={offer.t}>
                     {this.renderRedirect()}
@@ -250,13 +274,21 @@ class OfferForm extends Component {
                             defaultValue={offer.description}
                             InputLabelProps={{shrink: true}}
                         />
-                        <hr/>
-                        <OfferHeadingContainer
-                            heading={offer.heading ? offer.heading : []}
-                            handleChange={this.handleHeadingChange}
-                            removeHeadingItem={this.handleRemoveHeadingItem}
-                        />
-                        <hr/>
+                        <Autocomplete
+                            id="headings"
+                            options={convertedHeadings}
+                            getOptionLabel={option => option.option || ''}
+                            style={{ width: 500 }}
+                            onChange={this.handleHeadingsSelect}
+                            defaultValue={currentHeading}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    label="Headings"
+                                    variant="standard"
+                                    fullWidth
+                                />
+                        )}/>
                         <OfferDetailContainer
                             details={offer.details ? offer.details : []}
                             handleChange={this.handleDetailsChange}
@@ -290,15 +322,18 @@ class OfferForm extends Component {
 OfferForm.propTypes = {
     offer: object.isRequired,
     offerId: string.isRequired,
+    headings: array
 };
 
 OfferForm.defaultProps = {
     offer: undefined,
-    offerId: ''
+    offerId: '',
+    headings: []
 };
 
 const mapStateToProps = state => ({
-    offer: state.offers.single
+    offer: state.offers.single,
+    headings: state.headings.list.items
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -310,6 +345,15 @@ const mapDispatchToProps = dispatch => ({
     },
     onUpdateOffer: offer => {
         dispatch(updateOffer(offer));
+    },
+    onGetHeadings: search => {
+        dispatch(getHeadings({
+            limit: 50,
+            offset: 0,
+            search,
+            order: 'asc',
+            orderBy: 'heading'
+        }))
     }
 });
 
