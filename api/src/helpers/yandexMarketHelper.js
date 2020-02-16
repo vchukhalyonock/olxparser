@@ -5,7 +5,6 @@ import {
     toNumber
 } from 'lodash';
 import currencies, { currencyAssoc, DEFAULT_CURRENCY_ID } from "../constants/currencies";
-import { FIRST_CATEGORY_INDEX } from "../constants/categories";
 
 export const YMLConverter = (importRequest, offersList) => {
 
