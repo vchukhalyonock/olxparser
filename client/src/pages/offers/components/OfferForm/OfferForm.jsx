@@ -14,9 +14,6 @@ import {
     withStyles
 } from "@material-ui/core";
 import {
-    Autocomplete
-} from "@material-ui/lab";
-import {
     string,
     object, array
 } from "prop-types";
@@ -24,10 +21,10 @@ import {
     updateOffer,
     getOffer
 } from "../../../../actions/offers";
-import { getHeadings } from "../../../../actions/headings";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
 import { OfferDetailContainer } from "../../../../components/offerDetail";
+import HeadingsSelector from "../../../../components/headingsSelector";
 
 const styles = theme => ({
     textField: {
@@ -44,8 +41,6 @@ const styles = theme => ({
     },
 });
 
-
-const convertHeadings = headings => headings.map(item => ({value: item._id, option: item.heading}));
 
 class OfferForm extends Component {
 
@@ -65,11 +60,9 @@ class OfferForm extends Component {
 
         const {
             offerId,
-            onGetOffer,
-            onGetHeadings
+            onGetOffer
         } = this.props;
         onGetOffer(offerId);
-        onGetHeadings('');
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -226,7 +219,6 @@ class OfferForm extends Component {
     render() {
         const {
             offer,
-            headings,
             classes,
             onCreateTitle
         } = this.props;
@@ -234,7 +226,6 @@ class OfferForm extends Component {
         onCreateTitle(`Edit offer ${offer._id} for ${offer.importRequest ? offer.importRequest.email : undefined} account`);
 
         if(offer) {
-            const convertedHeadings = headings ? convertHeadings(headings) : [];
             const currentHeading = {
                 value: offer.headingId,
                 option: offer.headingString
@@ -274,21 +265,11 @@ class OfferForm extends Component {
                             defaultValue={offer.description}
                             InputLabelProps={{shrink: true}}
                         />
-                        <Autocomplete
+                        <HeadingsSelector
                             id="headings"
-                            options={convertedHeadings}
-                            getOptionLabel={option => option.option || ''}
-                            style={{ width: 500 }}
                             onChange={this.handleHeadingsSelect}
-                            defaultValue={currentHeading}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label="Headings"
-                                    variant="standard"
-                                    fullWidth
-                                />
-                        )}/>
+                            currentHeading={currentHeading}
+                        />
                         <OfferDetailContainer
                             details={offer.details ? offer.details : []}
                             handleChange={this.handleDetailsChange}
@@ -321,19 +302,16 @@ class OfferForm extends Component {
 
 OfferForm.propTypes = {
     offer: object.isRequired,
-    offerId: string.isRequired,
-    headings: array
+    offerId: string.isRequired
 };
 
 OfferForm.defaultProps = {
     offer: undefined,
-    offerId: '',
-    headings: []
+    offerId: ''
 };
 
 const mapStateToProps = state => ({
-    offer: state.offers.single,
-    headings: state.headings.list.items
+    offer: state.offers.single
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -345,15 +323,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onUpdateOffer: offer => {
         dispatch(updateOffer(offer));
-    },
-    onGetHeadings: search => {
-        dispatch(getHeadings({
-            limit: 50,
-            offset: 0,
-            search,
-            order: 'asc',
-            orderBy: 'heading'
-        }))
     }
 });
 
