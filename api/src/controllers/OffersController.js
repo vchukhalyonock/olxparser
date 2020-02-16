@@ -1,3 +1,7 @@
+import {
+    isArray,
+    isObject
+} from "lodash";
 import Controller, { VERB } from "../core/Controller";
 import {
     OffersModel,
@@ -14,6 +18,11 @@ class OffersController extends Controller {
                 route: OFFERS_URL,
                 verb: VERB.POST,
                 handler: this.createOffer
+            },
+            {
+                route: `${OFFERS_URL}/heading`,
+                verb: VERB.PUT,
+                handler: this.setHeading
             },
             {
                 route: `${OFFERS_URL}/offer`,
@@ -412,6 +421,38 @@ class OffersController extends Controller {
         } catch (e) {
             console.log(e);
             next(e);
+        }
+
+        return res.json({status: "success"});
+    }
+
+
+    async setHeading(req, res, next) {
+        const {
+            offers,
+            heading
+        } = req.body;
+
+        if(!isArray(offers) && !isObject(heading)) {
+            return next(new Error("Invalid params", 400));
+        }
+
+        try {
+            await OffersModel.updateMany(
+                    {
+                        _id: {
+                            $in: offers
+                        }
+                    },
+                    {
+                        headingId: heading.id,
+                        headingString: heading.value
+                    }
+                )
+                .exec();
+        } catch (e) {
+            console.log(e);
+            return next(e);
         }
 
         return res.json({status: "success"});
