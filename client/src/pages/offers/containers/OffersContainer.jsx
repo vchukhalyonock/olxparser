@@ -85,7 +85,7 @@ class OffersContainer extends Component {
             selectedItems.length = 0;
         } else {
             selectedItems = allIds;
-        };
+        }
 
         this.setState({selectedItems, numSelected: selectedItems.length});
     };

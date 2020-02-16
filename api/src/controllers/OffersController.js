@@ -172,6 +172,9 @@ class OffersController extends Controller {
                     },
                     {
                         url: regexp
+                    },
+                    {
+                        headingString: regexp
                     }
                 ]
             }

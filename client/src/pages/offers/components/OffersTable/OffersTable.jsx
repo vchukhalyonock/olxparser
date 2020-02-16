@@ -48,6 +48,7 @@ import SortingHeader from "../../../../components/sortingHeader";
 
 const headCells = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
+    { id: 'headingString', numeric: false, disablePadding: true, label: 'Heading' },
     { id: 'description', numeric: false, disablePadding: true, label: 'Description' }
 ];
 
@@ -278,6 +279,11 @@ class OffersTable extends Component {
                                             <Link href={item.url} target='_blank'>
                                                 {item.title}
                                             </Link>
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>
+                                            {item.headingString}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
