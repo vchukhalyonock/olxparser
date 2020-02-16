@@ -2,6 +2,7 @@ import React, {
     Component,
     Fragment
 } from "react";
+import { connect } from "react-redux";
 import {
     Container,
     Grid,
@@ -27,6 +28,8 @@ import {
     EXPORT_OFFERS_ALERT,
     EXPORT_OFFERS_ERROR
 } from "../../../constants/notifications";
+import HeadingsSelector from "../../../components/headingsSelector";
+import { setOffersHeading } from "../../../actions/offers";
 
 const styles  = theme => ({
     container: {
@@ -54,7 +57,8 @@ class OffersContainer extends Component {
             selectedItems: [],
             openAlert: false,
             openSetHeading: false,
-            alertErrorMessage: ''
+            alertErrorMessage: '',
+            selectedHeading: undefined
         }
     }
 
@@ -169,7 +173,36 @@ class OffersContainer extends Component {
 
 
     closeExportAlertHandler = () => {
-        this.setState({openAlert: false});
+        this.setState({
+            openAlert: false,
+            selectedHeading: false
+        });
+    };
+
+
+    handleHeadingsSelect = (e, value) => {
+        this.setState({ selectedHeading: value });
+    };
+
+
+    handleSetOffersHeading = (e) => {
+        e.preventDefault();
+
+        const {
+            selectedItems,
+            selectedHeading
+        } = this.state;
+
+        const { onSetOffersHeading } = this.props;
+
+        if(selectedItems.length === 0 || !selectedHeading) {
+            this.closeHeadingSelectedHandler();
+            return;
+        }
+
+        onSetOffersHeading(selectedItems, selectedHeading);
+        this.setState({selectedItems: []});
+        this.closeHeadingSelectedHandler();
     };
 
     render() {
@@ -187,20 +220,27 @@ class OffersContainer extends Component {
                     onClose={() => {}}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Set Heading to Selected Offers</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Select Heading and set it to selected offers.
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.closeHeadingSelectedHandler} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.closeHeadingSelectedHandler} color="primary">
-                            Do It!
-                        </Button>
-                    </DialogActions>
+                    <form onSubmit={this.handleSetOffersHeading}>
+                        <DialogTitle id="form-dialog-title">Set Heading to Selected Offers</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Select Heading and set it to selected offers.
+                            </DialogContentText>
+
+                                <HeadingsSelector
+                                    id="headings"
+                                    onChange={this.handleHeadingsSelect}
+                                />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.closeHeadingSelectedHandler} color="primary">
+                                Cancel
+                            </Button>
+                            <Button type="submit" color="primary">
+                                Do It!
+                            </Button>
+                        </DialogActions>
+                    </form>
                 </Dialog>
                 <Alert
                     message={`${EXPORT_OFFERS_ALERT} ${this.state.alertErrorMessage}`}
@@ -268,4 +308,11 @@ class OffersContainer extends Component {
 }
 
 
-export default withStyles(styles)(OffersContainer);
+const mapDispatchToProps = dispatch => ({
+    onSetOffersHeading: (offers, heading) => {
+        dispatch(setOffersHeading(offers, heading));
+    }
+});
+
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(OffersContainer));

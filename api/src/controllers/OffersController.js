@@ -448,8 +448,8 @@ class OffersController extends Controller {
                         }
                     },
                     {
-                        headingId: heading.id,
-                        headingString: heading.value
+                        headingId: heading.value,
+                        headingString: heading.option
                     }
                 )
                 .exec();
