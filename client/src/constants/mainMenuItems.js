@@ -2,10 +2,12 @@ import React from "react";
 import {
     Dashboard as DashboardIcon,
     List as ImportRequestsListIcon,
+    AccountTree as HeadingsIcon
 } from '@material-ui/icons';
 import {
     DASHBOARD_PATH,
-    IMPORT_REQUESTS_PAGE_PATH
+    IMPORT_REQUESTS_PAGE_PATH,
+    HEADINGS_PAGE_PATH
 } from "./router";
 
 
@@ -20,5 +22,10 @@ export const MAIN_MENU_ITEMS = [
         name: 'Import Requests',
         path: IMPORT_REQUESTS_PAGE_PATH,
         icon: <ImportRequestsListIcon />
+    },
+    {
+        name: 'Headings',
+        path: HEADINGS_PAGE_PATH,
+        icon: <HeadingsIcon />
     }
 ];

@@ -2,11 +2,18 @@ import React, {
     Component,
     Fragment
 } from "react";
+import { connect } from "react-redux";
 import {
     Container,
     Grid,
     Paper,
-    Button, withStyles
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    withStyles
 } from "@material-ui/core";
 import { saveAs } from "file-saver";
 import moment from "moment";
@@ -21,6 +28,8 @@ import {
     EXPORT_OFFERS_ALERT,
     EXPORT_OFFERS_ERROR
 } from "../../../constants/notifications";
+import HeadingsSelector from "../../../components/headingsSelector";
+import { setOffersHeading } from "../../../actions/offers";
 
 const styles  = theme => ({
     container: {
@@ -47,7 +56,9 @@ class OffersContainer extends Component {
             numSelected: 0,
             selectedItems: [],
             openAlert: false,
-            alertErrorMessage: ''
+            openSetHeading: false,
+            alertErrorMessage: '',
+            selectedHeading: undefined
         }
     }
 
@@ -85,9 +96,17 @@ class OffersContainer extends Component {
             selectedItems.length = 0;
         } else {
             selectedItems = allIds;
-        };
+        }
 
         this.setState({selectedItems, numSelected: selectedItems.length});
+    };
+
+    openHeadingSelectedHandler = () => {
+        this.setState({ openSetHeading: true });
+    };
+
+    closeHeadingSelectedHandler = () => {
+        this.setState({ openSetHeading: false });
     };
 
     exportSelectedHandler = () => {
@@ -154,15 +173,75 @@ class OffersContainer extends Component {
 
 
     closeExportAlertHandler = () => {
-        this.setState({openAlert: false});
+        this.setState({
+            openAlert: false,
+            selectedHeading: false
+        });
+    };
+
+
+    handleHeadingsSelect = (e, value) => {
+        this.setState({ selectedHeading: value });
+    };
+
+
+    handleSetOffersHeading = (e) => {
+        e.preventDefault();
+
+        const {
+            selectedItems,
+            selectedHeading
+        } = this.state;
+
+        const { onSetOffersHeading } = this.props;
+
+        if(selectedItems.length === 0 || !selectedHeading) {
+            this.closeHeadingSelectedHandler();
+            return;
+        }
+
+        onSetOffersHeading(selectedItems, selectedHeading);
+        this.setState({selectedItems: []});
+        this.closeHeadingSelectedHandler();
     };
 
     render() {
         const { classes } = this.props;
-        const { numSelected, selectedItems } = this.state;
+        const {
+            numSelected,
+            selectedItems,
+            openSetHeading
+        } = this.state;
 
         return (
             <Fragment>
+                <Dialog
+                    open={openSetHeading}
+                    onClose={() => {}}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <form onSubmit={this.handleSetOffersHeading}>
+                        <DialogTitle id="form-dialog-title">Set Heading to Selected Offers</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Select Heading and set it to selected offers.
+                            </DialogContentText>
+
+                                <HeadingsSelector
+                                    id="headings"
+                                    onChange={this.handleHeadingsSelect}
+                                />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.closeHeadingSelectedHandler} color="primary">
+                                Cancel
+                            </Button>
+                            <Button type="submit" color="primary">
+                                Do It!
+                            </Button>
+                        </DialogActions>
+                    </form>
+                </Dialog>
                 <Alert
                     message={`${EXPORT_OFFERS_ALERT} ${this.state.alertErrorMessage}`}
                     title="Alert"
@@ -171,8 +250,20 @@ class OffersContainer extends Component {
                 />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        <Grid item xs={4}/>
+                        <Grid item xs={2}/>
                         <Search onChange={this.onChangeSearchHandler}/>
+                        <Grid item xs={2}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="medium"
+                                className={classes.button}
+                                onClick={this.openHeadingSelectedHandler}
+                                to=''
+                            >
+                                Set Heading
+                            </Button>
+                        </Grid>
                         <Grid item xs={2}>
                             <Button
                                 variant="contained"
@@ -214,6 +305,14 @@ class OffersContainer extends Component {
             </Fragment>
         );
     }
-};
+}
 
-export default withStyles(styles)(OffersContainer);
+
+const mapDispatchToProps = dispatch => ({
+    onSetOffersHeading: (offers, heading) => {
+        dispatch(setOffersHeading(offers, heading));
+    }
+});
+
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(OffersContainer));

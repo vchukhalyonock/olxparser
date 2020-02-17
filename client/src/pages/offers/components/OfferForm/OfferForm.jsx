@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import {
     string,
-    object
+    object, array
 } from "prop-types";
 import {
     updateOffer,
@@ -23,8 +23,8 @@ import {
 } from "../../../../actions/offers";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
-import { SingleHeadingContainer } from "../../../../components/singleHeading";
-import { SingleDetailContainer } from "../../../../components/singleDetail";
+import { OfferDetailContainer } from "../../../../components/offerDetail";
+import HeadingsSelector from "../../../../components/headingsSelector";
 
 const styles = theme => ({
     textField: {
@@ -34,8 +34,13 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing(1),
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
 });
+
 
 class OfferForm extends Component {
 
@@ -111,7 +116,8 @@ class OfferForm extends Component {
         const { offer, onUpdateOffer } = this.props;
 
         const newOffer = {
-            heading: this.state.heading.map(item => item.value),
+            headingId: this.state.heading ? this.state.heading.value : offer.headingId,
+            headingString: this.state.heading ? this.state.heading.option : offer.headingString,
             url: this.state.url ? this.state.url : offer.url,
             title: this.state.title ? this.state.title : offer.title,
             price: this.state.price ? this.state.price : `${offer.price.amount.replace(' ', '')} ${offer.price.volume}`,
@@ -205,6 +211,11 @@ class OfferForm extends Component {
         this.setState({ details: newDetails });
     };
 
+
+    handleHeadingsSelect = (e, value) => {
+        this.setState({ heading: value });
+    };
+
     render() {
         const {
             offer,
@@ -215,6 +226,10 @@ class OfferForm extends Component {
         onCreateTitle(`Edit offer ${offer._id} for ${offer.importRequest ? offer.importRequest.email : undefined} account`);
 
         if(offer) {
+            const currentHeading = {
+                value: offer.headingId,
+                option: offer.headingString
+            };
             return (
                 <Fragment key={offer.t}>
                     {this.renderRedirect()}
@@ -250,14 +265,12 @@ class OfferForm extends Component {
                             defaultValue={offer.description}
                             InputLabelProps={{shrink: true}}
                         />
-                        <hr/>
-                        <SingleHeadingContainer
-                            heading={offer.heading ? offer.heading : []}
-                            handleChange={this.handleHeadingChange}
-                            removeHeadingItem={this.handleRemoveHeadingItem}
+                        <HeadingsSelector
+                            id="headings"
+                            onChange={this.handleHeadingsSelect}
+                            currentHeading={currentHeading}
                         />
-                        <hr/>
-                        <SingleDetailContainer
+                        <OfferDetailContainer
                             details={offer.details ? offer.details : []}
                             handleChange={this.handleDetailsChange}
                             removeDetailItem={this.handleRemoveDetailItem}
@@ -289,7 +302,7 @@ class OfferForm extends Component {
 
 OfferForm.propTypes = {
     offer: object.isRequired,
-    offerId: string.isRequired,
+    offerId: string.isRequired
 };
 
 OfferForm.defaultProps = {

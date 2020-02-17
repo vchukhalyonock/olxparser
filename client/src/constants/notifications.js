@@ -3,3 +3,5 @@ export const DELETE_OFFER_CONFIRMATION = 'Do you want to delete offer?';
 export const EXPORT_OFFERS_ALERT = 'Error during exporting offers!';
 export const EXPORT_OFFERS_ERROR = 'Something was wrong';
 
+export const DELETE_HEADING_CONFIRMATION = 'Do you want to delete heading?';
+

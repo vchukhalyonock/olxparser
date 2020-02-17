@@ -4,7 +4,8 @@ import {
     GET_OFFER,
     UPDATE_OFFER,
     DELETE_OFFER,
-    EXPORT_OFFERS
+    EXPORT_OFFERS,
+    SET_OFFERS_HEADING
 } from "../constants/actions";
 import {
     OFFER_URL,
@@ -59,10 +60,17 @@ const exportOffers = (importRequestId, offerIds) => async dispatch => {
     dispatch({ type: EXPORT_OFFERS, payload: responseData});
 };
 
+
+const setOffersHeading = (offers, heading) => async dispatch => {
+    const response = await rest(`${offersUrl}/heading`, METHODS.PUT, { offers, heading });
+    dispatch({ type: SET_OFFERS_HEADING, payload: response });
+};
+
 export {
     getOffer,
     getOffers,
     updateOffer,
     deleteOffer,
-    exportOffers
+    exportOffers,
+    setOffersHeading
 }

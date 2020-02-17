@@ -34,6 +34,11 @@ class ImportRequestsController extends Controller {
                 handler: this.getImportRequest
             },
             {
+                route: `${IMPORT_REQUEST_URL}/:id/offers`,
+                verb: VERB.DELETE,
+                handler: this.deleteImportRequestOffers
+            },
+            {
                 route: `${IMPORT_REQUEST_URL}/:id`,
                 verb: VERB.DELETE,
                 handler: this.deleteImportRequest
@@ -186,6 +191,7 @@ class ImportRequestsController extends Controller {
      *
      * @apiParam {String} id import request ID
      * @apiParam {String} status import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR
+     * @apiParam {String} [errorMessage]
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -223,7 +229,11 @@ class ImportRequestsController extends Controller {
      * }
      */
     async updateImportRequestStatus(req, res, next) {
-        const { id, status } = req.body;
+        const {
+            id,
+            status,
+            errorMessage
+        } = req.body;
 
         if(!id || !status) {
             next(new Error("Invalid params"));
@@ -233,6 +243,7 @@ class ImportRequestsController extends Controller {
             const importRequest = await ImportRequestModel.findOne({_id: id}).exec();
             if(importRequest) {
                 importRequest.status = status;
+                importRequest.errorMessage = errorMessage || '';
                 await importRequest.save();
             }
         } catch (e) {
@@ -356,6 +367,18 @@ class ImportRequestsController extends Controller {
                     processedAt: {
                         $gte: getLastMonthDate()
                     }
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.PENDING:
+                queryFilter = {
+                    status: REQUEST_STATUS.PENDING
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.IN_PROGRESS:
+                queryFilter = {
+                    status: REQUEST_STATUS.IN_PROGRESS
                 };
                 break;
 
@@ -504,12 +527,59 @@ class ImportRequestsController extends Controller {
         const { id } = req.params;
 
         if(!id) {
-            next(new Error("Invalid params"));
+            next(new Error("Invalid params", 400));
         }
 
         try {
             await OffersModel.deleteMany({importRequestId: id}).exec();
             await ImportRequestModel.deleteOne({_id: id}).exec();
+        } catch (e) {
+            console.log(e);
+            next(e);
+        }
+
+        return res.json({status: 'success'});
+    }
+
+
+    /**
+     * @api {delete} /import-request/:id/offers deleteImportRequestOffers
+     * @apiGroup ImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
+    async deleteImportRequestOffers(req, res, next) {
+        const { id } = req.params;
+
+        if(!id) {
+            next(new Error("Invalid params", 400));
+        }
+
+        try {
+            await OffersModel.deleteMany({importRequestId: id}).exec();
         } catch (e) {
             console.log(e);
             next(e);

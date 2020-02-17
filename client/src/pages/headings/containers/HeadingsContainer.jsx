@@ -10,11 +10,11 @@ import {
     FormControl,
     withStyles
 } from "@material-ui/core";
-import ImportRequestsTable from "../components/ImportRequestsTable";
+import HeadingsTable from "../components/headingsTable";
 import ListItemLink from "../../../components/listItemLink";
 import Search from "../../../components/search/Search";
-import { CREATE_IMPORT_REQUEST_PAGE_PATH } from "../../../constants/router";
-import { filterItems } from "../../../constants/common";
+import { CREATE_HEADING_PAGE_PATH } from "../../../constants/router";
+import { headingsFilterItems } from "../../../constants/common";
 
 const styles = theme => ({
     container: {
@@ -36,14 +36,12 @@ const styles = theme => ({
     },
 });
 
-
-class ImportRequestsContainer extends Component {
-
+class HeadingsContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             search: '',
-            filter: filterItems[0].value
+            filter: headingsFilterItems[0].value
         }
     }
 
@@ -79,7 +77,7 @@ class ImportRequestsContainer extends Component {
                             labelWidth={32}
                             value={filter}
                         >
-                            {filterItems.map(item => (
+                            {headingsFilterItems.map(item => (
                                 <MenuItem key={item.value} value={item.value}>{item.option}</MenuItem>
                             ))}
                         </Select>
@@ -92,14 +90,14 @@ class ImportRequestsContainer extends Component {
                             size="medium"
                             className={classes.button}
                             component={ListItemLink}
-                            to={CREATE_IMPORT_REQUEST_PAGE_PATH}
+                            to={CREATE_HEADING_PAGE_PATH}
                         >
-                            Create IR
+                            Create Heading
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <ImportRequestsTable
+                            <HeadingsTable
                                 getSearchString={this.getSearchString}
                                 getFilterString={this.getFilterString}
                             />
@@ -107,9 +105,8 @@ class ImportRequestsContainer extends Component {
                     </Grid>
                 </Grid>
             </Container>
-
         );
     }
 }
 
-export default withStyles(styles)(ImportRequestsContainer);
+export default withStyles(styles)(HeadingsContainer);

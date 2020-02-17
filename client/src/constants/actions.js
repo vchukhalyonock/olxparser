@@ -15,4 +15,11 @@ export const GET_OFFER = "GET_OFFER";
 export const DELETE_OFFER = "DELETE_OFFER";
 export const UPDATE_OFFER = "UPDATE_OFFER";
 export const EXPORT_OFFERS = "EXPORT_OFFERS";
+export const SET_OFFERS_HEADING = "SET_OFFERS_HEADING";
 
+
+export const GET_HEADINGS = "GET_HEADINGS";
+export const GET_HEADING = "GET_HEADING";
+export const DELETE_HEADING = "DELETE_HEADING";
+export const UPDATE_HEADING = "UPDATE_HEADING";
+export const CREATE_HEADING = "CREATE_HEADING";

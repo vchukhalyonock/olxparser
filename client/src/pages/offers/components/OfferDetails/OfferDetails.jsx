@@ -43,6 +43,7 @@ class OfferDetails extends Component {
             offer: {
                 title,
                 heading,
+                headingString,
                 description,
                 price,
                 srcImages,
@@ -54,12 +55,15 @@ class OfferDetails extends Component {
         return(
             <Fragment>
                 <h1>{title}</h1>
+                <h3>Heading Origin</h3>
                 {heading
                     ? (<Breadcrumbs>
                         {heading.map((item, index) => (<Typography key={index}>{item}</Typography>))}
                     </Breadcrumbs>)
                     : undefined
                 }
+                <h3>Heading Current</h3>
+                {headingString}
                 <p>{description}</p>
                 <p><strong>{price && price.amount} {price && price.volume}</strong></p>
                 {

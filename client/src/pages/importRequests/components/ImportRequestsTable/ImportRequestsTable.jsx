@@ -151,7 +151,7 @@ class ImportRequestsTable extends Component {
 
     handleAddToDone = (importRequestId) => {
         this.props.onAddToDone(importRequestId);
-    }
+    };
 
     handleChangePage = (event, newPage) => {
         const {
