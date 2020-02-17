@@ -244,6 +244,7 @@ class ImportRequestsController extends Controller {
             if(importRequest) {
                 importRequest.status = status;
                 importRequest.errorMessage = errorMessage || '';
+                importRequest.processedAt = new Date();
                 await importRequest.save();
             }
         } catch (e) {
