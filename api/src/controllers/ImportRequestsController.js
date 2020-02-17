@@ -382,6 +382,24 @@ class ImportRequestsController extends Controller {
                 };
                 break;
 
+            case FILTER_IMPORT_REQUESTS.ERROR:
+                queryFilter = {
+                    status: REQUEST_STATUS.ERROR
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.NEW:
+                queryFilter = {
+                    status: REQUEST_STATUS.NEW
+                };
+                break;
+
+            case FILTER_IMPORT_REQUESTS.DONE:
+                queryFilter = {
+                    status: REQUEST_STATUS.DONE
+                };
+                break;
+
             case FILTER_IMPORT_REQUESTS.ALL:
             default:
                 queryFilter = {};
