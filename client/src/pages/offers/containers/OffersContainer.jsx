@@ -4,6 +4,10 @@ import React, {
 } from "react";
 import { connect } from "react-redux";
 import {
+    uniq,
+    concat
+} from "lodash";
+import {
     Container,
     Grid,
     Paper,
@@ -53,7 +57,6 @@ class OffersContainer extends Component {
         super(props);
         this.state = {
             search: '',
-            numSelected: 0,
             selectedItems: [],
             openAlert: false,
             openSetHeading: false,
@@ -72,7 +75,6 @@ class OffersContainer extends Component {
 
     componentWillUnmount() {
         this.setState({
-           numSelected: 0,
            selectedItems: []
         });
     }
@@ -86,19 +88,18 @@ class OffersContainer extends Component {
             selectedItems.splice(index, 1);
         }
 
-        this.setState({selectedItems, numSelected: selectedItems.length});
+        this.setState({ selectedItems });
     };
 
-    offerCheckBoxSelectAllHandler = (allIds) => {
-        const { numSelected } = this.state;
-        let selectedItems = [];
-        if (numSelected > 0) {
-            selectedItems.length = 0;
+    offerCheckBoxSelectAllHandler = (allIds, currentSelectedNums) => {
+        let { selectedItems } = this.state;
+        if (currentSelectedNums > 0) {
+            selectedItems = selectedItems.filter(item => !allIds.includes(item));
         } else {
-            selectedItems = allIds;
+            selectedItems = uniq(concat(selectedItems, allIds));
         }
 
-        this.setState({selectedItems, numSelected: selectedItems.length});
+        this.setState({ selectedItems });
     };
 
     openHeadingSelectedHandler = () => {
@@ -208,7 +209,6 @@ class OffersContainer extends Component {
     render() {
         const { classes } = this.props;
         const {
-            numSelected,
             selectedItems,
             openSetHeading
         } = this.state;
@@ -293,7 +293,6 @@ class OffersContainer extends Component {
                                 <OffersTable
                                     importRequestId={this.props.match.params.importRequestId}
                                     getSearchString={this.getSearchString}
-                                    numSelected={numSelected}
                                     selectedItems={selectedItems}
                                     offerCheckBoxHandler={this.offerCheckBoxHandler}
                                     offerCheckBoxSelectAllHandler={this.offerCheckBoxSelectAllHandler}

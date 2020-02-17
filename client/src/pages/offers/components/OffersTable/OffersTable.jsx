@@ -210,6 +210,21 @@ class OffersTable extends Component {
         return selectedItems.includes(id);
     };
 
+    calculateNumSelectedOnCurrentPage = () => {
+        const {
+            selectedItems,
+            offers
+        } = this.props;
+
+        return offers.reduce((acc, offer) => {
+            if(selectedItems.includes(offer._id)) {
+                acc++;
+            }
+
+            return acc;
+        }, 0);
+    };
+
     render() {
         const {
             props: {
@@ -217,7 +232,6 @@ class OffersTable extends Component {
                 total,
                 importRequest,
                 onCreateTitle,
-                numSelected,
                 offerCheckBoxHandler,
                 offerCheckBoxSelectAllHandler
             },
@@ -230,6 +244,8 @@ class OffersTable extends Component {
         } = this;
         onCreateTitle(`Offers for ${importRequest.email} account`);
         const allIds = offers.map(offer => offer._id);
+
+        const currentPageSelectedNums = this.calculateNumSelectedOnCurrentPage();
 
         return (
             <Fragment>
@@ -247,9 +263,9 @@ class OffersTable extends Component {
                         <TableRow>
                             <TableCell padding="checkbox">
                                 <Checkbox
-                                    indeterminate={numSelected > 0 && numSelected < itemsPerPage && numSelected < total}
-                                    checked={total > 0 && (numSelected === itemsPerPage || numSelected === total)}
-                                    onChange={() => offerCheckBoxSelectAllHandler(allIds)}
+                                    indeterminate={currentPageSelectedNums > 0 && currentPageSelectedNums < itemsPerPage && currentPageSelectedNums < total}
+                                    checked={total > 0 && (currentPageSelectedNums === itemsPerPage || currentPageSelectedNums === total)}
+                                    onChange={() => offerCheckBoxSelectAllHandler(allIds, currentPageSelectedNums)}
                                 />
                             </TableCell>
                             <SortingHeader
@@ -336,7 +352,6 @@ OffersTable.propTypes = {
     getSearchString: func.isRequired,
     offerCheckBoxHandler: func.isRequired,
     offerCheckBoxSelectAllHandler: func.isRequired,
-    numSelected: number.isRequired,
     selectedItems: array.isRequired
 };
 
