@@ -86,7 +86,7 @@ class OffersContainer extends Component {
         if(selectedItems.indexOf(id) < 0) {
             newSelectedItems = concat(selectedItems, [id])
         } else {
-            newSelectedItems = remove(selectedItems, value => id != value);
+            newSelectedItems = remove(selectedItems, value => id !== value);
         }
 
         this.setState({ selectedItems: newSelectedItems });

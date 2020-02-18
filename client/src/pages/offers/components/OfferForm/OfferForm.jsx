@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import {
     string,
-    object, array
+    object
 } from "prop-types";
 import {
     updateOffer,

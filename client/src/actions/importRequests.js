@@ -6,6 +6,9 @@ import {
     UPDATE_IMPORT_REQUEST,
     DELETE_IMPORT_REQUEST,
     UPDATE_IMPORT_REQUEST_STATUS,
+    GET_LAST_NEW_IMPORT_REQUESTS,
+    GET_LAST_PROCESSED_IMPORT_REQUEST,
+    GET_LAST_ERRORED_IMPORT_REQUEST
 } from "../constants/actions";
 import { IMPORT_REQUESTS_URL } from "../constants/urls";
 import config from '../config';
@@ -30,6 +33,21 @@ const getImportRequest = (id) => async dispatch => {
     dispatch({ type: GET_IMPORT_REQUEST, payload: responseData });
 };
 
+const getDashboardImportRequests = (incomingQuery = {}, type) => async dispatch => {
+    const queryData = merge(defaultQuery, incomingQuery);
+    const responseData = await rest(url, METHODS.GET, queryData);
+    switch (type) {
+        case GET_LAST_NEW_IMPORT_REQUESTS:
+        case GET_LAST_PROCESSED_IMPORT_REQUEST:
+        case GET_LAST_ERRORED_IMPORT_REQUEST:
+            dispatch({ type, payload: responseData });
+            break;
+
+        default:
+            dispatch({ type: GET_LAST_NEW_IMPORT_REQUESTS, payload: responseData });
+            break;
+    }
+};
 
 const createImportRequest = (importRequest) => async dispatch => {
     const responseData = await rest(url, METHODS.POST, importRequest);
@@ -59,5 +77,6 @@ export {
     createImportRequest,
     updateImportRequest,
     deleteImportRequest,
-    updateImportRequestStatus
+    updateImportRequestStatus,
+    getDashboardImportRequests
 }
