@@ -82,12 +82,11 @@ class OffersContainer extends Component {
 
     offerCheckBoxHandler = (id) => {
         const { selectedItems } = this.state;
-        let index;
         let newSelectedItems;
-        if((index = selectedItems.indexOf(id)) < 0) {
+        if(selectedItems.indexOf(id) < 0) {
             newSelectedItems = concat(selectedItems, [id])
         } else {
-            newSelectedItems = remove(selectedItems, n => index === n);
+            newSelectedItems = remove(selectedItems, value => id != value);
         }
 
         this.setState({ selectedItems: newSelectedItems });
