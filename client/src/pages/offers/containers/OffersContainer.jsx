@@ -5,7 +5,8 @@ import React, {
 import { connect } from "react-redux";
 import {
     uniq,
-    concat
+    concat,
+    remove
 } from "lodash";
 import {
     Container,
@@ -82,13 +83,14 @@ class OffersContainer extends Component {
     offerCheckBoxHandler = (id) => {
         const { selectedItems } = this.state;
         let index;
+        let newSelectedItems;
         if((index = selectedItems.indexOf(id)) < 0) {
-            selectedItems.push(id);
+            newSelectedItems = concat(selectedItems, [id])
         } else {
-            selectedItems.splice(index, 1);
+            newSelectedItems = remove(selectedItems, n => index === n);
         }
 
-        this.setState({ selectedItems });
+        this.setState({ selectedItems: newSelectedItems });
     };
 
     offerCheckBoxSelectAllHandler = (allIds, currentSelectedNums) => {
