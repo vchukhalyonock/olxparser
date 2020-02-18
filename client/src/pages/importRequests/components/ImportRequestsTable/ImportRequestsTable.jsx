@@ -157,7 +157,8 @@ class ImportRequestsTable extends Component {
         const {
             props: {
                 getAllImportRequests,
-                getSearchString
+                getSearchString,
+                getFilterString
             },
             state: {
                 itemsPerPage,
@@ -168,13 +169,15 @@ class ImportRequestsTable extends Component {
 
         const search = getSearchString();
         const offset = newPage * itemsPerPage;
+        const filter = getFilterString();
         this.setState({currentPage: newPage});
         getAllImportRequests({
             limit: itemsPerPage,
             offset,
             search,
             orderBy,
-            order
+            order,
+            filter
         });
     };
 
@@ -182,7 +185,8 @@ class ImportRequestsTable extends Component {
         const {
             props: {
                 getAllImportRequests,
-                getSearchString
+                getSearchString,
+                getFilterString
             },
             state: {
                 orderBy,
@@ -192,6 +196,7 @@ class ImportRequestsTable extends Component {
 
         const newItemsPerPage = parseInt(event.target.value, 10);
         const search = getSearchString();
+        const filter = getFilterString();
         const state = {
             itemsPerPage: newItemsPerPage,
             currentPage: 0
@@ -202,7 +207,8 @@ class ImportRequestsTable extends Component {
             offset: 0,
             search,
             orderBy,
-            order
+            order,
+            filter
         });
     };
 
