@@ -1,8 +1,14 @@
+import { merge } from "lodash";
 import Controller, { VERB } from "../core/Controller";
 import { HEADINGS_URL } from "../constants/urls";
-import {HeadingModel, ImportRequestModel, OffersModel} from "../models";
+import {
+    HeadingModel,
+    OffersModel
+} from "../models";
 import { HeadingService } from "../services";
 import Error from "../core/Error";
+import { FILTER_HEADINGS } from "../constants/common";
+import {getLastDayDate, getLastHourDate, getLastMonthDate} from "../utils/common";
 
 class HeadingController extends Controller {
     get routes() {
@@ -87,12 +93,46 @@ class HeadingController extends Controller {
                 offset,
                 search,
                 order,
-                orderBy
+                orderBy,
+                filter
             }
         } = req;
 
         const queryOrderBy = orderBy === '' ? 'requestedAt' : orderBy;
         const queryOrder = order === '' ? 'desc' : order;
+
+        let queryFilter;
+
+        switch (filter) {
+            case FILTER_HEADINGS.DAY:
+                queryFilter = {
+                    createdAt: {
+                        $gte: getLastDayDate()
+                    }
+                };
+                break;
+
+            case FILTER_HEADINGS.HOUR:
+                queryFilter = {
+                    createdAt: {
+                        $gte: getLastHourDate()
+                    }
+                };
+                break;
+
+            case FILTER_HEADINGS.MONTH:
+                queryFilter = {
+                    createdAt: {
+                        $gte: getLastMonthDate()
+                    }
+                };
+                break;
+
+            case FILTER_HEADINGS.ALL:
+            default:
+                queryFilter = {};
+                break;
+        }
 
         let query;
         if(search && search.trim()) {
@@ -107,6 +147,8 @@ class HeadingController extends Controller {
         } else {
             query = {};
         }
+
+        query = merge(query, queryFilter);
 
         let headings = null;
         let total = 0;

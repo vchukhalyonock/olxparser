@@ -14,3 +14,12 @@ export const FILTER_IMPORT_REQUESTS = {
     NEW: REQUEST_STATUS.NEW,
     DONE: REQUEST_STATUS.DONE
 };
+
+
+export const FILTER_HEADINGS = {
+    ALL: "all",
+    HOUR: 'hour',
+    DAY: 'day',
+    MONTH: 'month'
+};
+
