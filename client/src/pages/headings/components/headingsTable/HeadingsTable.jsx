@@ -135,7 +135,8 @@ class HeadingsTable extends Component {
         const {
             props: {
                 getAllHeadings,
-                getSearchString
+                getSearchString,
+                getFilterString
             },
             state: {
                 itemsPerPage,
@@ -145,6 +146,7 @@ class HeadingsTable extends Component {
         } = this;
 
         const search = getSearchString();
+        const filter = getFilterString();
         const offset = newPage * itemsPerPage;
         this.setState({currentPage: newPage});
         getAllHeadings({
@@ -152,7 +154,8 @@ class HeadingsTable extends Component {
             offset,
             search,
             orderBy,
-            order
+            order,
+            filter
         });
     };
 
@@ -160,7 +163,8 @@ class HeadingsTable extends Component {
         const {
             props: {
                 getAllHeadings,
-                getSearchString
+                getSearchString,
+                getFilterString
             },
             state: {
                 orderBy,
@@ -170,6 +174,7 @@ class HeadingsTable extends Component {
 
         const newItemsPerPage = parseInt(event.target.value, 10);
         const search = getSearchString();
+        const filter = getFilterString();
         const state = {
             itemsPerPage: newItemsPerPage,
             currentPage: 0
@@ -180,7 +185,8 @@ class HeadingsTable extends Component {
             offset: 0,
             search,
             orderBy,
-            order
+            order,
+            filter
         });
     };
 
