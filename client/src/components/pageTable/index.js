@@ -1,3 +1,7 @@
 import PageTable from "./PageTable";
+import PageTableContainer from "./PageTableContainer"
 
-export default PageTable;
+export  {
+    PageTable,
+    PageTableContainer
+};

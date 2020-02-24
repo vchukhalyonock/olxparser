@@ -7,6 +7,7 @@ import {
     object,
     func
 } from "prop-types";
+import { merge } from "lodash";
 import {
     Table,
     TableBody,
@@ -41,7 +42,7 @@ import Confirm from "../../../../components/confirm";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
 import {IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT} from "../../../../constants/common";
 import SortingHeader from "../../../../components/sortingHeader";
-import PageTable from "../../../../components/pageTable";
+import { PageTable } from "../../../../components/pageTable";
 
 const headCells = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
@@ -51,15 +52,12 @@ const headCells = [
 
 class OffersTable extends PageTable {
 
-    intervalId;
-
     constructor(props) {
         super(props);
 
         const newState = merge(
             this.state,
             {
-                openConfirm: false,
                 offerId: undefined
             }
         );
@@ -68,19 +66,28 @@ class OffersTable extends PageTable {
     }
 
     componentDidMount() {
-        this.getData();
-        this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
+        this.getData({
+            pageTitle: "",
+            getAll: this.props.getAllOffers
+        });
+        this.intervalId = setInterval(
+            this.getData.bind(
+                this,
+                {
+                    pageTitle: "",
+                    getAll: this.props.getAllOffers
+                }
+            ),
+            IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
 
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
-    }
-
-    getData = () => {
+    getData = ({
+        pageTitle,
+        getAll
+               }) => {
         const {
             props: {
                 importRequestId,
-                getAllOffers,
                 getSearchString,
                 onGetImportRequest
             },
@@ -103,7 +110,7 @@ class OffersTable extends PageTable {
         }
 
         onGetImportRequest(importRequestId);
-        getAllOffers(importRequestId, {
+        getAll(importRequestId, {
             limit: itemsPerPage,
             offset,
             search,
@@ -118,10 +125,6 @@ class OffersTable extends PageTable {
             openConfirm: false,
             offerId: undefined
         });
-    };
-
-    disagreeHandler = () => {
-        this.setState({openConfirm: false});
     };
 
     handleDeleteOffer = id => {

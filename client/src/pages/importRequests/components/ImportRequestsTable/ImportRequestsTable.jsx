@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
     array,
@@ -6,13 +6,8 @@ import {
     number
 } from "prop-types";
 import {
-    Table,
-    TableBody,
     TableCell,
-    TableHead,
     TableRow,
-    TableFooter,
-    TablePagination,
     IconButton,
     CircularProgress,
     Typography,
@@ -30,7 +25,6 @@ import {
 } from '@material-ui/icons';
 import moment from "moment";
 import { merge } from "lodash";
-import Title from "../../../../components/title";
 import {
     getImportRequests,
     deleteImportRequest,
@@ -42,12 +36,10 @@ import {
     OFFERS_PAGE_PATH
 } from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
-import Confirm from "../../../../components/confirm";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
 import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
-import SortingHeader from "../../../../components/sortingHeader";
-import PageTable from "../../../../components/pageTable";
+import { PageTable, PageTableContainer } from "../../../../components/pageTable";
 
 const headCells = [
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
@@ -58,15 +50,12 @@ const headCells = [
 
 class ImportRequestsTable extends PageTable {
 
-    intervalId;
-
     constructor(props) {
         super(props);
 
         const newState = merge(
             this.state,
             {
-                openConfirm: false,
                 importRequestId: undefined
             }
         );
@@ -77,14 +66,17 @@ class ImportRequestsTable extends PageTable {
 
     componentDidMount() {
         this.getData({
-            title: "Import Requests",
-            getAll: this.props.getAllImportRequests
+            pageTitle: "Import Requests",
+            getAll: this.props.getAll
         });
-        this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
+        this.intervalId = setInterval(
+            this.getData.bind(
+                this,
+                {
+                    pageTitle: "Import Requests",
+                    getAll: this.props.getAll
+                }),
+            IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
 
     handleDeleteImportRequest = (importRequestId) => {
@@ -102,10 +94,6 @@ class ImportRequestsTable extends PageTable {
         });
     };
 
-    disagreeHandler = () => {
-        this.setState({openConfirm: false});
-    };
-
 
     handleAddToQueue = (importRequestId) => {
         this.props.onAddToQueue(importRequestId);
@@ -115,64 +103,6 @@ class ImportRequestsTable extends PageTable {
         this.props.onAddToDone(importRequestId);
     };
 
-    handleChangePage = (event, newPage) => {
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                itemsPerPage,
-                orderBy,
-                order
-            }
-        } = this;
-
-        const search = getSearchString();
-        const offset = newPage * itemsPerPage;
-        const filter = getFilterString();
-        this.setState({currentPage: newPage});
-        getAllImportRequests({
-            limit: itemsPerPage,
-            offset,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
-
-    handleChangeRowsPerPage = event => {
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                orderBy,
-                order
-            }
-        } = this;
-
-        const newItemsPerPage = parseInt(event.target.value, 10);
-        const search = getSearchString();
-        const filter = getFilterString();
-        const state = {
-            itemsPerPage: newItemsPerPage,
-            currentPage: 0
-        };
-        this.setState(state);
-        getAllImportRequests({
-            limit: newItemsPerPage,
-            offset: 0,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
 
     renderStatus(id, status, errorMessage) {
         switch (status) {
@@ -238,34 +168,28 @@ class ImportRequestsTable extends PageTable {
                 itemsPerPage,
                 currentPage,
                 orderBy,
-                order
+                order,
+                openConfirm
             }
         } = this;
 
         return (
-            <Fragment>
-                <Confirm
-                    key={this.state.openConfirm}
-                    message={DELETE_IMPORT_REQUEST_CONFIRMATION}
-                    title="Please, confirm"
-                    isOpen={this.state.openConfirm}
-                    agreeHandler={this.agreeHandler}
-                    disagreeHandler={this.disagreeHandler}
-                />
-                <Title>Import Requests</Title>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <SortingHeader
-                                headCells={headCells}
-                                orderBy={orderBy}
-                                order={order}
-                                sortHandler={this.sortHandler}
-                            />
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+            <PageTableContainer
+                openConfirm={openConfirm}
+                confirmMessage={DELETE_IMPORT_REQUEST_CONFIRMATION }
+                agreeHandler={this.agreeHandler}
+                disagreeHandler={this.disagreeHandler}
+                tableTitle="Import Requests"
+                headCells={headCells}
+                orderBy={orderBy}
+                order={order}
+                sortHandler={this.sortHandler}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                handleChangePage={this.handleChangePage}
+                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+                total={total}
+                >
                         {importRequests.map(item => (
                                 <TableRow key={item._id}>
                                     <TableCell>
@@ -305,22 +229,7 @@ class ImportRequestsTable extends PageTable {
                                 </TableRow>
                             )
                         )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={5}
-                                count={total}
-                                rowsPerPage={itemsPerPage}
-                                page={currentPage}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </Fragment>
+            </PageTableContainer>
         )
     }
 }
@@ -343,7 +252,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAllImportRequests: (options = {}) => {
+    getAll: (options = {}) => {
         dispatch(getImportRequests(options));
     },
     onDeleteImportRequest: (importRequestId) => {

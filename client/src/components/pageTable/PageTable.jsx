@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import { func } from "prop-types";
 
 class PageTable extends Component {
+
+    intervalId;
 
     constructor(props) {
         super(props);
         this.state = {
+            openConfirm: false,
             currentPage: 0,
             itemsPerPage: 10,
             previousSearch: '',
@@ -12,6 +16,14 @@ class PageTable extends Component {
             order: ''
         }
     }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
+    }
+
+    disagreeHandler = () => {
+        this.setState({openConfirm: false});
+    };
 
     sortHandler = (id) => {
         const {
@@ -32,10 +44,10 @@ class PageTable extends Component {
     };
 
     getData = ({
-        title,
+        pageTitle,
         getAll
                }) => {
-        this.props.onCreateTitle(title);
+        this.props.onCreateTitle(pageTitle);
         const {
             props: {
                 getSearchString,
@@ -73,6 +85,69 @@ class PageTable extends Component {
             filter
         });
     };
+
+    handleChangePage = (event, newPage) => {
+        const {
+            props: {
+                getAll,
+                getSearchString,
+                getFilterString
+            },
+            state: {
+                itemsPerPage,
+                orderBy,
+                order
+            }
+        } = this;
+
+        const search = getSearchString();
+        const offset = newPage * itemsPerPage;
+        const filter = getFilterString();
+        this.setState({currentPage: newPage});
+        getAll({
+            limit: itemsPerPage,
+            offset,
+            search,
+            orderBy,
+            order,
+            filter
+        });
+    };
+
+    handleChangeRowsPerPage = (event) => {
+        const {
+            props: {
+                getAll,
+                getSearchString,
+                getFilterString
+            },
+            state: {
+                orderBy,
+                order
+            }
+        } = this;
+
+        const newItemsPerPage = parseInt(event.target.value, 10);
+        const search = getSearchString();
+        const filter = getFilterString();
+        const state = {
+            itemsPerPage: newItemsPerPage,
+            currentPage: 0
+        };
+        this.setState(state);
+        getAll({
+            limit: newItemsPerPage,
+            offset: 0,
+            search,
+            orderBy,
+            order,
+            filter
+        });
+    };
 }
+
+PageTable.propTypes = {
+    getAll: func.isRequired
+};
 
 export default PageTable;
