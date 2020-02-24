@@ -9,7 +9,7 @@ import {
 } from "../models";
 import { OFFERS_URL } from "../constants/urls";
 import Error from "../core/Error";
-import offerService from "../services/OfferService";
+import { OfferService } from "../services/";
 
 class OffersController extends Controller {
     get routes() {
@@ -182,7 +182,7 @@ class OffersController extends Controller {
             query = { importRequestId };
         }
 
-        let offers = null;
+        let offers;
         let total = 0;
         try {
             offers = await OffersModel
@@ -195,10 +195,12 @@ class OffersController extends Controller {
                             [queryOrderBy, queryOrder]
                         ]
                     });
-            total = await OffersModel.countDocuments(query).exec();
+            total = await OffersModel
+                .countDocuments(query)
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({
@@ -301,9 +303,13 @@ class OffersController extends Controller {
         let doc = null;
 
         try {
-            offer = await OffersModel.findOne({_id: id}).exec();
+            offer = await OffersModel
+                .findOne({_id: id})
+                .exec();
             if (offer) {
-                importRequest = await ImportRequestModel.findOne({_id: offer.importRequestId}).exec();
+                importRequest = await ImportRequestModel
+                    .findOne({_id: offer.importRequestId})
+                    .exec();
                 doc = offer._doc;
             }
         } catch (e) {
@@ -312,7 +318,7 @@ class OffersController extends Controller {
         }
 
         if(!offer) {
-            throw new Error("Not found", 404);
+            return next(new Error("Not found", 404));
         }
 
         return res.json({
@@ -420,10 +426,12 @@ class OffersController extends Controller {
     async updateOffer(req, res, next) {
         const newOffer = req.body;
         try {
-            await OffersModel.updateOne({_id: newOffer._id}, newOffer).exec();
+            await OffersModel
+                .updateOne({_id: newOffer._id}, newOffer)
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: "success"});
@@ -599,7 +607,7 @@ class OffersController extends Controller {
     async createOffer(req, res, next) {
         const offer = req.body;
         try {
-            await offerService.importOffer(offer);
+            await OfferService.importOffer(offer);
         } catch (e) {
             console.log(e);
             return next(e);
@@ -640,10 +648,12 @@ class OffersController extends Controller {
     async deleteOffer(req, res, next) {
         const { id } = req.params;
         try {
-            await OffersModel.deleteOne({_id: id}).exec();
+            await OffersModel
+                .deleteOne({_id: id})
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: 'success'});

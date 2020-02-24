@@ -4,7 +4,11 @@ import {
     truncate,
     toNumber
 } from 'lodash';
-import currencies, { currencyAssoc, DEFAULT_CURRENCY_ID } from "../constants/currencies";
+import currencies,
+{
+    currencyAssoc,
+    DEFAULT_CURRENCY_ID
+} from "../constants/currencies";
 
 export const YMLConverter = (importRequest, offersList) => {
 

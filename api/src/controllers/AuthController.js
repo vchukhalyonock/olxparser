@@ -51,10 +51,12 @@ class AuthController extends Controller {
             {session: false},
             (err, user) => {
                 if(err || !user) {
-                    return res.status(404).json({
-                        message: 'Invalid login or password',
-                        user: user
-                    });
+                    return res
+                        .status(404)
+                        .json({
+                            message: 'Invalid login or password',
+                            user: user
+                        });
                 }
 
                 req.login(user, {session: false}, (err) => {
