@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
     string,
@@ -9,13 +9,8 @@ import {
 } from "prop-types";
 import { merge } from "lodash";
 import {
-    Table,
-    TableBody,
     TableCell,
-    TableHead,
     TableRow,
-    TablePagination,
-    TableFooter,
     IconButton,
     Typography,
     Link,
@@ -26,7 +21,6 @@ import {
     Delete as DeleteIcon,
     Info as InfoIcon
 } from '@material-ui/icons';
-import Title from "../../../../components/title";
 import {
     getOffers,
     deleteOffer
@@ -38,11 +32,9 @@ import {
     OFFER_DETAILS_PATH
 } from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
-import Confirm from "../../../../components/confirm";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
-import {IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT} from "../../../../constants/common";
-import SortingHeader from "../../../../components/sortingHeader";
-import { PageTable } from "../../../../components/pageTable";
+import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
+import { PageTable, PageTableContainer } from "../../../../components/pageTable";
 
 const headCells = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
@@ -222,7 +214,8 @@ class OffersTable extends PageTable {
                 currentPage,
                 itemsPerPage,
                 orderBy,
-                order
+                order,
+                openConfirm
             }
         } = this;
         onCreateTitle(`Offers for ${importRequest.email} account`);
@@ -231,37 +224,25 @@ class OffersTable extends PageTable {
         const currentPageSelectedNums = this.calculateNumSelectedOnCurrentPage();
 
         return (
-            <Fragment>
-                <Confirm
-                    key={this.state.openConfirm}
-                    message={DELETE_OFFER_CONFIRMATION}
-                    title="Please, confirm"
-                    isOpen={this.state.openConfirm}
-                    agreeHandler={this.agreeHandler}
-                    disagreeHandler={this.disagreeHandler}
-                />
-                <Title>Offers</Title>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell padding="checkbox">
-                                <Checkbox
-                                    indeterminate={currentPageSelectedNums > 0 && currentPageSelectedNums < itemsPerPage && currentPageSelectedNums < total}
-                                    checked={total > 0 && (currentPageSelectedNums === itemsPerPage || currentPageSelectedNums === total)}
-                                    onChange={() => offerCheckBoxSelectAllHandler(allIds, currentPageSelectedNums)}
-                                />
-                            </TableCell>
-                            <SortingHeader
-                                headCells={headCells}
-                                orderBy={orderBy}
-                                order={order}
-                                sortHandler={this.sortHandler}
-                            />
-                            <TableCell></TableCell>
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+           <PageTableContainer
+               tableTitle="Offers"
+               agreeHandler={this.agreeHandler}
+               itemsPerPage={itemsPerPage}
+               currentPage={currentPage}
+               order={order}
+               handleChangePage={this.handleChangePage}
+               disagreeHandler={this.handleChangeRowsPerPage}
+               orderBy={orderBy}
+               openConfirm={openConfirm}
+               headCells={headCells}
+               total={total}
+               sortHandler={this.sortHandler}
+               confirmMessage={DELETE_OFFER_CONFIRMATION}
+               handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+               currentPageSelectedNums={currentPageSelectedNums}
+               allIds={allIds}
+               allCheckboxSelectedHandler={offerCheckBoxSelectAllHandler}
+               >
                         {offers.map(item => {
                             const isItemSelected = this.isSelected(item._id);
 
@@ -307,22 +288,7 @@ class OffersTable extends PageTable {
                                 </TableRow>
                             );
                         })}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={5}
-                                count={total}
-                                rowsPerPage={itemsPerPage}
-                                page={currentPage}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </Fragment>
+           </PageTableContainer>
         );
     }
 }

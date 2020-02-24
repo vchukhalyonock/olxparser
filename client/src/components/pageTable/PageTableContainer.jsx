@@ -1,18 +1,27 @@
-import React, {Component, Fragment} from "react";
+import React,
+{
+    Component,
+    Fragment
+} from "react";
 import Confirm from "../confirm";
 import Title from "../title";
 import {
+    Checkbox,
     Table,
     TableBody,
     TableCell,
     TableFooter,
-    TableHead, TablePagination,
+    TableHead,
+    TablePagination,
     TableRow
 } from "@material-ui/core";
 import SortingHeader from "../sortingHeader";
 import {
     array,
-    bool, func, number, string
+    bool,
+    func,
+    number,
+    string
 } from "prop-types";
 
 
@@ -33,7 +42,11 @@ class PageTableContainer extends Component {
             handleChangePage,
             handleChangeRowsPerPage,
             total,
-            children
+            children,
+            isTotalCheckbox,
+            currentPageSelectedNums,
+            allCheckboxSelectedHandler,
+            allIds
         } = this.props;
 
         return (
@@ -49,6 +62,15 @@ class PageTableContainer extends Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            {isTotalCheckbox && (
+                                <TableCell padding="checkbox">
+                                    <Checkbox
+                                        indeterminate={currentPageSelectedNums > 0 && currentPageSelectedNums < itemsPerPage && currentPageSelectedNums < total}
+                                        checked={total > 0 && (currentPageSelectedNums === itemsPerPage || currentPageSelectedNums === total)}
+                                        onChange={() => allCheckboxSelectedHandler(allIds, currentPageSelectedNums)}
+                                    />
+                                </TableCell>
+                            )}
                             <SortingHeader
                                 headCells={headCells}
                                 orderBy={orderBy}
@@ -94,7 +116,18 @@ PageTableContainer.propTypes = {
     currentPage: number.isRequired,
     handleChangePage: func.isRequired,
     handleChangeRowsPerPage: func.isRequired,
-    total: number.isRequired
+    total: number.isRequired,
+    isTotalCheckbox: bool,
+    currentPageSelectedNums: number,
+    allCheckboxSelectedHandler: func,
+    allIds: array
+};
+
+PageTableContainer.defaultProps = {
+    isTotalCheckbox: false,
+    currentPageSelectedNums: 0,
+    allCheckboxSelectedHandler: undefined,
+    allIds: []
 };
 
 export default PageTableContainer;
