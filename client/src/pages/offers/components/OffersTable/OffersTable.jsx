@@ -1,8 +1,4 @@
-import React,
-{
-    Component,
-    Fragment
-} from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import {
     string,
@@ -45,6 +41,7 @@ import Confirm from "../../../../components/confirm";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
 import {IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT} from "../../../../constants/common";
 import SortingHeader from "../../../../components/sortingHeader";
+import PageTable from "../../../../components/pageTable";
 
 const headCells = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
@@ -52,21 +49,22 @@ const headCells = [
     { id: 'description', numeric: false, disablePadding: true, label: 'Description' }
 ];
 
-class OffersTable extends Component {
+class OffersTable extends PageTable {
 
     intervalId;
 
     constructor(props) {
         super(props);
-        this.state = {
-            openConfirm: false,
-            offerId: undefined,
-            currentPage: 0,
-            itemsPerPage: 10,
-            previousSearch: '',
-            orderBy: '',
-            order: ''
-        }
+
+        const newState = merge(
+            this.state,
+            {
+                openConfirm: false,
+                offerId: undefined
+            }
+        );
+
+        this.state = newState;
     }
 
     componentDidMount() {
@@ -185,24 +183,6 @@ class OffersTable extends Component {
             orderBy,
             order
         });
-    };
-
-    sortHandler = (id) => {
-        const {
-            orderBy,
-            order
-        } = this.state;
-
-        let newOrderBy, newOrder;
-        if (orderBy !== id) {
-            newOrderBy = id;
-            newOrder = 'asc';
-        } else {
-            newOrderBy = orderBy;
-            newOrder = order === 'asc' ? 'desc' : 'asc';
-        }
-
-        this.setState({orderBy: newOrderBy, order: newOrder});
     };
 
     isSelected = (id) => {

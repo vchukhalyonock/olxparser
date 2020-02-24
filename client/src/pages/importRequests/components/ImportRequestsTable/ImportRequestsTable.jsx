@@ -1,8 +1,4 @@
-import React,
-{
-    Component,
-    Fragment
-} from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import {
     array,
@@ -33,6 +29,7 @@ import {
     Info as InfoIcon
 } from '@material-ui/icons';
 import moment from "moment";
+import { merge } from "lodash";
 import Title from "../../../../components/title";
 import {
     getImportRequests,
@@ -50,6 +47,7 @@ import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifi
 import { REQUEST_STATUS } from "../../../../constants/statuses";
 import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
 import SortingHeader from "../../../../components/sortingHeader";
+import PageTable from "../../../../components/pageTable";
 
 const headCells = [
     { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
@@ -58,66 +56,30 @@ const headCells = [
     { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date' },
 ];
 
-class ImportRequestsTable extends Component {
+class ImportRequestsTable extends PageTable {
 
     intervalId;
 
     constructor(props) {
         super(props);
-        this.state = {
-            openConfirm: false,
-            importRequestId: undefined,
-            currentPage: 0,
-            itemsPerPage: 10,
-            previousSearch: '',
-            orderBy: '',
-            order: ''
-        }
+
+        const newState = merge(
+            this.state,
+            {
+                openConfirm: false,
+                importRequestId: undefined
+            }
+        );
+
+        this.state = newState;
     }
 
-    getData = () => {
-        this.props.onCreateTitle('Import Requests');
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                previousSearch,
-                orderBy,
-                order
-            }
-        } = this;
-
-        const search = getSearchString();
-        const filter = getFilterString();
-        let offset;
-        if(previousSearch !== search.toLowerCase()) {
-            offset = 0;
-            this.setState({
-                previousSearch: search.toLowerCase(),
-                orderBy: '',
-                order: ''
-            });
-        } else {
-            offset = currentPage * itemsPerPage;
-        }
-
-        getAllImportRequests({
-            limit: itemsPerPage,
-            offset,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
 
     componentDidMount() {
-        this.getData();
+        this.getData({
+            title: "Import Requests",
+            getAll: this.props.getAllImportRequests
+        });
         this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
 
@@ -265,24 +227,6 @@ class ImportRequestsTable extends Component {
                 );
         }
     }
-
-    sortHandler = (id) => {
-        const {
-            orderBy,
-            order
-        } = this.state;
-
-        let newOrderBy, newOrder;
-        if (orderBy !== id) {
-            newOrderBy = id;
-            newOrder = 'asc';
-        } else {
-            newOrderBy = orderBy;
-            newOrder = order === 'asc' ? 'desc' : 'asc';
-        }
-
-        this.setState({orderBy: newOrderBy, order: newOrder});
-    };
 
     render() {
         const {

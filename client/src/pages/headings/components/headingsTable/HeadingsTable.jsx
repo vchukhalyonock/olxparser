@@ -1,8 +1,4 @@
-import React,
-{
-    Component,
-    Fragment
-} from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import {
     array,
@@ -37,6 +33,7 @@ import Confirm from "../../../../components/confirm";
 import { DELETE_HEADING_CONFIRMATION } from "../../../../constants/notifications";
 import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
 import SortingHeader from "../../../../components/sortingHeader";
+import PageTable from "../../../../components/pageTable";
 
 
 const headCells = [
@@ -45,66 +42,29 @@ const headCells = [
     { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date' },
 ];
 
-class HeadingsTable extends Component {
+class HeadingsTable extends PageTable {
 
     intervalId;
 
     constructor(props) {
         super(props);
-        this.state = {
-            openConfirm: false,
-            headingId: undefined,
-            currentPage: 0,
-            itemsPerPage: 10,
-            previousSearch: '',
-            orderBy: '',
-            order: ''
-        };
+
+        const newState = merge(
+            this.state,
+            {
+                openConfirm: false,
+                headingId: undefined,
+            }
+        );
+
+        this.state = newState;
     }
 
-    getData = () => {
-        this.props.onCreateTitle('Headings');
-        const {
-            props: {
-                getAllHeadings,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                previousSearch,
-                orderBy,
-                order
-            }
-        } = this;
-
-        const search = getSearchString();
-        const filter = getFilterString();
-        let offset;
-        if(previousSearch !== search.toLowerCase()) {
-            offset = 0;
-            this.setState({
-                previousSearch: search.toLowerCase(),
-                orderBy: '',
-                order: ''
-            });
-        } else {
-            offset = currentPage * itemsPerPage;
-        }
-
-        getAllHeadings({
-            limit: itemsPerPage,
-            offset,
-            search,
-            orderBy,
-            order,
-            filter
-        })
-    };
-
     componentDidMount() {
-        this.getData();
+        this.getData({
+            title: "Headings",
+            getAll: this.props.getAllHeadings
+        });
         this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
 
@@ -189,25 +149,6 @@ class HeadingsTable extends Component {
             filter
         });
     };
-
-    sortHandler = (id) => {
-        const {
-            orderBy,
-            order
-        } = this.state;
-
-        let newOrderBy, newOrder;
-        if (orderBy !== id) {
-            newOrderBy = id;
-            newOrder = 'asc';
-        } else {
-            newOrderBy = orderBy;
-            newOrder = order === 'asc' ? 'desc' : 'asc';
-        }
-
-        this.setState({orderBy: newOrderBy, order: newOrder});
-    };
-
 
 
     render() {
