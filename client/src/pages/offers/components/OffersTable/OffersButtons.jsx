@@ -14,8 +14,8 @@ import {
     Info as InfoIcon
 } from "@material-ui/icons";
 import {
-    func, object,
-    string
+    func,
+    object
 } from "prop-types";
 
 const OffersButtons = ({

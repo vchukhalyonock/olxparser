@@ -25,9 +25,9 @@ const defaultQuery = {
     search: ''
 };
 
-const getOffers = (importRequestId, incomingQuery = {}) => async dispatch => {
+const getOffers = (incomingQuery = {}) => async dispatch => {
     const queryData = merge(defaultQuery, incomingQuery);
-    const responseData = await rest(`${offersUrl}/${importRequestId}`, METHODS.GET, queryData);
+    const responseData = await rest(`${offersUrl}/${incomingQuery.importRequestId}`, METHODS.GET, queryData);
     dispatch({ type: GET_OFFERS, payload: responseData });
 };
 

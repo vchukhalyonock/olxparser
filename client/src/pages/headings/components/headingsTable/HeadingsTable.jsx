@@ -1,27 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
     array,
     func,
     number
 } from "prop-types";
-import { merge } from "lodash";
 import {
     getHeadings,
     deleteHeading
 } from "../../../../actions/headings";
-import { menuClick } from "../../../../actions/menu";
 import { DELETE_HEADING_CONFIRMATION } from "../../../../constants/notifications";
 import {
-    IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT,
     HEAD_CELL_TYPE
 } from "../../../../constants/common";
 import {
     PageTable,
-    PageTableContainer,
-    PageTableContent
 } from "../../../../components/pageTable";
-import HeadingsButtons from "./HeadingsButtons"
+import {HeadingsButtons} from "./index";
 
 
 const headCells = [
@@ -30,39 +25,18 @@ const headCells = [
     { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date', typr: HEAD_CELL_TYPE.DATE },
 ];
 
-class HeadingsTable extends PageTable {
+class HeadingsTable extends Component {
 
     constructor(props) {
         super(props);
 
-        const newState = merge(
-            this.state,
-            {
-                headingId: undefined,
-            }
-        );
-
-        this.state = newState;
-    }
-
-    componentDidMount() {
-        this.getData({
-            pageTitle: "Headings",
-            getAll: this.props.getAll
-        });
-        this.intervalId = setInterval(
-            this.getData.bind(
-                this,
-                {
-                    pageTitle: "Headings",
-                    getAll: this.props.getAll
-                }
-            ), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
+        this.state = {
+            headingId: undefined
+        };
     }
 
     handleDeleteHeading = headingId => {
         this.setState({
-            openConfirm: true,
             headingId
         })
     };
@@ -70,50 +44,33 @@ class HeadingsTable extends PageTable {
     agreeHandler = () => {
         this.props.onDeleteHeading(this.state.headingId);
         this.setState({
-            openConfirm: false,
             headingId: undefined
         });
     };
 
     render() {
         const {
-            props: {
-                headings,
-                total
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                orderBy,
-                order,
-                openConfirm
-            }
-        } = this;
+            headings,
+            total,
+            getAll,
+            getFilterString,
+            getSearchString
+        } = this.props;
 
         return(
-            <PageTableContainer
-                openConfirm={openConfirm}
+            <PageTable
+                getAll={getAll}
                 confirmMessage={DELETE_HEADING_CONFIRMATION}
                 agreeHandler={this.agreeHandler}
-                disagreeHandler={this.disagreeHandler}
                 tableTitle="Headings"
                 headCells={headCells}
-                orderBy={orderBy}
-                order={order}
-                sortHandler={this.sortHandler}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                handleChangePage={this.handleChangePage}
-                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 total={total}
-                >
-                <PageTableContent
-                    headCells={headCells}
-                    data={headings}
-                    buttonsComponent={HeadingsButtons}
-                    deleteHandler={this.handleDeleteHeading}
-                />
-            </PageTableContainer>
+                data={headings}
+                pageTitle="Headings"
+                getFilterString={getFilterString}
+                getSearchString={getSearchString}
+                buttonsComponent={HeadingsButtons}
+            />
         );
     }
 }
@@ -131,8 +88,8 @@ HeadingsTable.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-   headings: state.headings.list.items,
-   total: state.headings.list.total
+    headings: state.headings.list.items,
+    total: state.headings.list.total
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -141,9 +98,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onDeleteHeading: headingId => {
         dispatch(deleteHeading(headingId));
-    },
-    onCreateTitle: title => {
-        dispatch(menuClick(title));
     }
 });
 

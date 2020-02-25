@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
     array,
@@ -16,25 +16,20 @@ import {
     Error as ErrorIcon,
     DoneAll as DoneIcon,
 } from '@material-ui/icons';
-import { merge } from "lodash";
 import {
     getImportRequests,
     deleteImportRequest,
     updateImportRequestStatus
 } from "../../../../actions/importRequests";
-import { menuClick } from "../../../../actions/menu";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
 import {
-    IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT,
     HEAD_CELL_TYPE
 } from "../../../../constants/common";
 import {
-    PageTable,
-    PageTableContainer,
-    PageTableContent
+    PageTable
 } from "../../../../components/pageTable";
-import ImportRequestButtons from "./ImportRequestsButtons";
+import {ImportRequestButtons} from "./index";
 
 const headCells = [
     { id: 'email', numeric: false, disablePadding: true, label: 'Email', type: HEAD_CELL_TYPE.TEXT },
@@ -43,36 +38,16 @@ const headCells = [
     { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date', type: HEAD_CELL_TYPE.DATE },
 ];
 
-class ImportRequestsTable extends PageTable {
+class ImportRequestsTable extends Component {
 
     constructor(props) {
         super(props);
 
-        const newState = merge(
-            this.state,
-            {
-                importRequestId: undefined
-            }
-        );
-
-        this.state = newState;
+        this.state = {
+            importRequestId: undefined
+        };
     }
 
-
-    componentDidMount() {
-        this.getData({
-            pageTitle: "Import Requests",
-            getAll: this.props.getAll
-        });
-        this.intervalId = setInterval(
-            this.getData.bind(
-                this,
-                {
-                    pageTitle: "Import Requests",
-                    getAll: this.props.getAll
-                }),
-            IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
-    }
 
     handleDeleteImportRequest = (importRequestId) => {
         this.setState({
@@ -155,44 +130,28 @@ class ImportRequestsTable extends PageTable {
 
     render() {
         const {
-            props: {
-                importRequests,
-                total
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                orderBy,
-                order,
-                openConfirm
-            }
-        } = this;
+            importRequests,
+            total,
+            getAll,
+            getFilterString,
+            getSearchString
+        } = this.props;
 
         return (
-            <PageTableContainer
-                openConfirm={openConfirm}
-                confirmMessage={DELETE_IMPORT_REQUEST_CONFIRMATION }
+            <PageTable
+                getAll={getAll}
+                confirmMessage={DELETE_IMPORT_REQUEST_CONFIRMATION}
                 agreeHandler={this.agreeHandler}
-                disagreeHandler={this.disagreeHandler}
                 tableTitle="Import Requests"
                 headCells={headCells}
-                orderBy={orderBy}
-                order={order}
-                sortHandler={this.sortHandler}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                handleChangePage={this.handleChangePage}
-                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 total={total}
-                >
-                <PageTableContent
-                    headCells={headCells}
-                    data={importRequests}
-                    buttonsComponent={ImportRequestButtons}
-                    deleteHandler={this.handleDeleteImportRequest}
-                    renderStatus={this.renderStatus}
-                />
-            </PageTableContainer>
+                data={importRequests}
+                pageTitle="Import Requests"
+                getFilterString={getFilterString}
+                getSearchString={getSearchString}
+                renderStatus={this.renderStatus}
+                buttonsComponent={ImportRequestButtons}
+            />
         )
     }
 }
@@ -226,9 +185,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onAddToDone: (importRequestId) => {
         dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.DONE));
-    },
-    onCreateTitle: title => {
-        dispatch(menuClick(title));
     }
 });
 

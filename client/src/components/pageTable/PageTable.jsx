@@ -1,5 +1,17 @@
-import { Component } from "react";
-import { func } from "prop-types";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+    array,
+    func,
+    number, object,
+    string
+} from "prop-types";
+import {
+    PageTableContainer,
+    PageTableContent
+} from "./index";
+import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../constants/common";
+import { menuClick } from "../../actions/menu";
 
 class PageTable extends Component {
 
@@ -15,6 +27,27 @@ class PageTable extends Component {
             orderBy: '',
             order: ''
         }
+    }
+
+    componentDidMount() {
+
+        const {
+            pageTitle,
+            getAll
+        } = this.props;
+
+        this.getData({
+            pageTitle,
+            getAll
+        });
+        this.intervalId = setInterval(
+            this.getData.bind(
+                this,
+                {
+                    pageTitle,
+                    getAll
+                }
+            ), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
     }
 
     componentWillUnmount() {
@@ -51,7 +84,8 @@ class PageTable extends Component {
         const {
             props: {
                 getSearchString,
-                getFilterString
+                getFilterString,
+                queryParams
             },
             state: {
                 itemsPerPage,
@@ -82,7 +116,8 @@ class PageTable extends Component {
             search,
             orderBy,
             order,
-            filter
+            filter,
+            ...queryParams
         });
     };
 
@@ -91,7 +126,8 @@ class PageTable extends Component {
             props: {
                 getAll,
                 getSearchString,
-                getFilterString
+                getFilterString,
+                queryParams
             },
             state: {
                 itemsPerPage,
@@ -110,7 +146,8 @@ class PageTable extends Component {
             search,
             orderBy,
             order,
-            filter
+            filter,
+            ...queryParams
         });
     };
 
@@ -119,7 +156,8 @@ class PageTable extends Component {
             props: {
                 getAll,
                 getSearchString,
-                getFilterString
+                getFilterString,
+                queryParams
             },
             state: {
                 orderBy,
@@ -141,13 +179,102 @@ class PageTable extends Component {
             search,
             orderBy,
             order,
-            filter
+            filter,
+            ...queryParams
         });
     };
+
+    render() {
+        const {
+            props: {
+                confirmMessage,
+                agreeHandler,
+                tableTitle,
+                headCells,
+                total,
+                data,
+                renderStatus,
+                allIds,
+                allCheckboxSelectedHandler,
+                checkBoxHandler,
+                currentPageSelectedNums,
+                isItemSelected,
+                buttonsComponent
+            },
+            state: {
+                openConfirm,
+                orderBy,
+                order,
+                itemsPerPage,
+                currentPage
+            }
+        } = this;
+
+        return(
+            <PageTableContainer
+                openConfirm={openConfirm}
+                confirmMessage={confirmMessage}
+                agreeHandler={agreeHandler}
+                disagreeHandler={this.disagreeHandler}
+                tableTitle={tableTitle}
+                headCells={headCells}
+                orderBy={orderBy}
+                order={order}
+                sortHandler={this.sortHandler}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                handleChangePage={this.handleChangePage}
+                handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+                total={total}
+                allIds={allIds}
+                allCheckboxSelectedHandler={allCheckboxSelectedHandler}
+                currentPageSelectedNums={currentPageSelectedNums}
+            >
+                <PageTableContent
+                    headCells={headCells}
+                    data={data}
+                    buttonsComponent={buttonsComponent}
+                    deleteHandler={this.handleDeleteHeading}
+                    renderStatus={renderStatus}
+                    checkBoxHandler={checkBoxHandler}
+                    isSelected={isItemSelected}
+                />
+            </PageTableContainer>
+        );
+    }
 }
 
 PageTable.propTypes = {
-    getAll: func.isRequired
+    getAll: func.isRequired,
+    confirmMessage: string.isRequired,
+    agreeHandler: func.isRequired,
+    tableTitle: string.isRequired,
+    headCells: array.isRequired,
+    total: number,
+    data: array,
+    pageTitle: string.isRequired,
+    getSearchString: func.isRequired,
+    getFilterString: func.isRequired,
+    renderStatus: func,
+    allIds: array,
+    allCheckboxSelectedHandler: func,
+    checkBoxHandler: func,
+    currentPageSelectedNums: number,
+    isItemSelected: func,
+    queryParams: object,
+    buttonsComponent: func
 };
 
-export default PageTable;
+PageTable.defaultProps = {
+    total: 0,
+    data: [],
+    queryParams: {}
+};
+
+const mapDispatchToProps = dispatch => ({
+    onCreateTitle: title => {
+        dispatch(menuClick(title));
+    }
+});
+
+export default connect(null, mapDispatchToProps)(PageTable);
