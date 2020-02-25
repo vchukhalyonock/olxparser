@@ -51,7 +51,6 @@ class ImportRequestsTable extends Component {
 
     handleDeleteImportRequest = (importRequestId) => {
         this.setState({
-            openConfirm: true,
             importRequestId: importRequestId
         });
     };
@@ -59,7 +58,6 @@ class ImportRequestsTable extends Component {
     agreeHandler = () => {
         this.props.onDeleteImportRequest(this.state.importRequestId);
         this.setState({
-            openConfirm: false,
             importRequestId: undefined
         });
     };
@@ -151,6 +149,7 @@ class ImportRequestsTable extends Component {
                 getSearchString={getSearchString}
                 renderStatus={this.renderStatus}
                 buttonsComponent={ImportRequestButtons}
+                itemDeleteHandler={this.handleDeleteImportRequest}
             />
         )
     }

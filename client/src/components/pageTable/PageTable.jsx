@@ -184,6 +184,16 @@ class PageTable extends Component {
         });
     };
 
+    handleDeleteItem = itemId => {
+        this.setState({openConfirm: true});
+        this.props.itemDeleteHandler(itemId);
+    };
+
+    deleteAgreeHandler = () => {
+        this.setState({openConfirm: false});
+        this.props.agreeHandler();
+    };
+
     render() {
         const {
             props: {
@@ -214,7 +224,7 @@ class PageTable extends Component {
             <PageTableContainer
                 openConfirm={openConfirm}
                 confirmMessage={confirmMessage}
-                agreeHandler={agreeHandler}
+                agreeHandler={this.deleteAgreeHandler}
                 disagreeHandler={this.disagreeHandler}
                 tableTitle={tableTitle}
                 headCells={headCells}
@@ -234,7 +244,7 @@ class PageTable extends Component {
                     headCells={headCells}
                     data={data}
                     buttonsComponent={buttonsComponent}
-                    deleteHandler={this.handleDeleteHeading}
+                    deleteHandler={this.handleDeleteItem}
                     renderStatus={renderStatus}
                     checkBoxHandler={checkBoxHandler}
                     isSelected={isItemSelected}
@@ -262,7 +272,8 @@ PageTable.propTypes = {
     currentPageSelectedNums: number,
     isItemSelected: func,
     queryParams: object,
-    buttonsComponent: func
+    buttonsComponent: func,
+    itemDeleteHandler: func
 };
 
 PageTable.defaultProps = {

@@ -70,6 +70,7 @@ class HeadingsTable extends Component {
                 getFilterString={getFilterString}
                 getSearchString={getSearchString}
                 buttonsComponent={HeadingsButtons}
+                itemDeleteHandler={this.handleDeleteHeading}
             />
         );
     }

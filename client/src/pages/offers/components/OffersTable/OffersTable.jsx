@@ -107,6 +107,7 @@ class OffersTable extends Component {
                 isItemSelected={this.isSelected}
                 queryParams={params}
                 buttonsComponent={OffersButtons}
+                itemDeleteHandler={this.handleDeleteOffer}
             />
         );
     }
