@@ -235,6 +235,7 @@ class OffersTable extends PageTable {
                    headCells={headCells}
                    buttonsComponent={OffersButtons}
                    deleteHandler={this.handleDeleteOffer}
+                   checkBoxHandler={offerCheckBoxHandler}
                />
            </PageTableContainer>
         );
