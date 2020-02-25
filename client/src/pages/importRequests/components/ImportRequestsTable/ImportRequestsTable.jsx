@@ -72,7 +72,7 @@ class ImportRequestsTable extends Component {
     };
 
 
-    renderStatus(id, status, errorMessage) {
+    renderStatus = (id, status, errorMessage) => {
         switch (status) {
             case REQUEST_STATUS.NEW:
                 return (
