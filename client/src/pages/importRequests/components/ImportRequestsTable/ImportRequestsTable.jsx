@@ -6,24 +6,16 @@ import {
     number
 } from "prop-types";
 import {
-    TableCell,
-    TableRow,
     IconButton,
     CircularProgress,
-    Typography,
-    Link,
     Tooltip
 } from '@material-ui/core';
 import {
-    Edit as EditIcon,
-    Delete as DeleteIcon,
     Queue as QueueIcon,
     PauseCircleOutline as PendingIcon,
     Error as ErrorIcon,
     DoneAll as DoneIcon,
-    Info as InfoIcon
 } from '@material-ui/icons';
-import moment from "moment";
 import { merge } from "lodash";
 import {
     getImportRequests,
@@ -31,21 +23,24 @@ import {
     updateImportRequestStatus
 } from "../../../../actions/importRequests";
 import { menuClick } from "../../../../actions/menu";
-import {
-    EDIT_IMPORT_REQUEST_PAGE_PATH,
-    OFFERS_PAGE_PATH
-} from "../../../../constants/router";
-import ListItemLink from "../../../../components/listItemLink";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
-import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
-import { PageTable, PageTableContainer } from "../../../../components/pageTable";
+import {
+    IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT,
+    HEAD_CELL_TYPE
+} from "../../../../constants/common";
+import {
+    PageTable,
+    PageTableContainer,
+    PageTableContent
+} from "../../../../components/pageTable";
+import ImportRequestButtons from "./ImportRequestsButtons";
 
 const headCells = [
-    { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
-    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone' },
-    { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL' },
-    { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date' },
+    { id: 'email', numeric: false, disablePadding: true, label: 'Email', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL', type: HEAD_CELL_TYPE.LINK },
+    { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date', type: HEAD_CELL_TYPE.DATE },
 ];
 
 class ImportRequestsTable extends PageTable {
@@ -190,45 +185,13 @@ class ImportRequestsTable extends PageTable {
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 total={total}
                 >
-                        {importRequests.map(item => (
-                                <TableRow key={item._id}>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.email}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.phone}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            <Link href={item.olxAccountUrl} target='_blank'>
-                                                {item.olxAccountUrl}
-                                            </Link>
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {moment(item.requestedAt).format( "DD-MM-YYYY HH:mm")}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                            <InfoIcon />
-                                        </IconButton>
-                                        <IconButton to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                        {this.renderStatus(item._id, item.status, item.errorMessage)}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        )}
+                <PageTableContent
+                    headCells={headCells}
+                    data={importRequests}
+                    buttonsComponent={ImportRequestButtons}
+                    deleteHandler={this.handleDeleteImportRequest}
+                    renderStatus={this.renderStatus}
+                />
             </PageTableContainer>
         )
     }

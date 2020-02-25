@@ -9,37 +9,24 @@ import {
 } from "prop-types";
 import { merge } from "lodash";
 import {
-    TableCell,
-    TableRow,
-    IconButton,
-    Typography,
-    Link,
-    Checkbox
-} from '@material-ui/core';
-import {
-    Edit as EditIcon,
-    Delete as DeleteIcon,
-    Info as InfoIcon
-} from '@material-ui/icons';
-import {
     getOffers,
     deleteOffer
 } from "../../../../actions/offers";
 import { menuClick } from "../../../../actions/menu";
 import { getImportRequest } from "../../../../actions/importRequests";
-import {
-    EDIT_OFFERS_PAGE_PATH,
-    OFFER_DETAILS_PATH
-} from "../../../../constants/router";
-import ListItemLink from "../../../../components/listItemLink";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
-import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
-import { PageTable, PageTableContainer } from "../../../../components/pageTable";
+import {
+    IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT,
+    HEAD_CELL_TYPE
+} from "../../../../constants/common";
+import { PageTable, PageTableContainer, PageTableContent } from "../../../../components/pageTable";
+import OffersButtons from "./OffersButtons";
 
 const headCells = [
-    { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
-    { id: 'headingString', numeric: false, disablePadding: true, label: 'Heading' },
-    { id: 'description', numeric: false, disablePadding: true, label: 'Description' }
+    { id: '_id', numeric: false, disablePadding: true, label: '', type: HEAD_CELL_TYPE.CHECKBOX },
+    { id: 'title', numeric: false, disablePadding: true, label: 'Title', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'headingString', numeric: false, disablePadding: true, label: 'Heading', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'description', numeric: false, disablePadding: true, label: 'Description', type: HEAD_CELL_TYPE.TEXT }
 ];
 
 class OffersTable extends PageTable {
@@ -243,51 +230,12 @@ class OffersTable extends PageTable {
                allIds={allIds}
                allCheckboxSelectedHandler={offerCheckBoxSelectAllHandler}
                >
-                        {offers.map(item => {
-                            const isItemSelected = this.isSelected(item._id);
-
-                            return (
-                                <TableRow key={item._id}>
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            checked={isItemSelected}
-                                            onChange={() => offerCheckBoxHandler(item._id)}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            <Link href={item.url} target='_blank'>
-                                                {item.title}
-                                            </Link>
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.headingString}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.description}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        {item.srcImages.length > 0 ? <img src={item.srcImages[0]} width="50px" alt={item.title}/> : undefined}
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
-                                            <InfoIcon />
-                                        </IconButton>
-                                        <IconButton to={`${EDIT_OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => this.handleDeleteOffer(item._id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
+               <PageTableContent
+                   data={offers}
+                   headCells={headCells}
+                   buttonsComponent={OffersButtons}
+                   deleteHandler={this.handleDeleteOffer}
+               />
            </PageTableContainer>
         );
     }

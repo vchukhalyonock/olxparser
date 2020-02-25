@@ -1,8 +1,4 @@
-import React,
-{
-    Component,
-    Fragment
-} from "react";
+import React, { Fragment } from "react";
 import Confirm from "../confirm";
 import Title from "../title";
 import {
@@ -25,31 +21,29 @@ import {
 } from "prop-types";
 
 
-class PageTableContainer extends Component {
-    render() {
-        const {
-            openConfirm,
-            confirmMessage,
-            agreeHandler,
-            disagreeHandler,
-            tableTitle,
-            headCells,
-            orderBy,
-            order,
-            sortHandler,
-            itemsPerPage,
-            currentPage,
-            handleChangePage,
-            handleChangeRowsPerPage,
-            total,
-            children,
-            isTotalCheckbox,
-            currentPageSelectedNums,
-            allCheckboxSelectedHandler,
-            allIds
-        } = this.props;
-
-        return (
+const PageTableContainer = (
+    {
+        openConfirm,
+        confirmMessage,
+        agreeHandler,
+        disagreeHandler,
+        tableTitle,
+        headCells,
+        orderBy,
+        order,
+        sortHandler,
+        itemsPerPage,
+        currentPage,
+        handleChangePage,
+        handleChangeRowsPerPage,
+        total,
+        children,
+        isTotalCheckbox,
+        currentPageSelectedNums,
+        allCheckboxSelectedHandler,
+        allIds
+    }
+) => (
             <Fragment>
                 <Confirm
                     message={confirmMessage}
@@ -98,9 +92,7 @@ class PageTableContainer extends Component {
                     </TableFooter>
                 </Table>
             </Fragment>
-        )
-    }
-}
+        );
 
 PageTableContainer.propTypes = {
     openConfirm: bool.isRequired,

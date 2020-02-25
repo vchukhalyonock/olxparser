@@ -7,32 +7,27 @@ import {
 } from "prop-types";
 import { merge } from "lodash";
 import {
-    TableCell,
-    TableRow,
-    IconButton,
-    Typography
-} from '@material-ui/core';
-import {
-    Edit as EditIcon,
-    Delete as DeleteIcon,
-} from '@material-ui/icons';
-import moment from "moment";
-import {
     getHeadings,
     deleteHeading
 } from "../../../../actions/headings";
 import { menuClick } from "../../../../actions/menu";
-import { EDIT_HEADINGS_PAGE_PATH } from "../../../../constants/router";
-import ListItemLink from "../../../../components/listItemLink";
 import { DELETE_HEADING_CONFIRMATION } from "../../../../constants/notifications";
-import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
-import { PageTable, PageTableContainer } from "../../../../components/pageTable";
+import {
+    IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT,
+    HEAD_CELL_TYPE
+} from "../../../../constants/common";
+import {
+    PageTable,
+    PageTableContainer,
+    PageTableContent
+} from "../../../../components/pageTable";
+import HeadingsButtons from "./HeadingsButtons"
 
 
 const headCells = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'id' },
-    { id: 'heading', numeric: false, disablePadding: true, label: 'Heading' },
-    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date' },
+    { id: '_id', numeric: true, disablePadding: true, label: 'id', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'heading', numeric: false, disablePadding: true, label: 'Heading', type: HEAD_CELL_TYPE.TEXT},
+    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date', typr: HEAD_CELL_TYPE.DATE },
 ];
 
 class HeadingsTable extends PageTable {
@@ -112,33 +107,12 @@ class HeadingsTable extends PageTable {
                 handleChangeRowsPerPage={this.handleChangeRowsPerPage}
                 total={total}
                 >
-                        {headings.map(item => (
-                            <TableRow key={item._id}>
-                                <TableCell>
-                                    <Typography>
-                                        {item._id}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {item.heading}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <Typography>
-                                        {moment(item.createdAt).format( "DD-MM-YYYY HH:mm")}
-                                    </Typography>
-                                </TableCell>
-                                <TableCell>
-                                    <IconButton to={`${EDIT_HEADINGS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => this.handleDeleteHeading(item._id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                <PageTableContent
+                    headCells={headCells}
+                    data={headings}
+                    buttonsComponent={HeadingsButtons}
+                    deleteHandler={this.handleDeleteHeading}
+                />
             </PageTableContainer>
         );
     }

@@ -1,7 +1,9 @@
 import PageTable from "./PageTable";
-import PageTableContainer from "./PageTableContainer"
+import PageTableContainer from "./PageTableContainer";
+import PageTableContent from "./PageTableContent";
 
 export  {
     PageTable,
-    PageTableContainer
+    PageTableContainer,
+    PageTableContent
 };
