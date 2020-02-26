@@ -50,30 +50,31 @@ class ImportRequestForm extends Component {
     }
 
     handleEmailChange = (event) => {
-        this.setState({email: event.target.value});
+        this.setState({ email: event.target.value });
     };
 
     handlePhoneChange = (event) => {
-        this.setState({phone: event.target.value});
+        this.setState({ phone: event.target.value });
     };
 
     handleOlxAccountUrlChange = (event) => {
-        this.setState({olxAccountUrl: event.target.value});
+        this.setState({ olxAccountUrl: event.target.value });
     };
 
     componentDidMount() {
-        const { importRequestId } = this.props;
+        const {
+            importRequestId,
+            onCreateTitle,
+            getIR
+        } = this.props;
+
         if (importRequestId) {
-            this.props.onCreateTitle("Edit Import Request");
-            this.props.getIR(importRequestId);
+            onCreateTitle("Edit Import Request");
+            getIR(importRequestId);
         } else {
-            this.props.onCreateTitle("Create Import Request");
+            onCreateTitle("Create Import Request");
         }
     }
-
-    setRedirect  = () => {
-        this.setState({redirect: true});
-    };
 
     renderRedirect = () => {
         if(this.state.redirect) {
@@ -82,22 +83,28 @@ class ImportRequestForm extends Component {
     };
 
     cancelHandler = (event) => {
-        this.setState({
+        event.preventDefault();
+        const newState = {
             email: undefined,
             phone: undefined,
             olxAccountUrl: undefined,
             emailError: false,
             phoneError: false,
-            urlError: false
-        });
-        this.setRedirect();
-        event.preventDefault();
+            urlError: false,
+            redirect: true
+        };
+        this.setState(newState);
     };
 
 
     IRSubmitHandler = (event) => {
 
         event.preventDefault();
+        const {
+            importRequestId,
+            saveIR
+        } = this.props;
+
         let errors = false;
 
         const converted = {
@@ -106,8 +113,11 @@ class ImportRequestForm extends Component {
             olxAccountUrl: this.state.olxAccountUrl ? this.state.olxAccountUrl : this.props.olxAccountUrl
         };
 
-        const { email, phone, olxAccountUrl } = converted;
-        const { importRequestId } = this.props;
+        const {
+            email,
+            phone,
+            olxAccountUrl
+        } = converted;
 
         const emailError = email.search(EMAIL_VALIDATE_REGEX) === -1;
         const phoneError = phone.search(PHONE_VALIDATE_REGEX) === -1;
@@ -125,13 +135,17 @@ class ImportRequestForm extends Component {
             };
             this.setState(errorState);
         } else {
-            this.setState({
+            saveIR(email, phone, olxAccountUrl, importRequestId);
+            const newState = {
+                email: undefined,
+                phone: undefined,
+                olxAccountUrl: undefined,
                 emailError: false,
                 phoneError: false,
-                urlError: false
-            });
-            this.props.saveIR(email, phone, olxAccountUrl, importRequestId);
-            this.setRedirect();
+                urlError: false,
+                redirect: true
+            };
+            this.setState(newState);
         }
     };
 
@@ -154,6 +168,7 @@ class ImportRequestForm extends Component {
         if(!importRequestId) {
             email = undefined;
             olxAccountUrl = undefined;
+            phone = undefined;
         }
 
         return (

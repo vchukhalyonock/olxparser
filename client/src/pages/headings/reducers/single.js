@@ -1,7 +1,8 @@
 import {
     GET_HEADING,
     CREATE_HEADING,
-    UPDATE_HEADING
+    UPDATE_HEADING,
+    RESET_HEADING_FORM
 } from "../../../constants/actions";
 
 const initialState = {
@@ -39,7 +40,8 @@ export default function single(state = initialState, action) {
                 }
             };
 
+        case RESET_HEADING_FORM:
         default:
-            return state;
+            return initialState;
     }
 }

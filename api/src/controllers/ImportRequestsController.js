@@ -103,7 +103,7 @@ class ImportRequestsController extends Controller {
         };
 
         if(!importRequest.email || !importRequest.phone || !importRequest.olxAccountUrl) {
-            next(new Error("Invalid params"));
+            return next(new Error("Invalid params"));
         }
 
         const importRequestModel = new ImportRequestModel(importRequest);
@@ -111,7 +111,7 @@ class ImportRequestsController extends Controller {
             await importRequestModel.save();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: 'success'});
@@ -170,14 +170,16 @@ class ImportRequestsController extends Controller {
         const newRequest = req.body;
 
         if(!newRequest.email || !newRequest.phone || !newRequest.olxAccountUrl || !newRequest._id) {
-            next(new Error("Invalid params"));
+            return next(new Error("Invalid params"));
         }
 
         try {
-            await ImportRequestModel.updateOne({_id: newRequest._id}, newRequest).exec();
+            await ImportRequestModel
+                .updateOne({_id: newRequest._id}, newRequest)
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: "success"});
@@ -236,11 +238,13 @@ class ImportRequestsController extends Controller {
         } = req.body;
 
         if(!id || !status) {
-            next(new Error("Invalid params"));
+            return next(new Error("Invalid params"));
         }
 
         try {
-            const importRequest = await ImportRequestModel.findOne({_id: id}).exec();
+            const importRequest = await ImportRequestModel
+                .findOne({_id: id})
+                .exec();
             if(importRequest) {
                 importRequest.status = status;
                 importRequest.errorMessage = errorMessage || '';
@@ -249,7 +253,7 @@ class ImportRequestsController extends Controller {
             }
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: "success"});
@@ -441,7 +445,9 @@ class ImportRequestsController extends Controller {
                         [queryOrderBy, queryOrder]
                     ]
                 });
-            total = await ImportRequestModel.countDocuments(query).exec();
+            total = await ImportRequestModel
+                .countDocuments(query)
+                .exec();
         } catch (e) {
             console.log(e);
             next(e);
@@ -500,10 +506,12 @@ class ImportRequestsController extends Controller {
         let importRequest = null;
 
         try {
-            importRequest = await ImportRequestModel.findOne({_id: id}).exec();
+            importRequest = await ImportRequestModel
+                .findOne({_id: id})
+                .exec();
         } catch (e) {
             console.log(e);
-            next(new Error("Not found", 404));
+            return next(new Error("Not found", 404));
         }
 
         return res.json({
@@ -546,15 +554,19 @@ class ImportRequestsController extends Controller {
         const { id } = req.params;
 
         if(!id) {
-            next(new Error("Invalid params", 400));
+            return next(new Error("Invalid params", 400));
         }
 
         try {
-            await OffersModel.deleteMany({importRequestId: id}).exec();
-            await ImportRequestModel.deleteOne({_id: id}).exec();
+            await OffersModel
+                .deleteMany({importRequestId: id})
+                .exec();
+            await ImportRequestModel
+                .deleteOne({_id: id})
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: 'success'});
@@ -594,14 +606,16 @@ class ImportRequestsController extends Controller {
         const { id } = req.params;
 
         if(!id) {
-            next(new Error("Invalid params", 400));
+            return next(new Error("Invalid params", 400));
         }
 
         try {
-            await OffersModel.deleteMany({importRequestId: id}).exec();
+            await OffersModel
+                .deleteMany({importRequestId: id})
+                .exec();
         } catch (e) {
             console.log(e);
-            next(e);
+            return next(e);
         }
 
         return res.json({status: 'success'});

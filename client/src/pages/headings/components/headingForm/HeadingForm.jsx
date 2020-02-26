@@ -15,7 +15,8 @@ import {
 import {
     createHeading,
     updateHeading,
-    getHeading
+    getHeading,
+    resetHeadingForm
 } from "../../../../actions/headings";
 import { HEADINGS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
@@ -37,38 +38,38 @@ class HeadingForm extends Component {
         this.state = {
             redirect: false,
             heading: undefined,
-            cancel: false
+            cancel: false,
+            submitted: false
         }
     }
 
     componentDidMount() {
-        const { headingId } = this.props;
-        this.setState({cancel: false});
+        const {
+            headingId,
+            onCreateTitle,
+            onGetHeading,
+            resetForm
+        } = this.props;
+
+        resetForm();
+
+        const newState = {
+            heading: undefined,
+            redirect: false,
+            cancel: false
+        };
+        this.setState(newState);
+
         if (headingId) {
-            this.props.onCreateTitle("Edit Heading");
-            this.props.onGetHeading(headingId);
+            onCreateTitle("Edit Heading");
+            onGetHeading(headingId);
         } else {
-            this.props.onCreateTitle("Create Heading");
+            onCreateTitle("Create Heading");
         }
     }
 
     handleHeadingChange = (event) => {
-        this.setState({heading: event.target.value});
-    };
-
-    setRedirect  = () => {
-        this.setState({
-            heading: undefined,
-            redirect: true
-        });
-    };
-
-    setCancel = () => {
-        this.setState({
-            heading: undefined,
-            redirect: true,
-            cancel: true
-        });
+        this.setState({ heading: event.target.value });
     };
 
     renderRedirect = () => {
@@ -78,8 +79,13 @@ class HeadingForm extends Component {
     };
 
     cancelHandler = (event) => {
-        this.setCancel();
         event.preventDefault();
+        const newState = {
+            heading: undefined,
+            redirect: true,
+            cancel: true
+        };
+        this.setState(newState);
     };
 
     headingSubmitHandler = (event) => {
@@ -87,7 +93,11 @@ class HeadingForm extends Component {
 
         const heading = this.state.heading ? this.state.heading : this.props.heading;
         this.props.saveHeading(this.props.headingId, heading);
-        this.setRedirect();
+        const newState = {
+            redirect: true,
+            cancel: false
+        };
+        this.setState(newState);
     };
 
     render() {
@@ -165,6 +175,9 @@ const mapDispatchToProps = dispatch => ({
     },
     onCreateTitle: title => {
         dispatch(menuClick(title));
+    },
+    resetForm: () => {
+        dispatch(resetHeadingForm());
     }
 });
 

@@ -1,8 +1,4 @@
-import React,
-{
-    Component,
-    Fragment
-} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
     array,
@@ -10,124 +6,51 @@ import {
     number
 } from "prop-types";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    TableFooter,
-    TablePagination,
     IconButton,
     CircularProgress,
-    Typography,
-    Link,
     Tooltip
 } from '@material-ui/core';
 import {
-    Edit as EditIcon,
-    Delete as DeleteIcon,
     Queue as QueueIcon,
     PauseCircleOutline as PendingIcon,
     Error as ErrorIcon,
     DoneAll as DoneIcon,
-    Info as InfoIcon
 } from '@material-ui/icons';
-import moment from "moment";
-import Title from "../../../../components/title";
 import {
     getImportRequests,
     deleteImportRequest,
     updateImportRequestStatus
 } from "../../../../actions/importRequests";
-import { menuClick } from "../../../../actions/menu";
-import {
-    EDIT_IMPORT_REQUEST_PAGE_PATH,
-    OFFERS_PAGE_PATH
-} from "../../../../constants/router";
-import ListItemLink from "../../../../components/listItemLink";
-import Confirm from "../../../../components/confirm";
 import { DELETE_IMPORT_REQUEST_CONFIRMATION } from "../../../../constants/notifications";
 import { REQUEST_STATUS } from "../../../../constants/statuses";
-import { IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT } from "../../../../constants/common";
-import SortingHeader from "../../../../components/sortingHeader";
+import {
+    HEAD_CELL_TYPE
+} from "../../../../constants/common";
+import {
+    PageTable
+} from "../../../../components/pageTable";
+import {ImportRequestButtons} from "./index";
 
 const headCells = [
-    { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
-    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone' },
-    { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL' },
-    { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date' },
+    { id: 'email', numeric: false, disablePadding: true, label: 'Email', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'phone', numeric: false, disablePadding: true, label: 'Phone', type: HEAD_CELL_TYPE.TEXT },
+    { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL', type: HEAD_CELL_TYPE.LINK },
+    { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date', type: HEAD_CELL_TYPE.DATE },
 ];
 
 class ImportRequestsTable extends Component {
 
-    intervalId;
-
     constructor(props) {
         super(props);
+
         this.state = {
-            openConfirm: false,
-            importRequestId: undefined,
-            currentPage: 0,
-            itemsPerPage: 10,
-            previousSearch: '',
-            orderBy: '',
-            order: ''
-        }
+            importRequestId: undefined
+        };
     }
 
-    getData = () => {
-        this.props.onCreateTitle('Import Requests');
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                previousSearch,
-                orderBy,
-                order
-            }
-        } = this;
-
-        const search = getSearchString();
-        const filter = getFilterString();
-        let offset;
-        if(previousSearch !== search.toLowerCase()) {
-            offset = 0;
-            this.setState({
-                previousSearch: search.toLowerCase(),
-                orderBy: '',
-                order: ''
-            });
-        } else {
-            offset = currentPage * itemsPerPage;
-        }
-
-        getAllImportRequests({
-            limit: itemsPerPage,
-            offset,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
-
-    componentDidMount() {
-        this.getData();
-        this.intervalId = setInterval(this.getData.bind(this), IMPORT_REQUEST_PAGE_REFRESH_TIMEOUT);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
-    }
 
     handleDeleteImportRequest = (importRequestId) => {
         this.setState({
-            openConfirm: true,
             importRequestId: importRequestId
         });
     };
@@ -135,13 +58,8 @@ class ImportRequestsTable extends Component {
     agreeHandler = () => {
         this.props.onDeleteImportRequest(this.state.importRequestId);
         this.setState({
-            openConfirm: false,
             importRequestId: undefined
         });
-    };
-
-    disagreeHandler = () => {
-        this.setState({openConfirm: false});
     };
 
 
@@ -153,66 +71,8 @@ class ImportRequestsTable extends Component {
         this.props.onAddToDone(importRequestId);
     };
 
-    handleChangePage = (event, newPage) => {
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                itemsPerPage,
-                orderBy,
-                order
-            }
-        } = this;
 
-        const search = getSearchString();
-        const offset = newPage * itemsPerPage;
-        const filter = getFilterString();
-        this.setState({currentPage: newPage});
-        getAllImportRequests({
-            limit: itemsPerPage,
-            offset,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
-
-    handleChangeRowsPerPage = event => {
-        const {
-            props: {
-                getAllImportRequests,
-                getSearchString,
-                getFilterString
-            },
-            state: {
-                orderBy,
-                order
-            }
-        } = this;
-
-        const newItemsPerPage = parseInt(event.target.value, 10);
-        const search = getSearchString();
-        const filter = getFilterString();
-        const state = {
-            itemsPerPage: newItemsPerPage,
-            currentPage: 0
-        };
-        this.setState(state);
-        getAllImportRequests({
-            limit: newItemsPerPage,
-            offset: 0,
-            search,
-            orderBy,
-            order,
-            filter
-        });
-    };
-
-    renderStatus(id, status, errorMessage) {
+    renderStatus = (id, status, errorMessage) => {
         switch (status) {
             case REQUEST_STATUS.NEW:
                 return (
@@ -266,117 +126,31 @@ class ImportRequestsTable extends Component {
         }
     }
 
-    sortHandler = (id) => {
-        const {
-            orderBy,
-            order
-        } = this.state;
-
-        let newOrderBy, newOrder;
-        if (orderBy !== id) {
-            newOrderBy = id;
-            newOrder = 'asc';
-        } else {
-            newOrderBy = orderBy;
-            newOrder = order === 'asc' ? 'desc' : 'asc';
-        }
-
-        this.setState({orderBy: newOrderBy, order: newOrder});
-    };
-
     render() {
         const {
-            props: {
-                importRequests,
-                total
-            },
-            state: {
-                itemsPerPage,
-                currentPage,
-                orderBy,
-                order
-            }
-        } = this;
+            importRequests,
+            total,
+            getAll,
+            getFilterString,
+            getSearchString
+        } = this.props;
 
         return (
-            <Fragment>
-                <Confirm
-                    key={this.state.openConfirm}
-                    message={DELETE_IMPORT_REQUEST_CONFIRMATION}
-                    title="Please, confirm"
-                    isOpen={this.state.openConfirm}
-                    agreeHandler={this.agreeHandler}
-                    disagreeHandler={this.disagreeHandler}
-                />
-                <Title>Import Requests</Title>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <SortingHeader
-                                headCells={headCells}
-                                orderBy={orderBy}
-                                order={order}
-                                sortHandler={this.sortHandler}
-                            />
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {importRequests.map(item => (
-                                <TableRow key={item._id}>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.email}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {item.phone}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            <Link href={item.olxAccountUrl} target='_blank'>
-                                                {item.olxAccountUrl}
-                                            </Link>
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography>
-                                            {moment(item.requestedAt).format( "DD-MM-YYYY HH:mm")}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                            <InfoIcon />
-                                        </IconButton>
-                                        <IconButton to={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton onClick={() => this.handleDeleteImportRequest(item._id)}>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                        {this.renderStatus(item._id, item.status, item.errorMessage)}
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={5}
-                                count={total}
-                                rowsPerPage={itemsPerPage}
-                                page={currentPage}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </Fragment>
+            <PageTable
+                getAll={getAll}
+                confirmMessage={DELETE_IMPORT_REQUEST_CONFIRMATION}
+                agreeHandler={this.agreeHandler}
+                tableTitle="Import Requests"
+                headCells={headCells}
+                total={total}
+                data={importRequests}
+                pageTitle="Import Requests"
+                getFilterString={getFilterString}
+                getSearchString={getSearchString}
+                renderStatus={this.renderStatus}
+                buttonsComponent={ImportRequestButtons}
+                itemDeleteHandler={this.handleDeleteImportRequest}
+            />
         )
     }
 }
@@ -399,7 +173,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAllImportRequests: (options = {}) => {
+    getAll: (options = {}) => {
         dispatch(getImportRequests(options));
     },
     onDeleteImportRequest: (importRequestId) => {
@@ -410,9 +184,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onAddToDone: (importRequestId) => {
         dispatch(updateImportRequestStatus(importRequestId, REQUEST_STATUS.DONE));
-    },
-    onCreateTitle: title => {
-        dispatch(menuClick(title));
     }
 });
 

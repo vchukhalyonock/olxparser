@@ -28,3 +28,12 @@ export const headingsFilterItems = [
     { value: 'day', option: 'Last Day Added' },
     { value: 'month', option: 'Last Month Added' },
 ];
+
+
+export const HEAD_CELL_TYPE = {
+    TEXT: "TEXT",
+    LINK: "LINK",
+    CHECKBOX: "CHECKBOX",
+    IMAGE: "IMAGE",
+    DATE: "DATE"
+};

@@ -133,7 +133,7 @@ class ExportController extends Controller {
             .exec();
 
         if(!importRequest) {
-            throw new Error("Not found", 404);
+            return next(new Error("Not found", 404));
         }
 
         let offers;

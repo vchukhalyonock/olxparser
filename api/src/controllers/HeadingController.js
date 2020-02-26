@@ -8,7 +8,11 @@ import {
 import { HeadingService } from "../services";
 import Error from "../core/Error";
 import { FILTER_HEADINGS } from "../constants/common";
-import {getLastDayDate, getLastHourDate, getLastMonthDate} from "../utils/common";
+import {
+    getLastDayDate,
+    getLastHourDate,
+    getLastMonthDate
+} from "../utils/common";
 
 class HeadingController extends Controller {
     get routes() {
@@ -162,7 +166,9 @@ class HeadingController extends Controller {
                         [queryOrderBy, queryOrder]
                     ]
                 });
-            total = await HeadingModel.countDocuments(query).exec();
+            total = await HeadingModel
+                .countDocuments(query)
+                .exec();
         } catch (e) {
             console.log(e);
             next(e);
@@ -219,7 +225,9 @@ class HeadingController extends Controller {
         let heading;
 
         try {
-            heading = await HeadingModel.findOne({_id: id}).exec();
+            heading = await HeadingModel
+                .findOne({_id: id})
+                .exec();
         } catch (e) {
             console.log(e);
             return next(new Error("Not found", 404));
