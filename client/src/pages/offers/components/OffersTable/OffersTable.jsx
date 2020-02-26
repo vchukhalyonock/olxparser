@@ -108,6 +108,7 @@ class OffersTable extends Component {
                 queryParams={params}
                 buttonsComponent={OffersButtons}
                 itemDeleteHandler={this.handleDeleteOffer}
+                isTotalCheckbox={true}
             />
         );
     }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-    array,
+    array, bool,
     func,
     number, object,
     string
@@ -209,7 +209,8 @@ class PageTable extends Component {
                 checkBoxHandler,
                 currentPageSelectedNums,
                 isItemSelected,
-                buttonsComponent
+                buttonsComponent,
+                isTotalCheckbox
             },
             state: {
                 openConfirm,
@@ -239,6 +240,7 @@ class PageTable extends Component {
                 allIds={allIds}
                 allCheckboxSelectedHandler={allCheckboxSelectedHandler}
                 currentPageSelectedNums={currentPageSelectedNums}
+                isTotalCheckbox={isTotalCheckbox}
             >
                 <PageTableContent
                     headCells={headCells}
@@ -273,13 +275,15 @@ PageTable.propTypes = {
     isItemSelected: func,
     queryParams: object,
     buttonsComponent: func,
-    itemDeleteHandler: func
+    itemDeleteHandler: func,
+    isTotalCheckbox: bool
 };
 
 PageTable.defaultProps = {
     total: 0,
     data: [],
-    queryParams: {}
+    queryParams: {},
+    isTotalCheckbox: false
 };
 
 const mapDispatchToProps = dispatch => ({
