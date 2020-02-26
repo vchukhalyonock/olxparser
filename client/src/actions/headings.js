@@ -4,7 +4,8 @@ import {
     GET_HEADING,
     CREATE_HEADING,
     UPDATE_HEADING,
-    DELETE_HEADING
+    DELETE_HEADING,
+    RESET_HEADING_FORM
 } from "../constants/actions";
 import { HEADINGS_URL } from "../constants/urls";
 import config from "../config";
@@ -48,10 +49,15 @@ const deleteHeading = id => async dispatch => {
     dispatch({ type: DELETE_HEADING, payload: { id } });
 };
 
+const resetHeadingForm = () => async dispatch => {
+    dispatch({ type: RESET_HEADING_FORM, payload: {} });
+};
+
 export {
     getHeadings,
     getHeading,
     createHeading,
     updateHeading,
-    deleteHeading
+    deleteHeading,
+    resetHeadingForm
 }
