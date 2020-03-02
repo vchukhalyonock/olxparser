@@ -3,6 +3,7 @@ import {GET_IMPORT_REQUEST} from "../../../constants/actions";
 const initialState = {
     email: undefined,
     olxAccountUrl: undefined,
+    userId: undefined,
     t: Date.now()
 };
 
