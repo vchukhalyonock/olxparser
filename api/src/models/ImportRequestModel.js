@@ -13,6 +13,7 @@ export const REQUEST_STATUS = {
 };
 
 const ImportRequestSchema = new Schema({
+    userId: String,
     email: String,
     phone: String,
     olxAccountUrl: String,
@@ -22,6 +23,16 @@ const ImportRequestSchema = new Schema({
     requestedAt: Date,
     processedAt: Date
 });
+
+ImportRequestSchema.index({
+        email: 1,
+        olxAccountUrl: 1
+    },
+    {
+        unique: true
+    });
+
+ImportRequestSchema.index({userId: 1}, {unique: true});
 
 ImportRequestSchema.plugin(mongoosePaginate);
 

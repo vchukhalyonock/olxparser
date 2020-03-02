@@ -5,7 +5,12 @@ import {
     } from '../models';
 import { REQUEST_STATUS } from "../models/ImportRequestModel";
 import { IMPORT_REQUEST_URL } from "../constants/urls";
-import { FILTER_IMPORT_REQUESTS } from "../constants/common";
+import {
+    FILTER_IMPORT_REQUESTS,
+    PHONE_REG,
+    EMAIL_VALIDATE_REGEX,
+    OLX_URL_VALIDATE_REGEXP
+} from "../constants/common";
 import Error from "../core/Error";
 import {
     getLastHourDate,
@@ -13,6 +18,23 @@ import {
     getLastMonthDate
 } from "../utils/common";
 import { merge } from "lodash";
+
+
+const isError = ({ phone, email, olxAccountUrl }) => {
+    if(phone.search(PHONE_REG) === -1) {
+        return new Error("Invalid phone format");
+    }
+
+    if(email.search(EMAIL_VALIDATE_REGEX) === -1) {
+        return new Error("Invalid email format");
+    }
+
+    if(olxAccountUrl.search(OLX_URL_VALIDATE_REGEXP) === -1) {
+        return new Error("Invalid OLX account URL");
+    }
+
+    return false;
+};
 
 class ImportRequestsController extends Controller {
 
@@ -62,8 +84,9 @@ class ImportRequestsController extends Controller {
      * @apiVersion 1.0.0
      *
      * @apiParam {String} email
-     * @apiParam {String} phone
+     * @apiParam {String} phone Format XXXXXXXXXX (0933222332)
      * @apiParam {String} olxAccountUrl
+     * @apiParam {String} userId
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -72,7 +95,8 @@ class ImportRequestsController extends Controller {
      * {
      *     "email": "test@test.com",
      *     "phone": "322223322",
-     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4",
+     *     "userId": "22"
      * }
      *
      * @apiSuccessExample {json} Success-Response:
@@ -89,9 +113,9 @@ class ImportRequestsController extends Controller {
      * }
      *
      * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 500 Internal Server Error
+     * HTTP/1.1 400 Bad Request
      * {
-     *     "status": 500,
+     *     "status": 400,
      *     "errors": "Invalid params"
      * }
      */
@@ -102,8 +126,17 @@ class ImportRequestsController extends Controller {
             requestedAt: new Date(),
         };
 
-        if(!importRequest.email || !importRequest.phone || !importRequest.olxAccountUrl) {
-            return next(new Error("Invalid params"));
+        if(!(importRequest.email && importRequest.email.trim())
+            || !(importRequest.phone && importRequest.phone.trim())
+            || !(importRequest.olxAccountUrl && importRequest.olxAccountUrl.trim())
+            || !(importRequest.userId && importRequest.userId.trim())
+        ) {
+            return next(new Error("Invalid params"), 400);
+        }
+
+        const error = isError(importRequest);
+        if(error) {
+            return next(error, 400);
         }
 
         const importRequestModel = new ImportRequestModel(importRequest);
@@ -126,8 +159,9 @@ class ImportRequestsController extends Controller {
      *
      * @apiParam {String} _id import request ID
      * @apiParam {String} email
-     * @apiParam {String} phone
+     * @apiParam {String} phone Format XXXXXXXXXX (0933222332)
      * @apiParam {String} olxAccountUrl
+     * @apiParam {String} userId
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -137,7 +171,8 @@ class ImportRequestsController extends Controller {
      *     "_id": "5e412380ea93af05d584bb2b",
      *     "email": "test@test.com",
      *     "phone": "322223322",
-     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4",
+     *     "userId": "22"
      * }
      *
      * @apiSuccessExample {json} Success-Response:
@@ -154,9 +189,9 @@ class ImportRequestsController extends Controller {
      * }
      *
      * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 500 Internal Server Error
+     * HTTP/1.1 400 Bad Request
      * {
-     *     "status": 500,
+     *     "status": 400,
      *     "errors": "Invalid params"
      * }
      *
@@ -169,8 +204,18 @@ class ImportRequestsController extends Controller {
     async updateImportRequest(req, res, next) {
         const newRequest = req.body;
 
-        if(!newRequest.email || !newRequest.phone || !newRequest.olxAccountUrl || !newRequest._id) {
-            return next(new Error("Invalid params"));
+        if(!(newRequest.email && newRequest.email.trim())
+            || !(newRequest.phone && newRequest.phone.trim())
+            || !(newRequest.olxAccountUrl && newRequest.olxAccountUrl.trim())
+            || !(newRequest.userId && newRequest.userId.trim())
+            || !newRequest._id
+        ) {
+            return next(new Error("Invalid params"), 400);
+        }
+
+        const error = isError(newRequest);
+        if(error) {
+            return next(error, 400);
         }
 
         try {

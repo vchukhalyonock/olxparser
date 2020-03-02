@@ -845,7 +845,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "phone",
-            "description": ""
+            "description": "<p>Format XXXXXXXXXX (0933222332)</p>"
           },
           {
             "group": "Parameter",
@@ -853,13 +853,20 @@ define({ "api": [
             "optional": false,
             "field": "olxAccountUrl",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": ""
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"email\": \"test@test.com\",\n    \"phone\": \"322223322\",\n    \"olxAccountUrl\": \"http://olx.ua/1/2/3/4\"\n}",
+          "content": "{\n    \"email\": \"test@test.com\",\n    \"phone\": \"322223322\",\n    \"olxAccountUrl\": \"http://olx.ua/1/2/3/4\",\n    \"userId\": \"22\"\n}",
           "type": "json"
         }
       ]
@@ -903,7 +910,7 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
           "type": "json"
         }
       ]
@@ -940,7 +947,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "phone",
-            "description": ""
+            "description": "<p>Format XXXXXXXXXX (0933222332)</p>"
           },
           {
             "group": "Parameter",
@@ -948,13 +955,20 @@ define({ "api": [
             "optional": false,
             "field": "olxAccountUrl",
             "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": ""
           }
         ]
       },
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n    \"_id\": \"5e412380ea93af05d584bb2b\",\n    \"email\": \"test@test.com\",\n    \"phone\": \"322223322\",\n    \"olxAccountUrl\": \"http://olx.ua/1/2/3/4\"\n}",
+          "content": "{\n    \"_id\": \"5e412380ea93af05d584bb2b\",\n    \"email\": \"test@test.com\",\n    \"phone\": \"322223322\",\n    \"olxAccountUrl\": \"http://olx.ua/1/2/3/4\",\n    \"userId\": \"22\"\n}",
           "type": "json"
         }
       ]
@@ -998,7 +1012,7 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
           "type": "json"
         },
         {
