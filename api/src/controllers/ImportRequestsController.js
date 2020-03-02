@@ -84,8 +84,9 @@ class ImportRequestsController extends Controller {
      * @apiVersion 1.0.0
      *
      * @apiParam {String} email
-     * @apiParam {String} phone
+     * @apiParam {String} phone Format XXXXXXXXXX (0933222332)
      * @apiParam {String} olxAccountUrl
+     * @apiParam {String} userId
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -94,7 +95,8 @@ class ImportRequestsController extends Controller {
      * {
      *     "email": "test@test.com",
      *     "phone": "322223322",
-     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4",
+     *     "userId": "22"
      * }
      *
      * @apiSuccessExample {json} Success-Response:
@@ -111,9 +113,9 @@ class ImportRequestsController extends Controller {
      * }
      *
      * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 500 Internal Server Error
+     * HTTP/1.1 400 Bad Request
      * {
-     *     "status": 500,
+     *     "status": 400,
      *     "errors": "Invalid params"
      * }
      */
@@ -157,8 +159,9 @@ class ImportRequestsController extends Controller {
      *
      * @apiParam {String} _id import request ID
      * @apiParam {String} email
-     * @apiParam {String} phone
+     * @apiParam {String} phone Format XXXXXXXXXX (0933222332)
      * @apiParam {String} olxAccountUrl
+     * @apiParam {String} userId
      *
      * @apiHeader {String} Content-Type=application/json
      * @apiHeader {String} Authorization Bearer JWT
@@ -168,7 +171,8 @@ class ImportRequestsController extends Controller {
      *     "_id": "5e412380ea93af05d584bb2b",
      *     "email": "test@test.com",
      *     "phone": "322223322",
-     *     "olxAccountUrl": "http://olx.ua/1/2/3/4"
+     *     "olxAccountUrl": "http://olx.ua/1/2/3/4",
+     *     "userId": "22"
      * }
      *
      * @apiSuccessExample {json} Success-Response:
@@ -185,9 +189,9 @@ class ImportRequestsController extends Controller {
      * }
      *
      * @apiErrorExample {json} Error-Response:
-     * HTTP/1.1 500 Internal Server Error
+     * HTTP/1.1 400 Bad Request
      * {
-     *     "status": 500,
+     *     "status": 400,
      *     "errors": "Invalid params"
      * }
      *
