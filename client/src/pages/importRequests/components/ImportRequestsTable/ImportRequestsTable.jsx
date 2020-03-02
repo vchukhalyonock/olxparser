@@ -32,6 +32,7 @@ import {
 import {ImportRequestButtons} from "./index";
 
 const headCells = [
+    { id: 'userId', numeric: false, disablePadding: true, label: 'User Id', type: HEAD_CELL_TYPE.TEXT },
     { id: 'email', numeric: false, disablePadding: true, label: 'Email', type: HEAD_CELL_TYPE.TEXT },
     { id: 'phone', numeric: false, disablePadding: true, label: 'Phone', type: HEAD_CELL_TYPE.TEXT },
     { id: 'olxAccountUrl', numeric: false, disablePadding: true, label: 'Account URL', type: HEAD_CELL_TYPE.LINK },
