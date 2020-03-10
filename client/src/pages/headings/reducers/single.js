@@ -25,7 +25,6 @@ export default function single(state = initialState, action) {
 
         case CREATE_HEADING:
         case UPDATE_HEADING:
-            console.log(action);
             if(!action.payload) {
                 return {
                     ...state,

@@ -144,6 +144,9 @@ class ImportRequestsController extends Controller {
             await importRequestModel.save();
         } catch (e) {
             console.log(e);
+            if(e.errmsg.indexOf('olxAccountUrl')) {
+                return next(new Error("Duplicated olxAccountUrl", 400));
+            }
             return next(e);
         }
 

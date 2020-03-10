@@ -6,7 +6,9 @@ import {
     TextField,
     withStyles
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import {
+    bool,
     number,
     string
 } from "prop-types";
@@ -46,7 +48,9 @@ class ImportRequestForm extends Component {
             olxAccountUrl: undefined,
             emailError: false,
             phoneError: false,
-            urlError: false
+            urlError: false,
+            cancel: false,
+            submitted: false
         }
     }
 
@@ -97,7 +101,8 @@ class ImportRequestForm extends Component {
             emailError: false,
             phoneError: false,
             urlError: false,
-            redirect: true
+            redirect: true,
+            cancel: true
         };
         this.setState(newState);
     };
@@ -144,7 +149,7 @@ class ImportRequestForm extends Component {
             this.setState(errorState);
         } else {
             saveIR(email, phone, olxAccountUrl, userId, importRequestId);
-            const newState = {
+            /*const newState = {
                 userId: undefined,
                 email: undefined,
                 phone: undefined,
@@ -152,7 +157,13 @@ class ImportRequestForm extends Component {
                 emailError: false,
                 phoneError: false,
                 urlError: false,
-                redirect: true
+                redirect: true,
+                cancel: false
+            };
+            this.setState(newState);*/
+            const newState = {
+                redirect: true,
+                cancel: false
             };
             this.setState(newState);
         }
@@ -166,7 +177,9 @@ class ImportRequestForm extends Component {
             importRequestId,
             phone,
             userId,
-            t
+            t,
+            loaded,
+            error
         } = this.props;
 
         const {
@@ -184,7 +197,8 @@ class ImportRequestForm extends Component {
 
         return (
             <Fragment key={t}>
-                {this.renderRedirect()}
+                {(!loaded && error) && (<Alert severity="error">Such OLX URL already exists!</Alert>)}
+                {((!error && loaded) || this.state.cancel) && this.renderRedirect()}
                 <form onSubmit={this.IRSubmitHandler}>
                     <TextField
                         id="userId"
@@ -245,7 +259,9 @@ ImportRequestForm.propTypes = {
     phone: string,
     olxAccountUrl: string,
     importRequestId: string,
-    t: number
+    t: number,
+    error: bool,
+    loaded: bool
 };
 
 ImportRequestForm.defaultProps = {
@@ -254,7 +270,9 @@ ImportRequestForm.defaultProps = {
     phone: undefined,
     olxAccountUrl: undefined,
     importRequestId: undefined,
-    t: 0
+    t: 0,
+    error: false,
+    loaded: false
 };
 
 const mapStateToProps = state => ({
@@ -263,6 +281,8 @@ const mapStateToProps = state => ({
     phone: state.importRequests.single.phone,
     olxAccountUrl: state.importRequests.single.olxAccountUrl,
     t: state.importRequests.single.t,
+    error: state.importRequests.single.error,
+    loaded: state.importRequests.single.loaded
 });
 
 const mapDispatchToProps = dispatch => ({
