@@ -24,15 +24,7 @@ const ImportRequestSchema = new Schema({
     processedAt: Date
 });
 
-ImportRequestSchema.index({
-        email: 1,
-        olxAccountUrl: 1
-    },
-    {
-        unique: true
-    });
-
-ImportRequestSchema.index({userId: 1}, {unique: true});
+ImportRequestSchema.index({ olxAccountUrl: 1 }, { unique: true });
 
 ImportRequestSchema.plugin(mongoosePaginate);
 
