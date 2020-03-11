@@ -129,7 +129,7 @@ class OffersContainer extends Component {
             ).then((response) => {
                 if(response) {
                     const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
-                    saveAs(blob, `${importRequestId}_export_${moment().format("DD_MM_YYYY_hh_mm")}.yml`);
+                    saveAs(blob, `${importRequestId}_export_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
                 } else {
                     this.openExportAlert(EXPORT_OFFERS_ERROR);
                 }
@@ -153,7 +153,7 @@ class OffersContainer extends Component {
         ).then((response) => {
             if(response) {
                 const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
-                saveAs(blob, `${importRequestId}_export_all_${moment().format("DD_MM_YYYY_hh_mm")}.yml`);
+                saveAs(blob, `${importRequestId}_export_all_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
             } else {
                 this.openExportAlert(EXPORT_OFFERS_ERROR);
             }
