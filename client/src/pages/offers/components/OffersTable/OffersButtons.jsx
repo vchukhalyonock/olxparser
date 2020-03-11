@@ -1,7 +1,8 @@
 import React from "react";
 import {
     IconButton,
-    TableCell
+    TableCell,
+    Tooltip
 } from "@material-ui/core";
 import {
     EDIT_OFFERS_PAGE_PATH,
@@ -24,13 +25,19 @@ const OffersButtons = ({
 }) => (
     <TableCell>
         <IconButton to={`${OFFER_DETAILS_PATH}/${item._id}`} component={ListItemLink}>
-            <InfoIcon />
+            <Tooltip title="Offer details">
+                <InfoIcon />
+            </Tooltip>
         </IconButton>
         <IconButton to={`${EDIT_OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-            <EditIcon />
+            <Tooltip title="Edit offer">
+                <EditIcon />
+            </Tooltip>
         </IconButton>
         <IconButton onClick={() => deleteHandler(item._id)}>
-            <DeleteIcon />
+            <Tooltip title="Delete offer">
+                <DeleteIcon />
+            </Tooltip>
         </IconButton>
     </TableCell>
 );

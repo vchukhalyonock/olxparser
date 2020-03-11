@@ -1,7 +1,8 @@
 import React from "react";
 import {
     IconButton,
-    TableCell
+    TableCell,
+    Tooltip
 } from "@material-ui/core";
 import { EDIT_HEADINGS_PAGE_PATH } from "../../../../constants/router";
 import ListItemLink from "../../../../components/listItemLink";
@@ -17,10 +18,14 @@ import {
 const HeadingsButtons = ({ item, deleteHandler }) => (
     <TableCell>
         <IconButton to={`${EDIT_HEADINGS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
-            <EditIcon />
+            <Tooltip title="Edit heading">
+                <EditIcon />
+            </Tooltip>
         </IconButton>
         <IconButton onClick={() => deleteHandler(item._id)}>
-            <DeleteIcon />
+            <Tooltip title="Delete heading">
+                <DeleteIcon />
+            </Tooltip>
         </IconButton>
     </TableCell>
 );
