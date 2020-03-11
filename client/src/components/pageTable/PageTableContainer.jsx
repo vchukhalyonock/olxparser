@@ -81,7 +81,7 @@ const PageTableContainer = (
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={5}
+                                colSpan={headCells.length + 1}
                                 count={total}
                                 rowsPerPage={itemsPerPage}
                                 page={currentPage}

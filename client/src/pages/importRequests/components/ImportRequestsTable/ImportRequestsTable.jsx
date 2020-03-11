@@ -78,14 +78,18 @@ class ImportRequestsTable extends Component {
             case REQUEST_STATUS.NEW:
                 return (
                     <IconButton onClick={() => this.handleAddToQueue(id)}>
-                        <QueueIcon />
+                        <Tooltip title="Add to queue">
+                            <QueueIcon />
+                        </Tooltip>
                     </IconButton>
                 );
 
             case REQUEST_STATUS.DONE:
                 return (
                     <IconButton onClick={() => this.handleAddToQueue(id)}>
-                        <DoneIcon />
+                        <Tooltip title="Add to queue">
+                            <DoneIcon />
+                        </Tooltip>
                     </IconButton>
                 );
 
@@ -99,29 +103,27 @@ class ImportRequestsTable extends Component {
             case REQUEST_STATUS.PENDING:
                 return (
                     <IconButton onClick={() => this.handleAddToDone(id)}>
-                        <PendingIcon />
+                        <Tooltip title="Remove from queue">
+                            <PendingIcon />
+                        </Tooltip>
                     </IconButton>
                 );
 
             case REQUEST_STATUS.ERROR:
-                return errorMessage
-                    ? (
-                        <Tooltip title={errorMessage}>
-                            <IconButton onClick={() => this.handleAddToQueue(id)}>
+                return (
+                    <IconButton onClick={() => this.handleAddToQueue(id)}>
+                        <Tooltip title={errorMessage + " Click add to queue"|| "Add to queue"}>
                                 <ErrorIcon />
-                            </IconButton>
                         </Tooltip>
-                    )
-                    : (
-                        <IconButton onClick={() => this.handleAddToQueue(id)}>
-                            <ErrorIcon />
-                        </IconButton>
-                    );
+                    </IconButton>
+                );
 
             default:
                 return (
                     <IconButton onClick={() => this.handleAddToQueue(id)}>
-                        <QueueIcon />
+                        <Tooltip title="Add to queue">
+                            <QueueIcon />
+                        </Tooltip>
                     </IconButton>
                 );
         }

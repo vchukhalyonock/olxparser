@@ -22,7 +22,7 @@ import {HeadingsButtons} from "./index";
 const headCells = [
     { id: '_id', numeric: true, disablePadding: true, label: 'id', type: HEAD_CELL_TYPE.TEXT },
     { id: 'heading', numeric: false, disablePadding: true, label: 'Heading', type: HEAD_CELL_TYPE.TEXT},
-    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date', typr: HEAD_CELL_TYPE.DATE },
+    { id: 'createdAt', numeric: false, disablePadding: true, label: 'Creating Date', type: HEAD_CELL_TYPE.DATE },
 ];
 
 class HeadingsTable extends Component {
