@@ -48,13 +48,16 @@ class OfferDetails extends Component {
                 price,
                 srcImages,
                 details,
-                importRequestId
+                importRequestId,
+                city,
+                region
             },
             classes } = this.props;
 
         return(
             <Fragment>
                 <h1>{title}</h1>
+                <p><strong>{city} ,{region}</strong></p>
                 <h3>Heading Origin</h3>
                 {heading
                     ? (<Breadcrumbs>

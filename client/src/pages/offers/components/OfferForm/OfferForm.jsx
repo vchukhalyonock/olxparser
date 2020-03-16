@@ -56,6 +56,8 @@ class OfferForm extends Component {
             images: undefined,
             srcImages: undefined,
             details: undefined,
+            region: undefined,
+            city: undefined
         };
 
         const {
@@ -105,7 +107,9 @@ class OfferForm extends Component {
             description: undefined,
             images: undefined,
             srcImages: undefined,
-            details: undefined
+            details: undefined,
+            region: undefined,
+            city: undefined
         };
         this.setState(newState);
         this.setRedirect();
@@ -129,6 +133,8 @@ class OfferForm extends Component {
                 measure: item.measure,
                 value: item.value
             })),
+            region: this.state.region ? this.state.region : offer.region,
+            city: this.state.city ? this.state.city : offer.city,
             createdAt: offer.createdAt,
             _id: offer._id
         };
@@ -198,12 +204,6 @@ class OfferForm extends Component {
         this.setState({heading: newHeading});
     };
 
-    handleRemoveHeadingItem = (index) => {
-        const { heading } = this.state;
-        const newHeading = heading.filter(item => +item.index !== index)
-        this.setState({ heading: newHeading });
-    };
-
 
     handleRemoveDetailItem = (index) => {
         const { details } = this.state;
@@ -242,6 +242,24 @@ class OfferForm extends Component {
                             required
                             onChange={e => this.handleAllChange(e, "title")}
                             defaultValue={offer.title}
+                            InputLabelProps={{shrink: true}}
+                        />
+                        <TextField
+                            id="city"
+                            label="city"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.handleAllChange(e, "city")}
+                            defaultValue={offer.city}
+                            InputLabelProps={{shrink: true}}
+                        />
+                        <TextField
+                            id="region"
+                            label="region"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.handleAllChange(e, "region")}
+                            defaultValue={offer.region}
                             InputLabelProps={{shrink: true}}
                         />
                         <TextField

@@ -17,6 +17,14 @@ const OfferSchema = new Schema({
     importRequestId: String,
     headingId: Number,
     headingString: String,
+    city: {
+        type: String,
+        default: ''
+    },
+    region: {
+        type: String,
+        default: ''
+    },
     createdAt: Date
 });
 
