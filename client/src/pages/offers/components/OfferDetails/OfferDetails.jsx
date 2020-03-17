@@ -50,13 +50,15 @@ class OfferDetails extends Component {
                 details,
                 importRequestId,
                 city,
-                region
+                region,
+                offerId
             },
             classes } = this.props;
 
         return(
             <Fragment>
                 <h1>{title}</h1>
+                <p>Offer ID: {offerId}</p>
                 <p><strong>{city} ,{region}</strong></p>
                 <h3>Heading Origin</h3>
                 {heading
