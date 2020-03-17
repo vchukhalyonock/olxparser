@@ -25,6 +25,10 @@ const OfferSchema = new Schema({
         type: String,
         default: ''
     },
+    offerId: {
+        type: String,
+        default: ''
+    },
     createdAt: Date
 });
 
