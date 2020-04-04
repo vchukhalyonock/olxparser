@@ -54,6 +54,25 @@ const convertOffers = (offerList) => {
 };
 
 
+const detailsConvertor = (details) => {
+    const detailsResult = [];
+    for (let i = 0; i < details.length; i++) {
+        const {
+            measure,
+            value
+        } = details[i];
+        for(let j = 0; j < value.length; j++) {
+            detailsResult.push({
+                name: measure,
+                value: value[j]
+            })
+        }
+    }
+
+    return detailsResult;
+};
+
+
 const currencyFounder = (currency) => currencyAssoc.reduce(
         (acc ,item) => {
             if(item.names.includes(toString(currency).toLowerCase())) {
@@ -66,7 +85,7 @@ const currencyFounder = (currency) => currencyAssoc.reduce(
 
 
 const convertOffer = (offer, categoryId) => ({
-        id: truncate(offer._id, {length: 20, omission: ''}),
+        id: truncate(offer.offerId, {length: 20, omission: ''}),
         available: true,
         url: offer.url,
         price: offer.price ? toNumber(offer.price.amount.replace(/\s/g, "")) : 0,
@@ -74,6 +93,6 @@ const convertOffer = (offer, categoryId) => ({
         categoryId: toString(categoryId),
         name: truncate(offer.title, {length: 120}),
         description: offer.description,
-        param: offer.details.map(({measure, value}) => ({ name: measure, value })),
-        picture: offer.images
+        param: detailsConvertor(offer.details),
+        picture: offer.images.filter((item, index) => index < 10)
     });

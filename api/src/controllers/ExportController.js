@@ -150,7 +150,13 @@ class ExportController extends Controller {
                 .exec();
         }
 
-        const YML = YMLConverter(importRequest, offers);
+        let YML;
+        try {
+            YML = YMLConverter(importRequest, offers);
+        } catch (e) {
+            console.log(e);
+            return next(new Error("Something was wrong during YML generation.", 500));
+        }
 
         res.set('Content-Type', 'text/xml');
         res.send(YML);
