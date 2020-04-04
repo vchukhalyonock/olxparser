@@ -43,7 +43,7 @@ class HeadingsSelector extends Component {
                 id={id}
                 options={convertedHeadings}
                 getOptionLabel={option => option.option || ''}
-                style={{ width: 500 }}
+                style={{ width: 900 }}
                 onChange={onChange}
                 defaultValue={currentHeading}
                 renderInput={params => (

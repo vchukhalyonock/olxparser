@@ -16,7 +16,7 @@ class OfferDetailContainer extends Component {
     }
 
     componentDidMount() {
-        const { details, handleChange } = this.props;
+        const { details, handleChange, removeDetailValue } = this.props;
 
         const localDetails = details.map((item, index) => (
             <SingleDetail
@@ -25,6 +25,7 @@ class OfferDetailContainer extends Component {
                 key={index}
                 removeDetails={this.handleRemoveDetailItem}
                 handleChange={handleChange}
+                removeDetailsValue={removeDetailValue}
             />
         ));
 
@@ -41,7 +42,7 @@ class OfferDetailContainer extends Component {
 
     handleAddDetailsItem = () => {
         const { localDetails } = this.state;
-        const { handleChange } = this.props;
+        const { handleChange, removeDetailValue } = this.props;
         const index = localDetails.length > 0
             ? localDetails[localDetails.length - 1].props.index + 1
             : 0;
@@ -51,6 +52,7 @@ class OfferDetailContainer extends Component {
             key={index}
             removeDetails={this.handleRemoveDetailItem}
             handleChange={handleChange}
+            removeDetailsValue={removeDetailValue}
         />);
         const newLocalDetails = concat(localDetails, newDetail);
         this.setState({localDetails: newLocalDetails});
@@ -78,7 +80,8 @@ class OfferDetailContainer extends Component {
 OfferDetailContainer.propTypes = {
     details: array.isRequired,
     handleChange: func.isRequired,
-    removeDetailItem: func.isRequired
+    removeDetailItem: func.isRequired,
+    removeDetailValue: func.isRequired
 };
 
 export default OfferDetailContainer;

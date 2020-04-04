@@ -30,7 +30,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 500,
+        width: 900,
     },
     button: {
         margin: theme.spacing(1),
@@ -81,7 +81,11 @@ class OfferForm extends Component {
             if(nextProps.offer.details) {
                 const newDetails = nextProps.offer.details.map((item, index) => ({
                     index,
-                    ...item
+                    measure: item.measure,
+                    value: item.value.map((vItem, vIndex) => ({
+                        index: vIndex,
+                        value: vItem
+                    }))
                 }));
                 this.setState({details: newDetails});
             }
@@ -133,7 +137,7 @@ class OfferForm extends Component {
             srcImages: offer.srcImages,
             details: this.state.details.map(item => ({
                 measure: item.measure,
-                value: item.value
+                value: item.value.map(vItem => vItem.value)
             })),
             region: this.state.region ? this.state.region : offer.region,
             city: this.state.city ? this.state.city : offer.city,
@@ -164,19 +168,39 @@ class OfferForm extends Component {
     handleDetailsChange = (event, detailsFieldId) => {
         const { details } = this.state;
         let newDetails = details === undefined ? [] : details.map(item => item);
-        const match = detailsFieldId.match(/detail-(measure|value)-([0-9]+)/);
-        const fieldType = match[1];
-        const index = match[2];
+        const match = detailsFieldId.match(/detail-((measure)-([0-9]+))|(([0-9]+)-(value)-([0-9]+))/);
+        const fieldType = match[2] ? match[2] : match[6];
+        const index = match[3] ? +match[3] : +match[5];
+        const vIndex = +match[7];
         const detailItemArray = newDetails.filter(item => item.index === index);
-        const detailItem = detailItemArray.length > 0 ? detailItemArray[0] : { index };
+        const detailItem = detailItemArray.length > 0
+            ? detailItemArray[0]
+            : {
+                index,
+                value: [
+                        { index: 0, value: ''}
+                    ]
+            } ;
         if(fieldType === 'measure') {
             detailItem.measure = event.target.value;
         } else {
-            detailItem.value = event.target.value;
+            const detailsValueArray = detailItem.value.filter(vItem => vItem.index === vIndex);
+            if(detailsValueArray.length === 0) {
+                detailItem.value = concat(detailItem.value, [{index: vIndex, value: event.target.value}]);
+            } else {
+                detailItem.value = detailItem.value.map(vItem => {
+                    if(vItem.index === vIndex) {
+                        vItem.value = event.target.value;
+                    }
+                    return vItem;
+                })
+            }
         }
 
         if(detailItemArray.length === 0) {
             newDetails = concat(newDetails, detailItem);
+        } else {
+            newDetails = newDetails.map(item => item.index === +index ? detailItem : item);
         }
 
         this.setState({details: newDetails});
@@ -215,6 +239,18 @@ class OfferForm extends Component {
     };
 
 
+    handleRemoveDetailsValue = (index, vIndex) => {
+        const { details } = this.state;
+        const newDetails = details.map(item => {
+            if(item.index === index) {
+                item.value = item.value.filter(value => +value.index !== vIndex);
+            }
+            return item;
+        });
+        this.setState({ details: newDetails });
+    };
+
+
     handleHeadingsSelect = (e, value) => {
         this.setState({ heading: value });
     };
@@ -239,7 +275,7 @@ class OfferForm extends Component {
                     <form onSubmit={this.OfferSubmitHandler}>
                         <TextField
                             id="title"
-                            label="title"
+                            label="Title"
                             className={classes.textField}
                             margin="normal"
                             required
@@ -304,6 +340,7 @@ class OfferForm extends Component {
                             details={offer.details ? offer.details : []}
                             handleChange={this.handleDetailsChange}
                             removeDetailItem={this.handleRemoveDetailItem}
+                            removeDetailValue={this.handleRemoveDetailsValue}
                         />
                         <hr/>
                         <TextField

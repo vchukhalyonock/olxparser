@@ -73,7 +73,7 @@ class OfferDetails extends Component {
                 <p><strong>{price && price.amount} {price && price.volume}</strong></p>
                 {
                     details
-                        ? details.map((detail, index) => (<Typography key={index}>{detail.measure} : {detail.value}</Typography>))
+                        ? details.map((detail, index) => (<Typography key={index}>{detail.measure} : {detail.value.join(", ")}</Typography>))
                         : undefined
                 }
                 {srcImages
