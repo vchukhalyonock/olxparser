@@ -53,6 +53,16 @@ class ImportRequestsController extends Controller {
                 handler: this.getImportRequests
             },
             {
+                route: `${IMPORT_REQUEST_URL}/deleted`,
+                verb: VERB.GET,
+                handler: this.getDeletedIRs
+            },
+            {
+                route: `${IMPORT_REQUEST_URL}/deleted/`,
+                verb: VERB.POST,
+                handler: this.confirmDeleteIRFolder
+            },
+            {
                 route: `${IMPORT_REQUEST_URL}/:id`,
                 verb: VERB.GET,
                 handler: this.getImportRequest
@@ -618,7 +628,7 @@ class ImportRequestsController extends Controller {
             console.log(e);
             return next(e);
         }
-        
+
         try {
             const deletedIR = new DeletedIRModel({
                 importRequestId: id
@@ -673,6 +683,33 @@ class ImportRequestsController extends Controller {
             await OffersModel
                 .deleteMany({importRequestId: id})
                 .exec();
+        } catch (e) {
+            console.log(e);
+            return next(e);
+        }
+
+        return res.json({status: 'success'});
+    }
+
+
+    async getDeletedIRs(req, res, next) {
+        const IRs = await DeletedIRModel.find({}).exec();
+        return res.json({
+            status: 'success',
+            items: IRs.docs === null ? [] : IRs.docs
+        });
+    }
+
+
+    async confirmDeleteIRFolder(req, res, next) {
+        const { id } = req.body;
+
+        if(!id) {
+            next(new Error("Invalid params", 400));
+        }
+
+        try {
+            await DeletedIRModel.deleteOne({importRequestId: id}).exec();
         } catch (e) {
             console.log(e);
             return next(e);
