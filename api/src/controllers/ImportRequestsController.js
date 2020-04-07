@@ -1,8 +1,10 @@
+import { merge } from "lodash";
 import Controller, { VERB } from '../core/Controller';
 import {
     ImportRequestModel,
-    OffersModel
-    } from '../models';
+    OffersModel,
+    DeletedIRModel
+} from '../models';
 import { REQUEST_STATUS } from "../models/ImportRequestModel";
 import { IMPORT_REQUEST_URL } from "../constants/urls";
 import {
@@ -17,7 +19,7 @@ import {
     getLastDayDate,
     getLastMonthDate
 } from "../utils/common";
-import { merge } from "lodash";
+
 
 
 const isError = ({ phone, email, olxAccountUrl }) => {
@@ -612,6 +614,16 @@ class ImportRequestsController extends Controller {
             await ImportRequestModel
                 .deleteOne({_id: id})
                 .exec();
+        } catch (e) {
+            console.log(e);
+            return next(e);
+        }
+        
+        try {
+            const deletedIR = new DeletedIRModel({
+                importRequestId: id
+            });
+            await deletedIR.save();
         } catch (e) {
             console.log(e);
             return next(e);
