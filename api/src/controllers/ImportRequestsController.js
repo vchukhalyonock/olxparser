@@ -58,7 +58,7 @@ class ImportRequestsController extends Controller {
                 handler: this.getDeletedIRs
             },
             {
-                route: `${IMPORT_REQUEST_URL}/deleted/`,
+                route: `${IMPORT_REQUEST_URL}/deleted`,
                 verb: VERB.POST,
                 handler: this.confirmDeleteIRFolder
             },
@@ -696,7 +696,7 @@ class ImportRequestsController extends Controller {
         const IRs = await DeletedIRModel.find({}).exec();
         return res.json({
             status: 'success',
-            items: IRs.docs === null ? [] : IRs.docs
+            items: IRs
         });
     }
 
