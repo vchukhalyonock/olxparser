@@ -10,3 +10,8 @@ export const OFFER_DETAILS_PATH = '/offer';
 export const HEADINGS_PAGE_PATH = '/headings';
 export const EDIT_HEADINGS_PAGE_PATH = '/headings/edit';
 export const CREATE_HEADING_PAGE_PATH = '/headings/create';
+
+
+export const CALLCENTER_IMPORT_REQUESTS_PAGE_PATH = '/callcenter-import-requests';
+export const CREATE_CALLCENTER_IMPORT_REQUEST_PAGE_PATH = '/callcenter-import-requests/create';
+export const EDIT_CALLCENTER_IMPORT_REQUEST_PAGE_PATH = '/callcenter-import-requests/edit';

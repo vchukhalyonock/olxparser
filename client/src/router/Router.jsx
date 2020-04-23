@@ -8,10 +8,13 @@ import {
     CREATE_IMPORT_REQUEST_PAGE_PATH,
     EDIT_IMPORT_REQUEST_PAGE_PATH,
     IMPORT_REQUESTS_PAGE_PATH,
+    CALLCENTER_IMPORT_REQUESTS_PAGE_PATH,
     OFFERS_PAGE_PATH,
     OFFER_DETAILS_PATH,
     EDIT_OFFERS_PAGE_PATH,
-    HEADINGS_PAGE_PATH, CREATE_HEADING_PAGE_PATH, EDIT_HEADINGS_PAGE_PATH
+    HEADINGS_PAGE_PATH,
+    CREATE_HEADING_PAGE_PATH,
+    EDIT_HEADINGS_PAGE_PATH
 } from "../constants/router";
 import Dashboard from "../pages/dashboard";
 import {
@@ -27,6 +30,9 @@ import {
     HeadingsContainer,
     HeadingFormContainer
 } from "../pages/headings";
+import {
+    CallCenterImportRequestsContainer
+} from "../pages/callCenterImportRequests"
 
 export default () => (
     <Switch>
@@ -78,6 +84,11 @@ export default () => (
             exact
             path={`${EDIT_HEADINGS_PAGE_PATH}/:headingId`}
             component={HeadingFormContainer}
+        />
+        <Route
+            exact
+            path={CALLCENTER_IMPORT_REQUESTS_PAGE_PATH}
+            component={CallCenterImportRequestsContainer}
         />
     </Switch>
 );
