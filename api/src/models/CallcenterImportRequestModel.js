@@ -14,7 +14,7 @@ export const CALLCENTER_REQUEST_STATUS = {
 
 const CallcenterImportRequestSchema = new Schema({
     olxUrl: String,
-    sessionIs: String,
+    sessionId: String,
     limit: Number,
     errorMessage: String,
     status: String,
