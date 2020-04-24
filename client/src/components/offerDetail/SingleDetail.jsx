@@ -40,8 +40,7 @@ class SingleDetail extends Component {
         const {
             index,
             value,
-            handleChange,
-            removeDetailsValue
+            handleChange
         } = this.props;
         const localValues = value.value.map((vItem, vIndex) => (
             <SingleDetailValue

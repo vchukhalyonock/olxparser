@@ -1,6 +1,7 @@
 import Controller, { VERB } from "../core/Controller";
 import {
-    CallcenterImportRequestModel, DeletedIRModel, ImportRequestModel,
+    CallcenterImportRequestModel,
+    DeletedIRModel,
     OffersModel
 } from '../models';
 import { OFFER_TYPE } from "../models/OffersModel";
@@ -15,13 +16,12 @@ import {
     getLastDayDate,
     getLastMonthDate
 } from "../utils/common";
-import {CALLCENTER_IMPORT_REQUEST_URL, IMPORT_REQUEST_URL} from "../constants/urls";
-import {REQUEST_STATUS} from "../models/ImportRequestModel";
+import { CALLCENTER_IMPORT_REQUEST_URL } from "../constants/urls";
 import {merge} from "lodash";
 
 
-const isError = ({ phone, email, olxAccountUrl }) => {
-    if(olxAccountUrl.search(OLX_URL_VALIDATE_REGEXP) === -1) {
+const isError = ({ olxUrl }) => {
+    if(olxUrl.search(OLX_URL_VALIDATE_REGEXP) === -1) {
         return new Error("Invalid OLX account URL");
     }
 
@@ -346,7 +346,7 @@ class CallcenterImportRequestsController extends Controller {
             await OffersModel
                 .deleteMany({importRequestId: id, offerType: OFFER_TYPE.CALLCENTER})
                 .exec();
-            await ImportRequestModel
+            await CallcenterImportRequestModel
                 .deleteOne({_id: id})
                 .exec();
         } catch (e) {

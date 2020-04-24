@@ -198,7 +198,6 @@ class PageTable extends Component {
         const {
             props: {
                 confirmMessage,
-                agreeHandler,
                 tableTitle,
                 headCells,
                 total,

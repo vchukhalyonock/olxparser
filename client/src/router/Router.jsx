@@ -9,6 +9,8 @@ import {
     EDIT_IMPORT_REQUEST_PAGE_PATH,
     IMPORT_REQUESTS_PAGE_PATH,
     CALLCENTER_IMPORT_REQUESTS_PAGE_PATH,
+    CREATE_CALLCENTER_IMPORT_REQUEST_PAGE_PATH,
+    EDIT_CALLCENTER_IMPORT_REQUEST_PAGE_PATH,
     OFFERS_PAGE_PATH,
     OFFER_DETAILS_PATH,
     EDIT_OFFERS_PAGE_PATH,
@@ -31,7 +33,8 @@ import {
     HeadingFormContainer
 } from "../pages/headings";
 import {
-    CallCenterImportRequestsContainer
+    CallCenterImportRequestsContainer,
+    CallCenterImportRequestsFormContainer
 } from "../pages/callCenterImportRequests"
 
 export default () => (
@@ -89,6 +92,16 @@ export default () => (
             exact
             path={CALLCENTER_IMPORT_REQUESTS_PAGE_PATH}
             component={CallCenterImportRequestsContainer}
+        />
+        <Route
+            exact
+            path={CREATE_CALLCENTER_IMPORT_REQUEST_PAGE_PATH}
+            component={CallCenterImportRequestsFormContainer}
+        />
+        <Route
+            exact
+            path={`${EDIT_CALLCENTER_IMPORT_REQUEST_PAGE_PATH}/:importRequestId`}
+            component={CallCenterImportRequestsFormContainer}
         />
     </Switch>
 );

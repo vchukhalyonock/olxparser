@@ -34,6 +34,7 @@ import { CallCenterImportRequestButtons } from "./index";
 const headCells = [
     { id: 'sessionId', numeric: false, disablePadding: true, label: 'Session Id', type: HEAD_CELL_TYPE.TEXT },
     { id: 'olxUrl', numeric: false, disablePadding: true, label: 'OLX URL', type: HEAD_CELL_TYPE.LINK },
+    { id: 'limit', numeric: true, disablePadding: true, label: 'Limit', type: HEAD_CELL_TYPE.TEXT },
     { id: 'requestedAt', numeric: false, disablePadding: true, label: 'Date', type: HEAD_CELL_TYPE.DATE },
 ];
 

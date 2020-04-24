@@ -20,7 +20,7 @@ export default function list(state = initialState, action) {
             newState[GET_LAST_PROCESSED_IMPORT_REQUEST] = action.payload;
             break;
 
-        //default:
+        default:
         case GET_LAST_NEW_IMPORT_REQUESTS:
             newState[GET_LAST_NEW_IMPORT_REQUESTS] = action.payload;
             break;
