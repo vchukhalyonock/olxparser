@@ -4,5 +4,4 @@ export const AUTH_URL = '/auth';
 export const OFFERS_URL = '/offers';
 export const EXPORT_URL = '/export';
 export const HEADINGS_URL = '/headings';
-
-
+export const CIR_URLS_URL = '/cir-urls';
