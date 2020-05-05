@@ -50,7 +50,7 @@ class CIRUrlController extends Controller {
             return next(e);
         }
 
-        return res.json({ status: "succecc" });
+        return res.json({ status: "success" });
     }
 
     async getImportRequestURLs(req, res, next) {
