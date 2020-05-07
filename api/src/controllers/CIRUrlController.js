@@ -57,8 +57,9 @@ class CIRUrlController extends Controller {
         const { id } = req.params;
         try {
             const urls = await CIRUrlModel.find({ importRequestId: id }).exec();
+            const processedUrls = urls.map(url => url.url);
             return res.json({
-                items: urls.docs === null ? [] : urls.docs
+                urls: processedUrls
             });
         } catch (e) {
             console.log(e);
