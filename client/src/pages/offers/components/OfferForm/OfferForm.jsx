@@ -58,7 +58,8 @@ class OfferForm extends Component {
             details: undefined,
             region: undefined,
             city: undefined,
-            offerId: undefined
+            offerId: undefined,
+            phone: undefined
         };
 
         const {
@@ -115,7 +116,8 @@ class OfferForm extends Component {
             details: undefined,
             region: undefined,
             city: undefined,
-            offerId: undefined
+            offerId: undefined,
+            phone: undefined
         };
         this.setState(newState);
         this.setRedirect();
@@ -142,6 +144,7 @@ class OfferForm extends Component {
             region: this.state.region ? this.state.region : offer.region,
             city: this.state.city ? this.state.city : offer.city,
             offerId: this.state.offerId ? this.state.offerId : offer.offerId,
+            phone: this.state.phone ? this.state.phone : offer.phone,
             createdAt: offer.createdAt,
             _id: offer._id
         };
@@ -290,6 +293,15 @@ class OfferForm extends Component {
                             margin="normal"
                             onChange={e => this.handleAllChange(e, "offerId")}
                             defaultValue={offer.offerId}
+                            InputLabelProps={{shrink: true}}
+                        />
+                        <TextField
+                            id="phone"
+                            label="Phone"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.handleAllChange(e, "phone")}
+                            defaultValue={offer.phone}
                             InputLabelProps={{shrink: true}}
                         />
                         <TextField
