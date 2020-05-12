@@ -80,7 +80,12 @@ class OffersTable extends Component {
             importRequestId
         } = this.props;
 
-        const pageTitle = `Offers for ${importRequest.email} account`;
+        let pageTitle = 'Offers';
+        if(importRequest.email) {
+            pageTitle = `Offers for ${importRequest.email} account`;
+        } else if(importRequest.sessionId) {
+            pageTitle = `Offers for call center session # ${importRequest.sessionId}`;
+        }
         const params = { importRequestId }
         const allIds = offers.map(offer => offer._id);
         const currentPageSelectedNums = this.calculateNumSelectedOnCurrentPage();
