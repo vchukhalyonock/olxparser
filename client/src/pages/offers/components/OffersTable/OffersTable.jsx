@@ -11,7 +11,6 @@ import {
     getOffers,
     deleteOffer
 } from "../../../../actions/offers";
-import { getImportRequest } from "../../../../actions/importRequests";
 import { DELETE_OFFER_CONFIRMATION } from "../../../../constants/notifications";
 import {
     HEAD_CELL_TYPE
@@ -35,7 +34,6 @@ class OffersTable extends Component {
             offerId: undefined
         };
     }
-
 
     agreeHandler = () => {
         this.props.onDeleteOffer(this.state.offerId);
@@ -82,14 +80,19 @@ class OffersTable extends Component {
             importRequestId
         } = this.props;
 
+        let pageTitle = 'Offers';
+        if(importRequest.email) {
+            pageTitle = `Offers for ${importRequest.email} account`;
+        } else if(importRequest.sessionId) {
+            pageTitle = `Offers for call center session # ${importRequest.sessionId}`;
+        }
         const params = { importRequestId }
-
         const allIds = offers.map(offer => offer._id);
-
         const currentPageSelectedNums = this.calculateNumSelectedOnCurrentPage();
 
         return (
             <PageTable
+                key={pageTitle}
                 getAll={getAll}
                 confirmMessage={DELETE_OFFER_CONFIRMATION}
                 agreeHandler={this.agreeHandler}
@@ -97,7 +100,7 @@ class OffersTable extends Component {
                 headCells={headCells}
                 total={total}
                 data={offers}
-                pageTitle={`Offers for ${importRequest.email} account`}
+                pageTitle={pageTitle}
                 getFilterString={() => ""}
                 getSearchString={getSearchString}
                 currentPageSelectedNums={currentPageSelectedNums}
@@ -135,7 +138,7 @@ OffersTable.defaultProps = {
 const mapStateToProps = state => ({
     offers: state.offers.list.items,
     total: state.offers.list.total,
-    importRequest: state.importRequests.single
+    importRequest: state.offers.list.importRequest
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -144,9 +147,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onDeleteOffer: id => {
         dispatch(deleteOffer(id));
-    },
-    onGetImportRequest: importRequestId => {
-        dispatch(getImportRequest(importRequestId));
     }
 });
 

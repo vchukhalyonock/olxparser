@@ -5,7 +5,8 @@ import {
 import Controller, { VERB } from "../core/Controller";
 import {
     OffersModel,
-    ImportRequestModel
+    ImportRequestModel,
+    CallcenterImportRequestModel
 } from "../models";
 import { OFFERS_URL } from "../constants/urls";
 import Error from "../core/Error";
@@ -203,8 +204,26 @@ class OffersController extends Controller {
             return next(e);
         }
 
+        let importRequest;
+        try {
+            importRequest = await ImportRequestModel.find({_id: importRequestId}).exec();
+        } catch (e) {
+            console.log(e);
+            return next(e);
+        }
+
+        if(importRequest.length === 0) {
+            try {
+                importRequest = await CallcenterImportRequestModel.find({_id: importRequestId}).exec();
+            } catch (e) {
+                console.log(e);
+                return next(e);
+            }
+        }
+
         return res.json({
             status: 'success',
+            importRequest: importRequest[0] ? importRequest[0] : {},
             items: offers.docs,
             total
         })

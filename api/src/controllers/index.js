@@ -5,6 +5,8 @@ import AuthController from './AuthController';
 import OffersController from './OffersController';
 import ImportController from "./ExportController";
 import HeadingController from "./HeadingController";
+import CallcenterImportRequestsController from "./CallcenterImportRequestsController";
+import CIRUrlController from "./CIRUrlController";
 
 const controllers = {
     DefaultController,
@@ -12,7 +14,9 @@ const controllers = {
     AuthController,
     OffersController,
     ImportController,
-    HeadingController
+    HeadingController,
+    CallcenterImportRequestsController,
+    CIRUrlController
 };
 
 export function initControllers(router) {

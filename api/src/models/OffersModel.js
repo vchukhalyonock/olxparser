@@ -2,6 +2,11 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { mongoConnection } from '../db';
 
+export const OFFER_TYPE = {
+    CUSTOMER: 'customer',
+    CALLCENTER: 'callcenter'
+};
+
 const Schema = mongoose.Schema;
 
 const OfferSchema = new Schema({
@@ -28,6 +33,10 @@ const OfferSchema = new Schema({
     offerId: {
         type: String,
         default: ''
+    },
+    offerType: {
+        type: String,
+        default: OFFER_TYPE.CUSTOMER
     },
     createdAt: Date
 });
