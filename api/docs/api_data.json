@@ -57,9 +57,593 @@
         }
       ]
     },
-    "filename": "./src/controllers/AuthController.js",
+    "filename": "src/controllers/AuthController.js",
     "groupTitle": "Authentication",
     "name": "PostAuth"
+  },
+  {
+    "type": "delete",
+    "url": "/callcenter-import-request/:id",
+    "title": "deleteCallcenterImportRequest",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"ImportRequest\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "DeleteCallcenterImportRequestId"
+  },
+  {
+    "type": "delete",
+    "url": "/callcenter-import-request/:id/offers",
+    "title": "deleteCallcenterImportRequestOffers",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"ImportRequest\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "DeleteCallcenterImportRequestIdOffers"
+  },
+  {
+    "type": "get",
+    "url": "/callcenter-import-request",
+    "title": "getAllCallcenterImportRequest",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "offset",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "search",
+            "description": "<p>search string</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "order",
+            "description": "<p>order direction 'asc' or 'desc'</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "orderBy",
+            "description": "<p>order by field. email, phone, olxAccountUrl, status, requestedAt</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "filter",
+            "description": "<p>filtering by import or processed dates. 'all', 'hour_requested', 'day_requested', 'month_requested', 'hour_processed', 'day_processed', 'month_processed'</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\",\n     \"items\": [\n     {\n         \"_id\": \"aba4454-0ds\",\n         \"sessionId\": \"12345\",\n         \"limit\": 100,\n         \"olxUrl\": \"http://olx.ua/1/2/3/4\"\n         \"status\": \"NEW\",\n         \"requestedAt\": \"2020-01-31T09:27:30.112Z\",\n         \"__v\": 0\n     },\n     {\n         \"_id\": \"aba4454-0ds\",\n         \"sessionId\": \"12345\",\n         \"limit\": 100,\n         \"olxUrl\": \"http://olx.ua/1/2/3/4\"\n         \"status\": \"NEW\",\n         \"requestedAt\": \"2020-01-31T09:27:30.112Z\",\n         \"__v\": 0\n     },\n     ],\n     \"total\": 10\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "GetCallcenterImportRequest"
+  },
+  {
+    "type": "get",
+    "url": "/callcenter-import-request/:id",
+    "title": "getCallcenterImportRequest",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\",\n     \"item\": {\n         \"_id\": \"aba4454-0ds\",\n         \"sessionId\": \"12345\",\n         \"limit\": 100,\n         \"olxUrl\": \"http://olx.ua/1/2/3/4\"\n         \"status\": \"NEW\",\n         \"requestedAt\": \"2020-01-31T09:27:30.112Z\",\n         \"__v\": 0\n         }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n     \"status\": 404,\n     \"errors\": \"Not found\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "GetCallcenterImportRequestId"
+  },
+  {
+    "type": "post",
+    "url": "/callcenter-import-request",
+    "title": "createCallcenterImportRequest",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sessionId",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "olxUrl",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"sessionId\": \"12345\",\n    \"limit\": 100,\n    \"olxUrl\": \"http://olx.ua/1/2/3/4\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Duplicated olxUrl\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "PostCallcenterImportRequest"
+  },
+  {
+    "type": "put",
+    "url": "/callcenter-import-request",
+    "title": "updateCallcenterImportRequest",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_id",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sessionId",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "limit",
+            "description": ""
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "olxUrl",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n     \"_id\": \"aba4454-0ds\",\n    \"sessionId\": \"12345\",\n    \"limit\": 100,\n    \"olxUrl\": \"http://olx.ua/1/2/3/4\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"status\": 400,\n    \"errors\": \"Duplicated olxUrl\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "PutCallcenterImportRequest"
+  },
+  {
+    "type": "put",
+    "url": "/callcenter-import-request/status",
+    "title": "updateCallcenterImportRequestStatus",
+    "group": "CallcenterImportRequest",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>import request ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "errorMessage",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n    \"id\": \"5e412380ea93af05d584bb2b\",\n    \"status\": \"DONE\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "defaultValue": "application/json",
+            "description": ""
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Bearer JWT</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n     \"status\": \"success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"Invalid token\",\n    \"user\": false\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"status\": 500,\n    \"errors\": \"Invalid params\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n    \"errors\": \"CastError: Cast to ObjectId failed for value \\\"1\\\" at path \\\"_id\\\" for model \\\"ImportRequest\\\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/controllers/CallcenterImportRequestsController.js",
+    "groupTitle": "CallcenterImportRequest",
+    "name": "PutCallcenterImportRequestStatus"
   },
   {
     "type": "post",
@@ -138,7 +722,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ExportController.js",
+    "filename": "src/controllers/ExportController.js",
     "groupTitle": "Export",
     "name": "PostExportYandexMarket"
   },
@@ -200,7 +784,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/HeadingController.js",
+    "filename": "src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "DeleteHeadingsId"
   },
@@ -290,7 +874,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/HeadingController.js",
+    "filename": "src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "GetHeadings"
   },
@@ -357,7 +941,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/HeadingController.js",
+    "filename": "src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "GetHeadingsId"
   },
@@ -436,7 +1020,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/HeadingController.js",
+    "filename": "src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "PostHeadings"
   },
@@ -522,7 +1106,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/HeadingController.js",
+    "filename": "src/controllers/HeadingController.js",
     "groupTitle": "Headings",
     "name": "PostHeadingsId"
   },
@@ -589,7 +1173,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "DeleteImportRequestId"
   },
@@ -656,7 +1240,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "DeleteImportRequestIdOffers"
   },
@@ -753,7 +1337,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "GetImportRequest"
   },
@@ -820,7 +1404,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "GetImportRequestId"
   },
@@ -915,7 +1499,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PostImportRequest"
   },
@@ -1022,7 +1606,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PutImportRequest"
   },
@@ -1115,7 +1699,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/ImportRequestsController.js",
+    "filename": "src/controllers/ImportRequestsController.js",
     "groupTitle": "ImportRequest",
     "name": "PutImportRequestStatus"
   },
@@ -1182,7 +1766,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "DeleteOffersOfferId"
   },
@@ -1284,7 +1868,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "GetOffersImportrequestid"
   },
@@ -1351,7 +1935,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "GetOffersOfferId"
   },
@@ -1419,7 +2003,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "PostOffers"
   },
@@ -1482,7 +2066,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "PutOffersHeading"
   },
@@ -1550,7 +2134,7 @@
         }
       ]
     },
-    "filename": "./src/controllers/OffersController.js",
+    "filename": "src/controllers/OffersController.js",
     "groupTitle": "Offers",
     "name": "PutOffersOffer"
   }

@@ -80,6 +80,52 @@ class CallcenterImportRequestsController extends Controller {
         ];
     }
 
+    /**
+     * @api {post} /callcenter-import-request createCallcenterImportRequest
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} sessionId
+     * @apiParam {Number} limit
+     * @apiParam {String} olxUrl
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *     "sessionId": "12345",
+     *     "limit": 100,
+     *     "olxUrl": "http://olx.ua/1/2/3/4"
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Duplicated olxUrl"
+     * }
+     */
     async addImportRequest(req, res, next) {
         const importRequest = {
             ...req.body,
@@ -114,6 +160,54 @@ class CallcenterImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {put} /callcenter-import-request updateCallcenterImportRequest
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} _id
+     * @apiParam {String} sessionId
+     * @apiParam {Number} limit
+     * @apiParam {String} olxUrl
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *      "_id": "aba4454-0ds",
+     *     "sessionId": "12345",
+     *     "limit": 100,
+     *     "olxUrl": "http://olx.ua/1/2/3/4"
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "status": 400,
+     *     "errors": "Duplicated olxUrl"
+     * }
+     */
     async updateImportRequest(req, res, next) {
         const newRequest = req.body;
 
@@ -143,6 +237,50 @@ class CallcenterImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {put} /callcenter-import-request/status updateCallcenterImportRequestStatus
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id import request ID
+     * @apiParam {String} status import request status. Can be one of NEW, PENDING, IN_PROGRESS, DONE, ERROR
+     * @apiParam {String} [errorMessage]
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiParamExample {json} Request-Example:
+     * {
+     *     "id": "5e412380ea93af05d584bb2b",
+     *     "status": "DONE",
+     * }
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "status": 500,
+     *     "errors": "Invalid params"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async updateImportRequestStatus(req, res, next) {
         const {
             id,
@@ -172,6 +310,58 @@ class CallcenterImportRequestsController extends Controller {
         return res.json({status: "success"});
     }
 
+
+    /**
+     * @api {get} /callcenter-import-request getAllCallcenterImportRequest
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} limit
+     * @apiParam {Number} offset
+     * @apiParam {String} [search] search string
+     * @apiParam {String} [order] order direction 'asc' or 'desc'
+     * @apiParam {String} [orderBy] order by field. email, phone, olxAccountUrl, status, requestedAt
+     * @apiParam {String} [filter] filtering by import or processed dates. 'all', 'hour_requested', 'day_requested', 'month_requested', 'hour_processed', 'day_processed', 'month_processed'
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "items": [
+     *      {
+     *          "_id": "aba4454-0ds",
+     *          "sessionId": "12345",
+     *          "limit": 100,
+     *          "olxUrl": "http://olx.ua/1/2/3/4"
+     *          "status": "NEW",
+     *          "requestedAt": "2020-01-31T09:27:30.112Z",
+     *          "__v": 0
+     *      },
+     *      {
+     *          "_id": "aba4454-0ds",
+     *          "sessionId": "12345",
+     *          "limit": 100,
+     *          "olxUrl": "http://olx.ua/1/2/3/4"
+     *          "status": "NEW",
+     *          "requestedAt": "2020-01-31T09:27:30.112Z",
+     *          "__v": 0
+     *      },
+     *      ],
+     *      "total": 10
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     */
     async getImportRequests(req, res, next) {
         const {
             limit,
@@ -316,6 +506,46 @@ class CallcenterImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {get} /callcenter-import-request/:id getCallcenterImportRequest
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {Number} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success",
+     *      "item": {
+     *          "_id": "aba4454-0ds",
+     *          "sessionId": "12345",
+     *          "limit": 100,
+     *          "olxUrl": "http://olx.ua/1/2/3/4"
+     *          "status": "NEW",
+     *          "requestedAt": "2020-01-31T09:27:30.112Z",
+     *          "__v": 0
+     *          }
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     *      "status": 404,
+     *      "errors": "Not found"
+     * }
+     */
     async getImportRequest(req, res, next) {
         const { id } = req.params;
         let importRequest = null;
@@ -335,6 +565,36 @@ class CallcenterImportRequestsController extends Controller {
         })
     }
 
+
+    /**
+     * @api {delete} /callcenter-import-request/:id deleteCallcenterImportRequest
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async deleteImportRequest(req, res, next) {
         const { id } = req.params;
 
@@ -401,6 +661,35 @@ class CallcenterImportRequestsController extends Controller {
     }
 
 
+    /**
+     * @api {delete} /callcenter-import-request/:id/offers deleteCallcenterImportRequestOffers
+     * @apiGroup CallcenterImportRequest
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiHeader {String} Content-Type=application/json
+     * @apiHeader {String} Authorization Bearer JWT
+     *
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *      "status": "success"
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 400 Bad Request
+     * {
+     *     "message": "Invalid token",
+     *     "user": false
+     * }
+     *
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 500 Internal Server Error
+     * {
+     *     "errors": "CastError: Cast to ObjectId failed for value \"1\" at path \"_id\" for model \"ImportRequest\""
+     * }
+     */
     async deleteImportRequestOffers(req, res, next) {
         const { id } = req.params;
 
