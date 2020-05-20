@@ -10,5 +10,8 @@ export default {
         dbname: 'olxparser',
         user: 'olxparser',
         password: 'olxparser'
+    },
+    callCenter: {
+        token: "azWsylP7od0XAgXfenVPyMwWYvWwcO3o"
     }
 }
