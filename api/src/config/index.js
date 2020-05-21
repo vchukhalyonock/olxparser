@@ -12,6 +12,7 @@ export default {
         password: 'olxparser'
     },
     callCenter: {
-        token: "azWsylP7od0XAgXfenVPyMwWYvWwcO3o"
+        token: "azWsylP7od0XAgXfenVPyMwWYvWwcO3o",
+        onceImportNumber: 500
     }
 }

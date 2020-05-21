@@ -38,7 +38,15 @@ const OfferSchema = new Schema({
         type: String,
         default: OFFER_TYPE.CUSTOMER
     },
-    createdAt: Date
+    createdAt: Date,
+    ccExport: {
+        type: Boolean,
+        default: false
+    },
+    userName: {
+        type: String,
+        default: ''
+    }
 });
 
 OfferSchema.plugin(mongoosePaginate);
