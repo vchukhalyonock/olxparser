@@ -60,7 +60,7 @@ export default () => (
 
         <Route
             exact
-            path={`${OFFERS_PAGE_PATH}/:importRequestId`}
+            path={`${OFFERS_PAGE_PATH}/:importRequestId/:isCallCenterImportRequest`}
             component={OffersContainer}
         />
         <Route

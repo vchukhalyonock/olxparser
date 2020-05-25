@@ -13,3 +13,9 @@ export const CALLCENTER_REQUEST_STATUS = {
     DONE: 'DONE',
     ERROR: 'ERROR'
 };
+
+export const OFFER_TYPE = {
+    CUSTOMER: 'customer',
+    CALLCENTER: 'callcenter'
+};
+

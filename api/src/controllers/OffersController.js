@@ -21,7 +21,7 @@ class OffersController extends Controller {
                 handler: this.createOffer
             },
             {
-                route: `${OFFERS_URL}/cc-import-offers`,
+                route: `${OFFERS_URL}/cc-export-offers`,
                 verb: VERB.PUT,
                 handler: this.addToCCExportList
             },
@@ -687,13 +687,16 @@ class OffersController extends Controller {
     async addToCCExportList(req, res, next) {
         const {
             importRequestId,
-            ids
+            ids: offerIds
         } = req.body;
         const offerService = new OfferService();
 
         try {
             await offerService.removeOffersFromCCExportListByImortRequestId(importRequestId);
-            await offerService.addOffersToCCExportList(ids);
+            if(ids.length)
+                await offerService.addOffersToCCExportList(offerIds);
+            else
+                await offerService.addAllOffersToCCExportList(importRequestId);
         } catch (e) {
             console.log(e);
             return next(e);

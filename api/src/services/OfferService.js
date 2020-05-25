@@ -45,6 +45,12 @@ class OfferService {
             .exec();
     }
 
+    async addAllOffersToCCExportList(importRequestId) {
+        return OffersModel
+            .updateMany({importRequestId}, { ccImport: false })
+            .exec();
+    }
+
     async exportToCallCenter() {
         const offerToExport = await this.getAllOffersToExport();
         for(let i = 0; i < offerToExport.length; i++) {

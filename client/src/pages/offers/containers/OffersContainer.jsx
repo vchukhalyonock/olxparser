@@ -26,7 +26,10 @@ import OffersTable from "../components/OffersTable";
 import Search from "../../../components/search";
 import rest, { DATA_TYPE } from "../../../utils/rest";
 import { METHODS } from "../../../constants/methods";
-import { EXPORT_YANDEX_MARKET_URL } from "../../../constants/urls";
+import {
+    EXPORT_YANDEX_MARKET_URL,
+    EXPORT_CALL_CENTER_URL
+} from "../../../constants/urls";
 import config from "../../../config";
 import Alert from "../../../components/alert";
 import {
@@ -113,23 +116,74 @@ class OffersContainer extends Component {
 
     exportSelectedHandler = () => {
         const offersIds = this.state.selectedItems;
-        const importRequestId = this.props.match.params.importRequestId;
+        const {
+            importRequestId,
+            isCallCenterImportRequest
+        } = this.props.match.params
 
         if(offersIds.length === 0) {
             this.openExportAlert("Please, select offers!");
         } else {
+            if(+isCallCenterImportRequest === 0) {
+                rest(
+                    `${config.backendUrl}${EXPORT_YANDEX_MARKET_URL}`,
+                    METHODS.POST,
+                    {
+                        importRequestId,
+                        offersIds
+                    },
+                    DATA_TYPE.XML
+                ).then((response) => {
+                    if (response) {
+                        const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
+                        saveAs(blob, `${importRequestId}_export_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
+                    } else {
+                        this.openExportAlert(EXPORT_OFFERS_ERROR);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.openExportAlert(error);
+                });
+            } else {
+                rest(
+                    `${config.backendUrl}${EXPORT_CALL_CENTER_URL}`,
+                    METHODS.POST,
+                    {
+                        importRequestId,
+                        offersIds
+                    },
+                    DATA_TYPE.JSON
+                ).then((response) => {
+                    if(!response) {
+                        this.openExportAlert(EXPORT_OFFERS_ERROR);
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.openExportAlert(error);
+                });
+            }
+        }
+    };
+
+    exportAllHandler = () => {
+        const {
+            importRequestId,
+            isCallCenterImportRequest
+        } = this.props.match.params;
+
+        if(+isCallCenterImportRequest === 0) {
             rest(
                 `${config.backendUrl}${EXPORT_YANDEX_MARKET_URL}`,
                 METHODS.POST,
                 {
                     importRequestId,
-                    offersIds
+                    offersIds: []
                 },
                 DATA_TYPE.XML
             ).then((response) => {
-                if(response) {
+                if (response) {
                     const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
-                    saveAs(blob, `${importRequestId}_export_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
+                    saveAs(blob, `${importRequestId}_export_all_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
                 } else {
                     this.openExportAlert(EXPORT_OFFERS_ERROR);
                 }
@@ -137,30 +191,24 @@ class OffersContainer extends Component {
                 console.log(error);
                 this.openExportAlert(error);
             });
+        } else {
+            rest(
+                `${config.backendUrl}${EXPORT_CALL_CENTER_URL}`,
+                METHODS.POST,
+                {
+                    importRequestId,
+                    offersIds: []
+                },
+                DATA_TYPE.JSON
+            ).then((response) => {
+                if(!response) {
+                    this.openExportAlert(EXPORT_OFFERS_ERROR);
+                }
+            }).catch((error) => {
+                console.log(error);
+                this.openExportAlert(error);
+            });
         }
-    };
-
-    exportAllHandler = () => {
-        const importRequestId = this.props.match.params.importRequestId;
-        rest(
-            `${config.backendUrl}${EXPORT_YANDEX_MARKET_URL}`,
-            METHODS.POST,
-            {
-                importRequestId,
-                offersIds: []
-            },
-            DATA_TYPE.XML
-        ).then((response) => {
-            if(response) {
-                const blob = new Blob([response], {type: "text/xml;charset=utf-8"});
-                saveAs(blob, `${importRequestId}_export_all_${moment().format("DD_MM_YYYY_hh_mm")}.xml`);
-            } else {
-                this.openExportAlert(EXPORT_OFFERS_ERROR);
-            }
-        }).catch((error) => {
-            console.log(error);
-            this.openExportAlert(error);
-        });
     };
 
 

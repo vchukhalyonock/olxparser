@@ -25,7 +25,7 @@ const CallCenterImportRequestButtons = ({
                                   renderStatus
                               }) => (
     <TableCell>
-        <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}`} component={ListItemLink}>
+        <IconButton to={`${OFFERS_PAGE_PATH}/${item._id}/1`} component={ListItemLink}>
             <Tooltip title="Show Offers">
                 <InfoIcon />
             </Tooltip>
