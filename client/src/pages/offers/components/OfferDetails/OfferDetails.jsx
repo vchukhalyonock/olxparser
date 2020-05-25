@@ -16,7 +16,6 @@ import {
 import { getOffer } from "../../../../actions/offers";
 import ListItemLink from "../../../../components/listItemLink";
 import { OFFERS_PAGE_PATH } from "../../../../constants/router";
-import { OFFER_TYPE } from "../../../../constants/statuses";
 
 const styles = theme => ({
     root: {

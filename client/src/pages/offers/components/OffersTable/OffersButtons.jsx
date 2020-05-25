@@ -12,12 +12,14 @@ import ListItemLink from "../../../../components/listItemLink";
 import {
     Delete as DeleteIcon,
     Edit as EditIcon,
-    Info as InfoIcon
+    Info as InfoIcon,
+    Schedule as ScheduleIcon
 } from "@material-ui/icons";
 import {
     func,
     object
 } from "prop-types";
+import { OFFER_TYPE } from "../../../../constants/statuses";
 
 const OffersButtons = ({
     item,
@@ -39,6 +41,13 @@ const OffersButtons = ({
                 <DeleteIcon />
             </Tooltip>
         </IconButton>
+        {item.offerType = OFFER_TYPE.CALLCENTER && item.ccExport && (
+            <IconButton onClick={() => {}}>
+                <Tooltip title="Offer scheduled to callcenter export">
+                    <ScheduleIcon />
+                </Tooltip>
+            </IconButton>
+        )}
     </TableCell>
 );
 
