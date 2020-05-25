@@ -29,25 +29,25 @@ class OfferService {
 
     async removeOfferFromCCExportList(offerId) {
         return OffersModel
-            .updateOne({_id: offerId}, { ccImport: false })
+            .updateOne({_id: offerId}, { ccExport: false })
             .exec();
     }
 
     async removeOffersFromCCExportListByImortRequestId(importRequestId) {
         return OffersModel
-            .updateMany({ importRequestId }, { ccImport: false })
+            .updateMany({ importRequestId }, { ccExport: false })
             .exec();
     }
 
     async addOffersToCCExportList(ids = []) {
         return OffersModel
-            .updateMany({_id: { $in : ids}}, { ccImport: false })
+            .updateMany({_id: { $in : ids}}, { ccExport: true })
             .exec();
     }
 
     async addAllOffersToCCExportList(importRequestId) {
         return OffersModel
-            .updateMany({importRequestId}, { ccImport: false })
+            .updateMany({importRequestId}, { ccExport: true })
             .exec();
     }
 

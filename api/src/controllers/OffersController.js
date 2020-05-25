@@ -22,7 +22,7 @@ class OffersController extends Controller {
             },
             {
                 route: `${OFFERS_URL}/cc-export-offers`,
-                verb: VERB.PUT,
+                verb: VERB.POST,
                 handler: this.addToCCExportList
             },
             {
@@ -687,22 +687,21 @@ class OffersController extends Controller {
     async addToCCExportList(req, res, next) {
         const {
             importRequestId,
-            ids: offerIds
+            offersIds
         } = req.body;
-        const offerService = new OfferService();
 
         try {
-            await offerService.removeOffersFromCCExportListByImortRequestId(importRequestId);
-            if(ids.length)
-                await offerService.addOffersToCCExportList(offerIds);
+            await OfferService.removeOffersFromCCExportListByImortRequestId(importRequestId);
+            if(offersIds.length)
+                await OfferService.addOffersToCCExportList(offersIds);
             else
-                await offerService.addAllOffersToCCExportList(importRequestId);
+                await OfferService.addAllOffersToCCExportList(importRequestId);
         } catch (e) {
             console.log(e);
             return next(e);
         }
 
-        return req.json({ status: 'success' })
+        return res.json({ status: 'success' })
     }
 }
 
