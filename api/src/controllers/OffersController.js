@@ -21,6 +21,11 @@ class OffersController extends Controller {
                 handler: this.createOffer
             },
             {
+                route: `${OFFERS_URL}/cc-export-offers`,
+                verb: VERB.POST,
+                handler: this.addToCCExportList
+            },
+            {
                 route: `${OFFERS_URL}/heading`,
                 verb: VERB.PUT,
                 handler: this.setHeading
@@ -675,7 +680,28 @@ class OffersController extends Controller {
             return next(e);
         }
 
-        return res.json({status: 'success'});
+        return res.json({ status: 'success' });
+    }
+
+
+    async addToCCExportList(req, res, next) {
+        const {
+            importRequestId,
+            offersIds
+        } = req.body;
+
+        try {
+            await OfferService.removeOffersFromCCExportListByImortRequestId(importRequestId);
+            if(offersIds.length)
+                await OfferService.addOffersToCCExportList(offersIds);
+            else
+                await OfferService.addAllOffersToCCExportList(importRequestId);
+        } catch (e) {
+            console.log(e);
+            return next(e);
+        }
+
+        return res.json({ status: 'success' })
     }
 }
 

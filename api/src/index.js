@@ -2,10 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import cors from 'cors';
+import schedule from "node-schedule";
 import middlewares from './middlewares';
 import { initControllers } from './controllers';
 import LocalAuthStrategy from './config/auth/LocalAuthStrategy';
 import JWTAuthStrategy from './config/auth/JWTAuthStrategy';
+import OfferService from "./services/OfferService";
 
 const app = express();
 const router = express.Router();
@@ -29,5 +31,12 @@ initControllers(router);
 
 app.listen(3003,()=>
     console.log(`Server is listening on port 3003`));
+
+const scheduleJob = schedule.scheduleJob('*/10 * * * *', async () => {
+    console.log("Schedule Job: Export offers to Call center");
+    const offerService = new OfferService();
+    await offerService.exportToCallCenter();
+});
+scheduleJob.cancel(); //temporary stop
 
 export default app;

@@ -57,21 +57,20 @@ export default () => (
             path={`${EDIT_IMPORT_REQUEST_PAGE_PATH}/:importRequestId`}
             component={ImportRequestsFormContainer}
         />
-
         <Route
             exact
-            path={`${OFFERS_PAGE_PATH}/:importRequestId`}
+            path={`${EDIT_OFFERS_PAGE_PATH}/:offerId`}
+            component={OffersFormContainer}
+        />
+        <Route
+            exact
+            path={`${OFFERS_PAGE_PATH}/:importRequestId/:isCallCenterImportRequest`}
             component={OffersContainer}
         />
         <Route
             exact
             path={`${OFFER_DETAILS_PATH}/:offerId`}
             component={OfferDetailsContainer}
-        />
-        <Route
-            exact
-            path={`${EDIT_OFFERS_PAGE_PATH}/:offerId`}
-            component={OffersFormContainer}
         />
         <Route
             exact

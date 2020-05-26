@@ -52,9 +52,12 @@ class OfferDetails extends Component {
                 city,
                 region,
                 offerId,
-                phone
+                phone,
+                offerType
             },
             classes } = this.props;
+
+        const isCallCenterImportRequest = offerType ? 1 : 0;
 
         return(
             <Fragment>
@@ -96,7 +99,7 @@ class OfferDetails extends Component {
                         <Button
                             variant="contained"
                             component={ListItemLink}
-                            to={`${OFFERS_PAGE_PATH}/${importRequestId}`}
+                            to={`${OFFERS_PAGE_PATH}/${importRequestId}/${isCallCenterImportRequest}`}
                         >
                             Back to Offers
                         </Button>
