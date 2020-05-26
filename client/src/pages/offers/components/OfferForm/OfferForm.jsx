@@ -25,6 +25,7 @@ import { OFFERS_PAGE_PATH } from "../../../../constants/router";
 import { menuClick } from "../../../../actions/menu";
 import { OfferDetailContainer } from "../../../../components/offerDetail";
 import HeadingsSelector from "../../../../components/headingsSelector";
+import { OFFER_TYPE } from "../../../../constants/statuses";
 
 const styles = theme => ({
     textField: {
@@ -94,13 +95,14 @@ class OfferForm extends Component {
     }
 
     setRedirect  = () => {
-        this.setState({redirect: true});
+        this.setState({ redirect: true });
     };
 
     renderRedirect = () => {
         const { offer } = this.props;
         if(this.state.redirect) {
-            return <Redirect to={`${OFFERS_PAGE_PATH}/${offer.importRequestId}`}/>;
+            const offerType = offer.offerType === OFFER_TYPE.CALLCENTER ? 1 : 0;
+            return <Redirect to={`${OFFERS_PAGE_PATH}/${offer.importRequestId}/${offerType}`}/>;
         }
     };
 
