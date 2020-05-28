@@ -60,7 +60,8 @@ class OfferForm extends Component {
             region: undefined,
             city: undefined,
             offerId: undefined,
-            phone: undefined
+            phone: undefined,
+            userName: undefined
         };
 
         const {
@@ -119,7 +120,8 @@ class OfferForm extends Component {
             region: undefined,
             city: undefined,
             offerId: undefined,
-            phone: undefined
+            phone: undefined,
+            userName: undefined
         };
         this.setState(newState);
         this.setRedirect();
@@ -148,7 +150,8 @@ class OfferForm extends Component {
             offerId: this.state.offerId ? this.state.offerId : offer.offerId,
             phone: this.state.phone ? this.state.phone : offer.phone,
             createdAt: offer.createdAt,
-            _id: offer._id
+            _id: offer._id,
+            userName: this.state.userName ? this.state.userName : offer.userName,
         };
 
         const priceParts = newOffer.price.split(" ");
@@ -364,6 +367,15 @@ class OfferForm extends Component {
                             margin="normal"
                             onChange={e => this.handleAllChange(e, "price")}
                             defaultValue={offer.price ? `${offer.price.amount.replace(' ', '')} ${offer.price.volume}` : ''}
+                            InputLabelProps={{shrink: true}}
+                        />
+                        <TextField
+                            id="userName"
+                            label="User Name"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.handleAllChange(e, "userName")}
+                            defaultValue={offer.userName}
                             InputLabelProps={{shrink: true}}
                         />
                         <div style={{textAlign: "right"}}>
