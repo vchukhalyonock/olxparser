@@ -53,7 +53,8 @@ class OfferDetails extends Component {
                 region,
                 offerId,
                 phone,
-                offerType
+                offerType,
+                userName
             },
             classes } = this.props;
 
@@ -63,6 +64,7 @@ class OfferDetails extends Component {
             <Fragment>
                 <h1>{title}</h1>
                 <p>Offer ID: {offerId}</p>
+                <p>User Name: {userName}</p>
                 <p>Phone: {phone}</p>
                 <p><strong>{city} ,{region}</strong></p>
                 <h3>Heading Origin</h3>
