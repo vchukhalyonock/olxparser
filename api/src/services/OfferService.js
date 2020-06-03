@@ -1,4 +1,5 @@
 import { OffersModel } from "../models";
+import { OFFER_STATUS } from "../models/OffersModel";
 import headingService from "./HeadingService";
 import config from "../config";
 import {
@@ -34,8 +35,15 @@ class OfferService {
     }
 
     async setExportErrors(offerId, errors) {
+        await this.setOfferStatus(offerId, OFFER_STATUS.FAILED);
         return OffersModel
             .updateOne({ _id: offerId }, { exportErrors: errors })
+            .exec();
+    }
+
+    async setOfferStatus(offerId, status) {
+        return OffersModel
+            .updateOne({ _id: offerId }, { ccExportStatus: status })
             .exec();
     }
 
@@ -68,6 +76,7 @@ class OfferService {
                     await this.setExportErrors(offer.id, response.errors);
                 }
             }
+            await this.setOfferStatus(offer.id, OFFER_STATUS.EXPORTED);
             await this.removeOfferFromCCExportList(offer.id);
         }
     }
