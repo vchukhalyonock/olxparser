@@ -46,6 +46,10 @@ const OfferSchema = new Schema({
     userName: {
         type: String,
         default: ''
+    },
+    exportErrors: {
+        type: Object,
+        default: {}
     }
 });
 

@@ -32,11 +32,10 @@ initControllers(router);
 app.listen(3003,()=>
     console.log(`Server is listening on port 3003`));
 
-const scheduleJob = schedule.scheduleJob('*/10 * * * *', async () => {
+const scheduleJob = schedule.scheduleJob('*/5 * * * *', async () => {
     console.log("Schedule Job: Export offers to Call center");
-    const offerService = new OfferService();
-    await offerService.exportToCallCenter();
+    await OfferService.exportToCallCenter();
 });
-scheduleJob.cancel(); //temporary stop
+//scheduleJob.cancel(); //temporary stop
 
 export default app;

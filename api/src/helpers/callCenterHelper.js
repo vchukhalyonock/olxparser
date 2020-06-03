@@ -1,3 +1,4 @@
+import { findKey } from "lodash";
 import rest from "../utils/rest";
 import { METHODS } from "../constants/methods";
 import { CALLCENTER_BASE_URL } from "../constants/urls";
@@ -20,24 +21,43 @@ export const exportOffer = async (offer) => {
     const importRequest = await CallcenterImportRequestModel.findOne({ _id: offer.importRequestId });
     if(!importRequest) return;
     const bundle = convertToExportBundle(importRequest, offer);
-    await rest(
+    return rest(
         `${CALLCENTER_BASE_URL}/api/classified/store`,
         METHODS.POST,
         bundle
     );
 }
 
+const currencyReplacer = currency => {
+    const matrix = {
+        usd: {
+            variants: ['$', 'usd']
+        },
+        eur: {
+            variants: ['€', 'eur']
+        },
+        uah: {
+            variants: ['грн', 'uah']
+        }
+    }
+
+    const pointlessCurrency = currency.replace('.', '').toLowerCase();
+    return findKey(matrix, o => {
+        return o.variants.includes(pointlessCurrency);
+    });
+}
+
 const convertToExportBundle = (importRequest, offer) => ({
-    id: offer._id, name: offer.title,
+    name: offer.title,
     url: offer.url,
     session_id: importRequest.sessionId,
-    price: offer.price.amount,
-    currency: offer.price.volume,
+    price: offer.price.amount.replace(' ', ''),
+    currency: currencyReplacer(offer.price.volume),
     description: offer.description,
     city: offer.city,
-    params: offer.details.map(detail => ({ name: detail.measure, value: detail.value })),
-    images: offer.images,
-    phones: [offer.phone],
+    params: offer.details.map(detail => ({ name: detail.measure, value: detail.value.join(",") })),
+    images: offer.srcImages,
+    phones: [offer.phone.replace(' ', '')],
     user_name: offer.userName
 });
 

@@ -33,6 +33,12 @@ class OfferService {
             .exec();
     }
 
+    async setExportErrors(offerId, errors) {
+        return OffersModel
+            .updateOne({ _id: offerId }, { exportErrors: errors })
+            .exec();
+    }
+
     async removeOffersFromCCExportListByImortRequestId(importRequestId) {
         return OffersModel
             .updateMany({ importRequestId }, { ccExport: false })
@@ -56,19 +62,24 @@ class OfferService {
         for(let i = 0; i < offerToExport.length; i++) {
             const offer = offerToExport[i];
             if(!await isOfferExists(offer.url)) {
-                await exportOffer(offer);
+                const response = await exportOffer(offer);
+                console.log(response);
+                if(response.errors) {
+                    await this.setExportErrors(offer.id, response.errors);
+                }
             }
             await this.removeOfferFromCCExportList(offer.id);
         }
     }
 
     async getAllOffersToExport() {
-        return OffersModel.paginate(
+        const offers = await OffersModel.paginate(
             { ccExport: true },
             {
                 limit: conf.onceImportNumber,
                 offset: 0
             });
+        return offers.docs;
     }
 }
 

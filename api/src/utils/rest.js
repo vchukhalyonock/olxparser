@@ -26,11 +26,12 @@ export default async function (url, method, data = undefined) {
         options
     );
 
-    let responseData = false;
+    /*let responseData = false;
 
     if(response.ok) {
         responseData = await response.json();
     }
 
-    return responseData;
+    return responseData;*/
+    return response.json();
 }
