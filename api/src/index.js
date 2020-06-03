@@ -8,6 +8,7 @@ import { initControllers } from './controllers';
 import LocalAuthStrategy from './config/auth/LocalAuthStrategy';
 import JWTAuthStrategy from './config/auth/JWTAuthStrategy';
 import OfferService from "./services/OfferService";
+import config from "./config";
 
 const app = express();
 const router = express.Router();
@@ -36,6 +37,7 @@ const scheduleJob = schedule.scheduleJob('*/5 * * * *', async () => {
     console.log("Schedule Job: Export offers to Call center");
     await OfferService.exportToCallCenter();
 });
-//scheduleJob.cancel(); //temporary stop
-
+if(!config.callCenter.enableExport) {
+    scheduleJob.cancel();
+}
 export default app;

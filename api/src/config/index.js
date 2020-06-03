@@ -13,6 +13,7 @@ export default {
     },
     callCenter: {
         token: "azWsylP7od0XAgXfenVPyMwWYvWwcO3o",
-        onceImportNumber: 500
+        onceImportNumber: 500,
+        enableExport: true
     }
 }
