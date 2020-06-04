@@ -13,13 +13,17 @@ import {
     Delete as DeleteIcon,
     Edit as EditIcon,
     Info as InfoIcon,
-    Schedule as ScheduleIcon
+    Schedule as ScheduleIcon,
+    Error as ErrorIcon,
 } from "@material-ui/icons";
 import {
     func,
     object
 } from "prop-types";
-import { OFFER_TYPE } from "../../../../constants/statuses";
+import {
+    OFFER_STATUS,
+    OFFER_TYPE
+} from "../../../../constants/statuses";
 
 const OffersButtons = ({
     item,
@@ -41,10 +45,17 @@ const OffersButtons = ({
                 <DeleteIcon />
             </Tooltip>
         </IconButton>
-        {item.offerType = OFFER_TYPE.CALLCENTER && item.ccExport && (
+        {item.offerType === OFFER_TYPE.CALLCENTER && item.ccExport && (
             <IconButton onClick={() => {}}>
                 <Tooltip title="Offer scheduled to callcenter export">
                     <ScheduleIcon />
+                </Tooltip>
+            </IconButton>
+        )}
+        {item.offerType === OFFER_TYPE.CALLCENTER && !item.ccExport && item.ccExportStatus === OFFER_STATUS.FAILED && (
+            <IconButton onClick={() => {}}>
+                <Tooltip title={JSON.stringify(item.exportErrors)}>
+                    <ErrorIcon />
                 </Tooltip>
             </IconButton>
         )}

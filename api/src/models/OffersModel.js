@@ -7,6 +7,13 @@ export const OFFER_TYPE = {
     CALLCENTER: 'callcenter'
 };
 
+export const OFFER_STATUS = {
+    NEW: 'new',
+    EXPORTED: 'exported',
+    FAILED: 'failed'
+};
+
+
 const Schema = mongoose.Schema;
 
 const OfferSchema = new Schema({
@@ -46,6 +53,14 @@ const OfferSchema = new Schema({
     userName: {
         type: String,
         default: ''
+    },
+    exportErrors: {
+        type: Object,
+        default: {}
+    },
+    ccExportStatus: {
+        type: String,
+        default: OFFER_STATUS.NEW
     }
 });
 

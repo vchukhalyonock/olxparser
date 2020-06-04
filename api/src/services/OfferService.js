@@ -1,4 +1,5 @@
 import { OffersModel } from "../models";
+import { OFFER_STATUS } from "../models/OffersModel";
 import headingService from "./HeadingService";
 import config from "../config";
 import {
@@ -33,6 +34,19 @@ class OfferService {
             .exec();
     }
 
+    async setExportErrors(offerId, errors) {
+        await this.setOfferStatus(offerId, OFFER_STATUS.FAILED);
+        return OffersModel
+            .updateOne({ _id: offerId }, { exportErrors: errors })
+            .exec();
+    }
+
+    async setOfferStatus(offerId, status) {
+        return OffersModel
+            .updateOne({ _id: offerId }, { ccExportStatus: status })
+            .exec();
+    }
+
     async removeOffersFromCCExportListByImortRequestId(importRequestId) {
         return OffersModel
             .updateMany({ importRequestId }, { ccExport: false })
@@ -56,19 +70,25 @@ class OfferService {
         for(let i = 0; i < offerToExport.length; i++) {
             const offer = offerToExport[i];
             if(!await isOfferExists(offer.url)) {
-                await exportOffer(offer);
+                const response = await exportOffer(offer);
+                console.log(response);
+                if(response.errors) {
+                    await this.setExportErrors(offer.id, response.errors);
+                }
             }
+            await this.setOfferStatus(offer.id, OFFER_STATUS.EXPORTED);
             await this.removeOfferFromCCExportList(offer.id);
         }
     }
 
     async getAllOffersToExport() {
-        return OffersModel.paginate(
+        const offers = await OffersModel.paginate(
             { ccExport: true },
             {
                 limit: conf.onceImportNumber,
                 offset: 0
             });
+        return offers.docs;
     }
 }
 

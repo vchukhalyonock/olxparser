@@ -8,6 +8,7 @@ import { initControllers } from './controllers';
 import LocalAuthStrategy from './config/auth/LocalAuthStrategy';
 import JWTAuthStrategy from './config/auth/JWTAuthStrategy';
 import OfferService from "./services/OfferService";
+import config from "./config";
 
 const app = express();
 const router = express.Router();
@@ -32,11 +33,11 @@ initControllers(router);
 app.listen(3003,()=>
     console.log(`Server is listening on port 3003`));
 
-const scheduleJob = schedule.scheduleJob('*/10 * * * *', async () => {
+const scheduleJob = schedule.scheduleJob('*/5 * * * *', async () => {
     console.log("Schedule Job: Export offers to Call center");
-    const offerService = new OfferService();
-    await offerService.exportToCallCenter();
+    await OfferService.exportToCallCenter();
 });
-scheduleJob.cancel(); //temporary stop
-
+if(!config.callCenter.enableExport) {
+    scheduleJob.cancel();
+}
 export default app;
