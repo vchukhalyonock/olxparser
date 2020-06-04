@@ -46,14 +46,18 @@ const OffersButtons = ({
             </Tooltip>
         </IconButton>
         {item.offerType === OFFER_TYPE.CALLCENTER && item.ccExport && (
-            <Tooltip title="Offer scheduled to callcenter export">
-                <ScheduleIcon />
-            </Tooltip>
+            <IconButton onClick={() => {}}>
+                <Tooltip title="Offer scheduled to callcenter export">
+                    <ScheduleIcon />
+                </Tooltip>
+            </IconButton>
         )}
         {item.offerType === OFFER_TYPE.CALLCENTER && !item.ccExport && item.ccExportStatus === OFFER_STATUS.FAILED && (
-            <Tooltip title={JSON.stringify(item.exportErrors)}>
-                <ErrorIcon />
-            </Tooltip>
+            <IconButton onClick={() => {}}>
+                <Tooltip title={JSON.stringify(item.exportErrors)}>
+                    <ErrorIcon />
+                </Tooltip>
+            </IconButton>
         )}
     </TableCell>
 );
