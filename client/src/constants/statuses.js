@@ -19,3 +19,9 @@ export const OFFER_TYPE = {
     CALLCENTER: 'callcenter'
 };
 
+export const OFFER_STATUS = {
+    NEW: 'new',
+    EXPORTED: 'exported',
+    FAILED: 'failed'
+};
+
