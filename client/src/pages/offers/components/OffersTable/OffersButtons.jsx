@@ -15,6 +15,7 @@ import {
     Info as InfoIcon,
     Schedule as ScheduleIcon,
     Error as ErrorIcon,
+    DoneAll as DoneIcon,
 } from "@material-ui/icons";
 import {
     func,
@@ -56,6 +57,13 @@ const OffersButtons = ({
             <IconButton onClick={() => {}}>
                 <Tooltip title={JSON.stringify(item.exportErrors)}>
                     <ErrorIcon />
+                </Tooltip>
+            </IconButton>
+        )}
+        {item.offerType === OFFER_TYPE.CALLCENTER && !item.ccExport && item.ccExportStatus === OFFER_STATUS.EXPORTED && (
+            <IconButton onClick={() => {}}>
+                <Tooltip title={JSON.stringify(item.exportErrors)}>
+                    <DoneIcon />
                 </Tooltip>
             </IconButton>
         )}
