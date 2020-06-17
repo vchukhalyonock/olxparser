@@ -468,7 +468,10 @@ class CallcenterImportRequestsController extends Controller {
             query = {
                 $or: [
                     {
-                        olxAccountUrl: regexp
+                        olxUrl: regexp
+                    },
+                    {
+                        sessionId: regexp
                     }
                 ]
             }
