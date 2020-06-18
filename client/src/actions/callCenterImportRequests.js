@@ -5,7 +5,10 @@ import {
     CREATE_CALLCENTER_IMPORT_REQUEST,
     UPDATE_CALLCENTER_IMPORT_REQUEST,
     DELETE_CALLCENTER_IMPORT_REQUEST,
-    UPDATE_CALLCENTER_IMPORT_REQUEST_STATUS
+    UPDATE_CALLCENTER_IMPORT_REQUEST_STATUS,
+    GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS,
+    GET_LAST_PROCESSED_CALL_CENTER_IMPORT_REQUEST,
+    GET_LAST_ERRORED_CALL_CENTER_IMPORT_REQUEST
 } from "../constants/actions";
 import {
     CALLCENTER_IMPORT_REQUESTS_URL
@@ -55,11 +58,28 @@ const updateImportRequestStatus = (id, status) => async dispatch => {
     dispatch({ type: UPDATE_CALLCENTER_IMPORT_REQUEST_STATUS, payload: { id, status } });
 };
 
+const getCallCenterDashboardImportRequests = (incomingQuery = {}, type) => async dispatch => {
+    const queryData = merge(defaultQuery, incomingQuery);
+    const responseData = await rest(url, METHODS.GET, queryData);
+    switch (type) {
+        case GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS:
+        case GET_LAST_PROCESSED_CALL_CENTER_IMPORT_REQUEST:
+        case GET_LAST_ERRORED_CALL_CENTER_IMPORT_REQUEST:
+            dispatch({ type, payload: responseData });
+            break;
+
+        default:
+            dispatch({ type: GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS, payload: responseData });
+            break;
+    }
+};
+
 export {
     getImportRequest,
     getImportRequests,
     createImportRequest,
     updateImportRequest,
     deleteImportRequest,
-    updateImportRequestStatus
+    updateImportRequestStatus,
+    getCallCenterDashboardImportRequests
 }

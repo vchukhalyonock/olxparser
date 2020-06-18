@@ -1,3 +1,7 @@
 import DashboardImportRequests from "./DashboardImportRequests";
+import DashboardCallCenterImportRequests from "./DashboardCallCenterImportRequests";
 
-export default DashboardImportRequests;
+export {
+    DashboardImportRequests,
+    DashboardCallCenterImportRequests
+};

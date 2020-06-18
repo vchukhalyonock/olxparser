@@ -4,12 +4,18 @@ import {
     Grid,
     Paper,
 } from '@material-ui/core';
-import DashboardImportRequests from "./components/dashboardImportRequests";
-import {REQUEST_STATUS} from "../../constants/statuses";
+import {
+    DashboardImportRequests,
+    DashboardCallCenterImportRequests
+} from "./components/dashboardImportRequests";
+import { REQUEST_STATUS } from "../../constants/statuses";
 import {
     GET_LAST_ERRORED_IMPORT_REQUEST,
     GET_LAST_NEW_IMPORT_REQUESTS,
-    GET_LAST_PROCESSED_IMPORT_REQUEST
+    GET_LAST_PROCESSED_IMPORT_REQUEST,
+    GET_LAST_ERRORED_CALL_CENTER_IMPORT_REQUEST,
+    GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS,
+    GET_LAST_PROCESSED_CALL_CENTER_IMPORT_REQUEST
 } from "../../constants/actions";
 
 const useStyles = makeStyles(theme => ({
@@ -35,12 +41,51 @@ export default function Dashboard() {
             <Grid container spacing={2} className={classes.root}>
                 <Grid item xs={5}>
                     <Paper className={classes.paper}>
+                        <DashboardCallCenterImportRequests
+                            limit={10}
+                            offset={0}
+                            orderBy="requestedAt"
+                            order="desc"
+                            title="New Call Center Import Request"
+                            filter={REQUEST_STATUS.NEW}
+                            type={GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                    <Paper className={classes.paper}>
+                        <DashboardCallCenterImportRequests
+                            limit={10}
+                            offset={0}
+                            orderBy="requestedAt"
+                            order="desc"
+                            title="Last Processed Call Center Import Request"
+                            filter={REQUEST_STATUS.DONE}
+                            type={GET_LAST_PROCESSED_CALL_CENTER_IMPORT_REQUEST}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                    <Paper className={classes.paper}>
+                        <DashboardCallCenterImportRequests
+                            limit={10}
+                            offset={0}
+                            orderBy="requestedAt"
+                            order="desc"
+                            title="Last Error Call Center Import Request"
+                            filter={REQUEST_STATUS.ERROR}
+                            type={GET_LAST_ERRORED_CALL_CENTER_IMPORT_REQUEST}
+                        />
+                    </Paper>
+                </Grid>
+                <Grid item xs={5}>
+                    <Paper className={classes.paper}>
                         <DashboardImportRequests
                             limit={10}
                             offset={0}
                             orderBy="requestedAt"
                             order="desc"
-                            title="New Import Requests"
+                            title="New Customer Import Requests"
                             filter={REQUEST_STATUS.NEW}
                             type={GET_LAST_NEW_IMPORT_REQUESTS}
                         />
@@ -53,7 +98,7 @@ export default function Dashboard() {
                             offset={0}
                             orderBy="processedAt"
                             order="desc"
-                            title="Processed Requests"
+                            title="Customer Processed Requests"
                             filter={REQUEST_STATUS.DONE}
                             type={GET_LAST_PROCESSED_IMPORT_REQUEST}
                         />
@@ -66,7 +111,7 @@ export default function Dashboard() {
                             offset={0}
                             orderBy="processedAt"
                             order="desc"
-                            title="Requests with Errors"
+                            title="Customer Requests with Errors"
                             filter={REQUEST_STATUS.ERROR}
                             type={GET_LAST_ERRORED_IMPORT_REQUEST}
                         />
