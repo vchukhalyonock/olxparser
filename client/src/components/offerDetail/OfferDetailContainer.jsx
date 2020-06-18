@@ -48,7 +48,7 @@ class OfferDetailContainer extends Component {
             : 0;
         const newDetail = (<SingleDetail
             index={index}
-            value={{}}
+            value={{ value: []}}
             key={index}
             removeDetails={this.handleRemoveDetailItem}
             handleChange={handleChange}
