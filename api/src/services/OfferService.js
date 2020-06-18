@@ -69,14 +69,15 @@ class OfferService {
         const offerToExport = await this.getAllOffersToExport();
         for(let i = 0; i < offerToExport.length; i++) {
             const offer = offerToExport[i];
+            let response;
             if(!await isOfferExists(offer.url)) {
-                const response = await exportOffer(offer);
+                response = await exportOffer(offer);
                 console.log(response);
                 if(response.errors) {
                     await this.setExportErrors(offer.id, response.errors);
                 }
             }
-            await this.setOfferStatus(offer.id, OFFER_STATUS.EXPORTED);
+            await this.setOfferStatus(offer.id, response.errors ? OFFER_STATUS.FAILED : OFFER_STATUS.EXPORTED);
             await this.removeOfferFromCCExportList(offer.id);
         }
     }
