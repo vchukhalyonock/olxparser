@@ -8,7 +8,10 @@ import {
     DashboardImportRequests,
     DashboardCallCenterImportRequests
 } from "./components/dashboardImportRequests";
-import { REQUEST_STATUS } from "../../constants/statuses";
+import {
+    REQUEST_STATUS,
+    CALLCENTER_REQUEST_STATUS
+} from "../../constants/statuses";
 import {
     GET_LAST_ERRORED_IMPORT_REQUEST,
     GET_LAST_NEW_IMPORT_REQUESTS,
@@ -47,7 +50,7 @@ export default function Dashboard() {
                             orderBy="requestedAt"
                             order="desc"
                             title="New Call Center Import Request"
-                            filter={REQUEST_STATUS.NEW}
+                            filter={CALLCENTER_REQUEST_STATUS.NEW}
                             type={GET_LAST_NEW_CALL_CENTER_IMPORT_REQUESTS}
                         />
                     </Paper>
@@ -60,7 +63,7 @@ export default function Dashboard() {
                             orderBy="requestedAt"
                             order="desc"
                             title="Last Processed Call Center Import Request"
-                            filter={REQUEST_STATUS.DONE}
+                            filter={CALLCENTER_REQUEST_STATUS.DONE}
                             type={GET_LAST_PROCESSED_CALL_CENTER_IMPORT_REQUEST}
                         />
                     </Paper>
@@ -73,7 +76,7 @@ export default function Dashboard() {
                             orderBy="requestedAt"
                             order="desc"
                             title="Last Error Call Center Import Request"
-                            filter={REQUEST_STATUS.ERROR}
+                            filter={CALLCENTER_REQUEST_STATUS.ERROR}
                             type={GET_LAST_ERRORED_CALL_CENTER_IMPORT_REQUEST}
                         />
                     </Paper>
