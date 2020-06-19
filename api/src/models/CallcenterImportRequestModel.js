@@ -22,8 +22,6 @@ const CallcenterImportRequestSchema = new Schema({
     processedAt: Date
 });
 
-CallcenterImportRequestSchema.index({ olxUrl: 1 }, { unique: true });
-
 CallcenterImportRequestSchema.plugin(mongoosePaginate);
 
 export default mongoConnection.model('CallcenterImportRequest', CallcenterImportRequestSchema);
