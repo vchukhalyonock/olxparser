@@ -76,6 +76,10 @@ class OfferService {
                 if(response.errors) {
                     await this.setExportErrors(offer.id, response.errors);
                 }
+            } else {
+                response = {
+                    errors: { error: "Offer already exists in Call Center database" }
+                };
             }
             await this.setOfferStatus(offer.id, (response && response.errors) ? OFFER_STATUS.FAILED : OFFER_STATUS.EXPORTED);
             await this.removeOfferFromCCExportList(offer.id);
@@ -84,7 +88,11 @@ class OfferService {
 
     async getAllOffersToExport() {
         const offers = await OffersModel.paginate(
-            { ccExport: true },
+            { $or: [
+                    { ccExport: true },
+                    { ccExportStatus: OFFER_STATUS.NEW }
+                ]
+            },
             {
                 limit: conf.onceImportNumber,
                 offset: 0
