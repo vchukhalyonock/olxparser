@@ -77,7 +77,7 @@ class OfferService {
                     await this.setExportErrors(offer.id, response.errors);
                 }
             }
-            await this.setOfferStatus(offer.id, response.errors ? OFFER_STATUS.FAILED : OFFER_STATUS.EXPORTED);
+            await this.setOfferStatus(offer.id, (response && response.errors) ? OFFER_STATUS.FAILED : OFFER_STATUS.EXPORTED);
             await this.removeOfferFromCCExportList(offer.id);
         }
     }
