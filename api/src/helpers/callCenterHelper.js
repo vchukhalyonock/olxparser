@@ -4,6 +4,24 @@ import { METHODS } from "../constants/methods";
 import { CALLCENTER_BASE_URL } from "../constants/urls";
 import { CallcenterImportRequestModel } from "../models";
 
+const operatorsCodes = [
+    "039",
+    "067",
+    "068",
+    "096",
+    "097",
+    "098",
+    "050",
+    "066",
+    "095",
+    "099",
+    "063",
+    "093",
+    "091",
+    "092",
+    "094"
+];
+
 export const isOfferExists = async (offerUrl) => {
     const response = await rest(
         `${CALLCENTER_BASE_URL}/api/classified/check`,
@@ -47,6 +65,36 @@ const currencyReplacer = currency => {
     });
 }
 
+
+const getOperatorCodePositionIndex = phones => {
+    const indexes = [];
+    for(let i = 0; i < operatorsCodes.length; i++) {
+        let codePositionIndex = phones.indexOf(operatorsCodes[i]);
+        if(codePositionIndex > -1) {
+            indexes.push(codePositionIndex);
+        }
+    }
+
+    if(indexes.length > 0) {
+        return Math.min(...indexes);
+    }
+
+    return -1;
+}
+
+const normalizePhones = phones => {
+    let onlyDigitalPhones = phones.replace(/[^+\d]/g, '');
+    const phonesArray = [];
+    let codePositionIndex = getOperatorCodePositionIndex(onlyDigitalPhones);
+    while(codePositionIndex > -1) {
+        const phone = onlyDigitalPhones.slice(codePositionIndex, codePositionIndex + 10);
+        phonesArray.push(phone);
+        onlyDigitalPhones = onlyDigitalPhones.slice(codePositionIndex + 10);
+        codePositionIndex = getOperatorCodePositionIndex(onlyDigitalPhones);
+    }
+    return phonesArray;
+}
+
 const convertToExportBundle = (importRequest, offer) => ({
     name: offer.title,
     url: offer.url,
@@ -57,7 +105,7 @@ const convertToExportBundle = (importRequest, offer) => ({
     city: offer.city,
     params: offer.details.map(detail => ({ name: detail.measure, value: detail.value.join(",") })),
     images: offer.srcImages,
-    phones: [offer.phone.replace(' ', '')],
-    user_name: offer.userName
+    phones: normalizePhones(offer.phone),
+    user_name: offer.userName.trim()
 });
 
