@@ -1,7 +1,4 @@
-import {
-    findKey,
-    words
-} from "lodash";
+import { findKey } from "lodash";
 import rest from "../utils/rest";
 import { METHODS } from "../constants/methods";
 import { CALLCENTER_BASE_URL } from "../constants/urls";
