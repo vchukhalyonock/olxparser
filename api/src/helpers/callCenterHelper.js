@@ -67,12 +67,18 @@ const currencyReplacer = currency => {
 
 
 const getOperatorCodePositionIndex = phones => {
+    const indexes = [];
     for(let i = 0; i < operatorsCodes.length; i++) {
         let codePositionIndex = phones.indexOf(operatorsCodes[i]);
         if(codePositionIndex > -1) {
-            return codePositionIndex;
+            indexes.push(codePositionIndex);
         }
     }
+
+    if(indexes.length > 0) {
+        return Math.min(...indexes);
+    }
+
     return -1;
 }
 
