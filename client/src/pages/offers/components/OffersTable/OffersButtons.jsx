@@ -16,6 +16,7 @@ import {
     Schedule as ScheduleIcon,
     Error as ErrorIcon,
     DoneAll as DoneIcon,
+    LocationOn as ExistIcon
 } from "@material-ui/icons";
 import {
     func,
@@ -56,7 +57,11 @@ const OffersButtons = ({
         {item.offerType === OFFER_TYPE.CALLCENTER && !item.ccExport && item.ccExportStatus === OFFER_STATUS.FAILED && (
             <IconButton onClick={() => {}}>
                 <Tooltip title={JSON.stringify(item.exportErrors)}>
-                    <ErrorIcon />
+                    {(item.exportErrors.error && item.exportErrors.error === "Offer already exists in Call Center database" && (
+                        <ExistIcon />
+                    )) || (
+                        <ErrorIcon />
+                    )}
                 </Tooltip>
             </IconButton>
         )}
