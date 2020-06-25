@@ -19,7 +19,8 @@ const operatorsCodes = [
     "093",
     "091",
     "092",
-    "094"
+    "094",
+    "073"
 ];
 
 export const isOfferExists = async (offerUrl) => {
